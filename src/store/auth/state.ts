@@ -1,20 +1,23 @@
 import { AppError } from 'src/models/app-error';
-import { User } from 'src/models/user';
 
 /** Auth state. */
 export interface AuthState {
 
-  /** Whether authentication is in process or not. */
-  readonly isLoading: boolean;
+  /** Check user is logged in or not. */
+  readonly isAuthorized: boolean;
+
+  /** Whether isAuthorized is checking or not. */
+  readonly isCheckingAuthorized: boolean;
 
   /** Error. */
   readonly error?: AppError;
 
-  /** User. */
-  readonly user: User | null;
+  /** Whether authorization is loading or not. */
+  readonly isLoading: boolean;
 }
 
 export const initialState: AuthState = {
   isLoading: false,
-  user: null,
+  isAuthorized: false,
+  isCheckingAuthorized: true,
 };

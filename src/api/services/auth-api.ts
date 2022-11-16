@@ -1,4 +1,6 @@
 import { AxiosError } from 'axios';
+import { Login } from 'src/models/login-values';
+import { Token } from 'src/models/token';
 import { User } from 'src/models/user';
 
 import { http } from '..';
@@ -44,11 +46,12 @@ export namespace AuthApi {
    * @param email Email.
    * @param password Password.
    */
-  export async function login(email: string, password: string): Promise<User> {
-    const userDto = await mockLogin(email, password);
-    const user = userMapper.fromDto(userDto);
+  export async function login(account: Login): Promise<Token> {
+    const userDto = await mockLogin(account.email, account.password);
 
-    return user;
+    return {
+      accessToken: '',
+    };
   }
 
   /** Logs the current user out. */

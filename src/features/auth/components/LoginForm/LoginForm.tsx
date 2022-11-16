@@ -20,7 +20,7 @@ const LoginFormComponent: FC = () => {
   }, [error]);
 
   const handleUserLogin = (values: LoginFormValue): void => {
-    dispatch(AuthActions.loginUser(values));
+    dispatch(AuthActions.login(values));
   };
 
   return (

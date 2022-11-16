@@ -1,20 +1,21 @@
+import { createEntityAdapter } from '@reduxjs/toolkit';
 import { AppError } from 'src/models/app-error';
 import { Post } from 'src/models/post';
+
+export const postAdapter = createEntityAdapter<Post>();
 
 /** Posts state. */
 export interface PostsState {
 
-  /** Posts list. */
-  readonly posts: Post[];
-
   /** Error. */
-  readonly error?: AppError;
+  readonly error?: string;
 
   /** Whether posts are loading or not. */
   readonly isLoading: boolean;
 }
 
-export const initialState: PostsState = {
+export const initialState = postAdapter.getInitialState<PostsState>({
   isLoading: false,
-  posts: [],
-};
+})
+
+export type State = typeof initialState;

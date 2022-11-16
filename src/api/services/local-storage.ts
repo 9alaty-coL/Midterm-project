@@ -16,4 +16,7 @@ export namespace LocalStorageService {
 
   /** Gets session token. */
   export const getSessionToken = () => localStorage.getItem(KEY);
+
+  /** Remove session token. */
+  export const removeSessionToken = () => localStorage.removeItem(KEY);
 }

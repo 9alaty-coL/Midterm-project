@@ -3,10 +3,10 @@ import {
   Navigate, Outlet, To, useLocation,
 } from 'react-router-dom';
 import { useAppSelector } from 'src/store';
-import { selectUser } from 'src/store/auth/selectors';
+import { selectIsAuthorized } from 'src/store/auth/selectors';
 
 export const AuthGuard: FC = () => {
-  const user = useAppSelector(selectUser);
+  const isAuthorized = useAppSelector(selectIsAuthorized);
   const location = useLocation();
 
   const redirect: To = {
@@ -16,7 +16,7 @@ export const AuthGuard: FC = () => {
     }).toString(),
   };
 
-  if (!user) {
+  if (!isAuthorized) {
     return <Navigate to={redirect} replace />;
   }
 

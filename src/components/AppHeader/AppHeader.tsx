@@ -4,15 +4,19 @@ import {
   AppBar, Box, Button, Link, Toolbar,
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'src/store';
-import { AuthActions } from 'src/store/auth/dispatchers';
-import { selectUser } from 'src/store/auth/selectors';
+import { User } from 'src/models/user';
+import { logout } from 'src/store/auth/slice';
 
 const AppHeaderComponent: FC = () => {
-  const user = useAppSelector(selectUser);
+  const user = new User({
+    id: Date.now(),
+    email: 'trantanloc@gmail.com',
+    name: 'loc',
+  })
   const dispatch = useAppDispatch();
 
   const handleUserLogout = () => {
-    dispatch(AuthActions.logoutUser());
+    dispatch(logout());
   };
 
   const rightSection = user ? (

@@ -11,11 +11,8 @@ export namespace PostApiService {
    * Fetches a list of posts.
    * @param signal AbortController signal.
    */
-  export async function fetchPosts(signal: AbortSignal): Promise<Post[]> {
-    // Read more about Axios http requests cancellation here: https://axios-http.com/docs/cancellation
-    const { data } = await http.get<PostDto[]>('https://jsonplaceholder.typicode.com/posts', {
-      signal,
-    });
+  export async function fetchPosts(): Promise<Post[]> {
+    const { data } = await http.get<PostDto[]>('https://jsonplaceholder.typicode.com/posts');
 
     return data.map(dto => postMapper.fromDto(dto));
   }

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { LocalStorageService } from 'src/api/services/local-storage';
 
 import { AuthActions } from './dispatchers';
 
@@ -7,29 +8,22 @@ import { initialState } from './state';
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logout() {
+      LocalStorageService.removeSessionToken();
+    }
+  },
   extraReducers: builder => builder
-    .addCase(AuthActions.loginUser, state => {
-      state.error = undefined;
+    .addCase(AuthActions.login.pending, state => {
       state.isLoading = true;
     })
-    .addCase(AuthActions.loginSuccess, (state, action) => {
-      state.user = action.payload;
+    .addCase(AuthActions.login.fulfilled, (state, action) => {
       state.isLoading = false;
+      state.isAuthorized = true;
     })
-    .addCase(AuthActions.loginFailure, (state, action) => {
+    .addCase(AuthActions.login.rejected, (state, action) => {
       state.error = action.payload;
-      state.isLoading = false;
     })
-    .addCase(AuthActions.logoutUser, state => {
-      state.isLoading = true;
-    })
-    .addCase(AuthActions.logoutSuccess, state => {
-      state.user = null;
-      state.isLoading = false;
-    })
-    .addCase(AuthActions.logoutFailure, (state, action) => {
-      state.error = action.payload;
-      state.isLoading = false;
-    }),
 });
+
+export const { logout } = authSlice.actions;

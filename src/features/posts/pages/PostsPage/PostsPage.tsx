@@ -2,18 +2,17 @@ import { memo, useEffect, FC } from 'react';
 import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 import { useAppDispatch, useAppSelector } from 'src/store';
 import { PostsActions } from 'src/store/posts/dispatchers';
+import { selectIsPostLoading, selectPosts } from 'src/store/posts/selectors';
 
 import { PostCard } from '../../components/PostCard';
 
 const PostsPageComponent: FC = () => {
   const dispatch = useAppDispatch();
-  const { posts, isLoading } = useAppSelector(state => state.posts);
+  const isLoading = useAppSelector(selectIsPostLoading);
+  const posts = useAppSelector(selectPosts)
 
   useEffect(() => {
     dispatch(PostsActions.fetchPosts());
-    return () => {
-      dispatch(PostsActions.cancelFetchPosts());
-    };
   }, [dispatch]);
 
   if (isLoading && posts.length === 0) {
