@@ -1,6 +1,5 @@
-/** Values required to login. */
-export interface Login {
-
+export interface Account {
+  
   /** Email. */
   readonly email: string;
 

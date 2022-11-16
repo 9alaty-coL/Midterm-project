@@ -1,8 +1,8 @@
-import { Login } from 'src/models/login-values';
+import { Account } from 'src/models/account';
 import * as Yup from 'yup';
 
 /** Login form. */
-export type LoginFormValue = Login;
+export type LoginFormValue = Account;
 
 export const initValues: LoginFormValue = {
   email: '',
