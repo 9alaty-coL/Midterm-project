@@ -1,5 +1,4 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
-import { AppError } from 'src/models/app-error';
 import { Post } from 'src/models/post';
 
 export const postAdapter = createEntityAdapter<Post>();

@@ -1,33 +1,40 @@
 import { memo, useEffect, FC } from 'react';
-import { Box, Button } from '@mui/material';
-import { Formik, Form, Field } from 'formik';
+import { Box, Button, CircularProgress } from '@mui/material';
+import { Formik, Form, Field, useFormik, FormikProvider } from 'formik';
 import { TextField } from 'formik-mui';
 import { useAppDispatch, useAppSelector } from 'src/store';
 import { AuthActions } from 'src/store/auth/dispatchers';
 
 import { initValues, loginFormSchema, LoginFormValue } from './form-settings';
+import { selectAuthError, selectIsAuthLoading } from 'src/store/auth/selectors';
+import { useSnackbar } from 'notistack';
 
 const LoginFormComponent: FC = () => {
   const dispatch = useAppDispatch();
-  const { error } = useAppSelector(state => state.auth);
+  const error = useAppSelector(selectAuthError);
+  const isLoading = useAppSelector(selectIsAuthLoading);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (error) {
-      // TODO (Danil K): Add error handling here.
-      // eslint-disable-next-line no-console
-      console.log(error.message);
+      enqueueSnackbar(error.message, { variant: 'error' });
     }
   }, [error]);
 
   const handleUserLogin = (values: LoginFormValue): void => {
     dispatch(AuthActions.login(values));
+    formik.setSubmitting(false);
   };
 
+  const formik = useFormik({
+    initialValues: initValues,
+    validationSchema: loginFormSchema,
+    onSubmit: handleUserLogin,
+  })
+
   return (
-    <Formik
-      initialValues={initValues}
-      validationSchema={loginFormSchema}
-      onSubmit={handleUserLogin}
+    <FormikProvider
+      value={formik}
     >
       <Box component={Form} sx={{ mt: 1 }}>
         <Field
@@ -57,11 +64,12 @@ const LoginFormComponent: FC = () => {
           fullWidth
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
+          disabled={isLoading}
         >
-          Sign In
+          {isLoading ? <CircularProgress size={'20px'} color="inherit" /> : 'Sign In'}
         </Button>
       </Box>
-    </Formik>
+    </FormikProvider>
   );
 };
 

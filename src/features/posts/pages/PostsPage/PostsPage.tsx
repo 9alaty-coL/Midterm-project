@@ -9,7 +9,7 @@ import { PostCard } from '../../components/PostCard';
 const PostsPageComponent: FC = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(selectIsPostLoading);
-  const posts = useAppSelector(selectPosts)
+  const posts = useAppSelector(selectPosts);
 
   useEffect(() => {
     dispatch(PostsActions.fetchPosts());

@@ -1,8 +1,10 @@
 import { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
+import { SnackbarProvider } from 'notistack';
 
 import reportWebVitals from './reportWebVitals';
 import { App } from './App';
+import { CloseSnackbarAction } from './config/CloseSnackbarAction';
 
 const rootElement: HTMLElement | null = document.getElementById('root');
 if (rootElement === null) {
@@ -11,7 +13,12 @@ if (rootElement === null) {
 
 ReactDOM.createRoot(rootElement).render(
   <StrictMode>
-    <App />
+    <SnackbarProvider
+      maxSnack={3}
+      action={key => <CloseSnackbarAction id={key} />}
+    >
+      <App />
+    </SnackbarProvider>
   </StrictMode>,
 );
 

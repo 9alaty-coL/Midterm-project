@@ -1,6 +1,6 @@
 /** Local storage service. */
 export namespace LocalStorageService {
-  const KEY = '-=APP_NAME_TOKEN=-';
+  const KEY = 'AUTH_TOKEN';
 
   /**
    * Saves session token into local storage.

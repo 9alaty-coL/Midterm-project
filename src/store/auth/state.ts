@@ -1,3 +1,4 @@
+import { LocalStorageService } from 'src/api/services/local-storage';
 import { AppError } from 'src/models/app-error';
 
 /** Auth state. */
@@ -18,6 +19,6 @@ export interface AuthState {
 
 export const initialState: AuthState = {
   isLoading: false,
-  isAuthorized: false,
+  isAuthorized: !!LocalStorageService.getSessionToken(),
   isCheckingAuthorized: true,
 };

@@ -9,8 +9,9 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout() {
+    logout(state) {
       LocalStorageService.removeSessionToken();
+      state.isAuthorized = false;
     }
   },
   extraReducers: builder => builder
@@ -22,6 +23,7 @@ export const authSlice = createSlice({
       state.isAuthorized = true;
     })
     .addCase(AuthActions.login.rejected, (state, action) => {
+      state.isLoading = false;
       state.error = action.payload;
     })
 });

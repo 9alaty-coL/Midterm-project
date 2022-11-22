@@ -6,26 +6,18 @@ import {
 import { useAppDispatch, useAppSelector } from 'src/store';
 import { User } from 'src/models/user';
 import { logout } from 'src/store/auth/slice';
+import { selectIsAuthorized } from 'src/store/auth/selectors';
 
 const AppHeaderComponent: FC = () => {
-  const user = new User({
-    id: Date.now(),
-    email: 'trantanloc@gmail.com',
-    name: 'loc',
-  })
+  const isAuthorized = useAppSelector(selectIsAuthorized)
   const dispatch = useAppDispatch();
 
   const handleUserLogout = () => {
     dispatch(logout());
   };
 
-  const rightSection = user ? (
+  const rightSection = isAuthorized ? (
     <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
-      <span>
-        Hello,
-        {' '}
-        <b>{user.name}</b>
-      </span>
       <Button
         color="inherit"
         onClick={handleUserLogout}
