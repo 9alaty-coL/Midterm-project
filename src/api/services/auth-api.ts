@@ -15,11 +15,12 @@ export namespace AuthApi {
    * @param account Account data.
    */
   export async function login(account: Account): Promise<Token> {
-    const { data: tokenDto} = await http.post<TokenDto>(
+    const { data } = await http.post(
       AUTH_ROUTE,
       accountMapper.toDto(account)
     );
 
+    const { data: tokenDto } = data;
     return tokenMapper.fromDto(tokenDto);
   }
 

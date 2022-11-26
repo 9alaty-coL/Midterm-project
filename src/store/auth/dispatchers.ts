@@ -5,8 +5,6 @@ import { LocalStorageService } from 'src/api/services/local-storage';
 import { Account } from 'src/models/account';
 import { AppError } from 'src/models/app-error';
 import { Token } from 'src/models/token';
-import { User } from 'src/models/user';
-import { authSlice } from './slice';
 
 export namespace AuthActions {
   export const login = createAsyncThunk<
@@ -17,7 +15,9 @@ export namespace AuthActions {
     }
   >('auth/login', async (account: Account, { rejectWithValue }) => {
     try {
-      return await AuthApi.login(account);
+      const token = await AuthApi.login(account);
+      LocalStorageService.setLocalStorage(token.accessToken);
+      return token;
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         return rejectWithValue(new AppError(error.message));

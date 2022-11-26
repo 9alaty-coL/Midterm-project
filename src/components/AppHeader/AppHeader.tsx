@@ -49,7 +49,18 @@ const AppHeaderComponent: FC = () => {
           underline="none"
           noWrap
         >
-          React Boilerplate
+          Home
+        </Link>
+        <Link
+          sx={{ marginLeft: 2 }}
+          component={RouterLink}
+          to="/group"
+          variant="h5"
+          color="inherit"
+          underline="none"
+          noWrap
+        >
+          Group
         </Link>
         <div />
         <Box sx={{ flexGrow: 1 }} />

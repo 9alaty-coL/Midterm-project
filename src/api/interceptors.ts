@@ -40,7 +40,7 @@ export const addTokenBeforeRequest = (config: AxiosRequestConfig): AxiosRequestC
     ...config,
     headers: {
       ...headers,
-      Authorization: `Bearer ${token}`,
+      ['x-access-token']: `${token}`,
     },
   };
 };

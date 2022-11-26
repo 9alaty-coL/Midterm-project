@@ -20,7 +20,9 @@ export const authSlice = createSlice({
     })
     .addCase(AuthActions.login.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.isAuthorized = true;
+      if (!!action.payload.accessToken) {
+        state.isAuthorized = true;
+      }
     })
     .addCase(AuthActions.login.rejected, (state, action) => {
       state.isLoading = false;

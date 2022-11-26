@@ -3,6 +3,7 @@ import { Navigate, RouteObject, useRoutes } from 'react-router-dom';
 import { postsRoutes } from 'src/features/posts/routes';
 import { authRoutes } from 'src/features/auth/routes';
 import { homeRoutes } from 'src/features/home/routes';
+import { groupRoutes } from 'src/features/group/routes';
 
 const routes: RouteObject[] = [
   {
@@ -12,6 +13,7 @@ const routes: RouteObject[] = [
   ...homeRoutes,
   ...authRoutes,
   ...postsRoutes,
+  ...groupRoutes,
 ];
 
 export const RootRouter: FC = () => useRoutes(routes);

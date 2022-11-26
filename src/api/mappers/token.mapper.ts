@@ -5,7 +5,7 @@ import { IMapperFromDto } from './mappers';
 class TokenMapper implements IMapperFromDto<TokenDto, Token> {
   fromDto(dto: TokenDto): Token {
     return {
-      accessToken: dto.token,
+      accessToken: dto.accessToken,
     }
   }
 }

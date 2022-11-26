@@ -12,6 +12,13 @@ const HomePageComponent: FC = () => (
     >
       Posts
     </Button>
+    <Button
+      component={RouterLink}
+      color="inherit"
+      to="group"
+    >
+      Groups
+    </Button>
   </>
 );
 

@@ -1,0 +1,13 @@
+.group {
+  cursor: pointer;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-block: 20px;
+  transition: all ease-in 0.2s;
+  padding-inline: 5px;
+}
+
+.group:hover {
+  background-color: #eee;
+  transform: scale(101%);
+}
