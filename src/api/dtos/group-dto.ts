@@ -1,10 +1,19 @@
 export interface GroupDto {
   /** Group id. */
-  _id: string;
+  readonly _id: string;
 
   /** Group name. */
-  name: string;
+  readonly name: string;
+
+  /** Owner id. */
+  readonly owner_id: string;
 
   /** Group image. */
-  image: string;
+  readonly image: string;
+
+  /** Co-owner id. */
+  readonly co_owner_id: readonly string[];
+
+  /** Member id. */
+  readonly member_id: readonly string[];
 }
