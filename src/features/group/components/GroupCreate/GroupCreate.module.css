@@ -1,0 +1,36 @@
+.group-create-container {
+    display: flex;
+    width: 100%;
+    height: 60vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.group-create-title {
+    font-size: 50px;
+    font-weight: bold;
+    padding-bottom: 50px;
+}
+
+.group-create-formrow {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.group-create-formrow-label {
+    font-size: 30px;
+    padding-right: 20px;
+    width: 200px;
+}
+
+.group-create-btn-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    padding-top: 25px;
+}
