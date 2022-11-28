@@ -19,15 +19,19 @@ const JoinGroupPageComponent: FC = () => {
   const isLoadingGroup = useAppSelector(selectIsGroupDetailLoading);
   const isAddingUser = useAppSelector(selectIsAddingUser);
   const error = useAppSelector(selectGroupDetailError);
-  const groupDetails = useAppSelector(selectGroupDetails)
+  const groupDetails = useAppSelector(state => selectGroupDetails(state, groupId ?? ''))
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(GroupDetailsActions.fetchGroupDetails(groupId ?? ''));
   }, [groupId, dispatch])
 
-  if (isLoadingGroup || groupDetails.length === 0) {
+  if (isLoadingGroup) {
     return <AppLoadingSpinner />;
+  }
+
+  if (groupDetails == null) {
+    return <h1>No group with given id</h1>;
   }
 
   if (error || groupId == null) {
@@ -46,7 +50,7 @@ const JoinGroupPageComponent: FC = () => {
     )
   }
 
-  return <JoinGroup name={groupDetails[0].name} onClick={handleJoin} />;
+  return <JoinGroup name={groupDetails.name} onClick={handleJoin} />;
 }
 
 export const JoinGroupPage = memo(JoinGroupPageComponent);

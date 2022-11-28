@@ -4,11 +4,11 @@ import { RootState } from '../store';
 
 import { groupDetailAdapter } from './state';
 
-const { selectAll } = groupDetailAdapter.getSelectors();
+const { selectById } = groupDetailAdapter.getSelectors();
 
 /** Select groups. */
 export const selectGroupDetails = createSelector(
-  (state: RootState) => selectAll(state.groupDetail),
+  (state: RootState, id: EntityId) => selectById(state.groupDetail, id),
   group => group
 );
 

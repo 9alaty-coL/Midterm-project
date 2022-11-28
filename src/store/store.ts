@@ -7,6 +7,7 @@ import { groupDetailsSlice } from './groupDetails/slice';
 import { groupsSlice } from './groups/slice';
 
 import { postsSlice } from './posts/slice';
+import { userSlice } from './profile/slice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     auth: authSlice.reducer,
     groups: groupsSlice.reducer,
     groupDetail: groupDetailsSlice.reducer,
+    user: userSlice.reducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware({
     // We need to disable this check to allow ES6 classes in Redux.

@@ -1,13 +1,7 @@
+import { RegisterAccountDto } from './account-dto';
+
 /** User DTO. */
-export interface UserDto {
-
-  /** Id. */
-  readonly id: number;
-
-  /** Name. */
-  readonly name: string;
-
-  /** Email. */
-  readonly email: string;
-
+export interface UserDto extends RegisterAccountDto {
+  _id: string,
+  avatar: string,
 }

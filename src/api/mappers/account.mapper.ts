@@ -20,6 +20,17 @@ class AccountMapper implements IMapperToDto<AccountDto, Account> {
       address: data.address,
     }
   }
+
+  public fromRegisterAccountDto(data: RegisterAccountDto): RegisterAccount {
+    return {
+      email: data.email,
+      password: data.password,
+      yearOfBirth: data.yearOfBirth,
+      firstName: data.firstname,
+      lastName: data.lastname,
+      address: data.address,
+    }
+  }
 }
 
 export const accountMapper = new AccountMapper();

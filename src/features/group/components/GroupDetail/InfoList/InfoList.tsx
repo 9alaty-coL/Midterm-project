@@ -8,11 +8,12 @@ import { faUserSlash } from "@fortawesome/free-solid-svg-icons"
 import { useState, useEffect } from "react"
 
 import { InfoCard } from "./InfoCard/InfoCard"
+import { User } from 'src/models/user';
 
 interface Props {
 
     /** Group. */
-    readonly list: any;
+    readonly list: readonly User['id'][];
 
     /** Owner */
     readonly type: string;
@@ -50,8 +51,8 @@ const InfoListComponent: FC<Props> = ({
             </div>
             <div className={style['list-body']}>
                 {
-                    list.map((member: any, index: number) => 
-                        <InfoCard key={index} info={member} type={type} isSelecting={isOpenDeleting}
+                    list.map((member: User['id'], index: number) => 
+                        <InfoCard key={index} userId={member} type={type} isSelecting={isOpenDeleting}
                             checkedListID={checkedListID} setCheckedListID={setCheckedListID}
                         />
                     )

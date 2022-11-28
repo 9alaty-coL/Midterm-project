@@ -1,6 +1,6 @@
 import { memo, useState, FC, SyntheticEvent } from 'react';
 
-import { Group as GroupItem } from 'src/models/group';
+import { Group, Group as GroupItem } from 'src/models/group';
 import style from './GroupDetail.module.css';
 import { GroupInfo } from './GroupInfo/GroupInfo';
 import { InfoList } from './InfoList/InfoList';
@@ -8,30 +8,16 @@ import { InfoList } from './InfoList/InfoList';
 interface Props {
 
   /** Group. */
-  readonly group: any;
-
-  /** Owner */
-  readonly owner: any;
-
-  /** Co-owners */
-  readonly coOwners: any[];
-
-  /** Members */
-  readonly members: any[];
+  readonly group: Group;
 }
 
-const GroupDetailComponent: FC<Props> = ({
-  group,
-  owner,
-  coOwners,
-  members
-}) => {
+const GroupDetailComponent: FC<Props> = ({ group }) => {
 
   return (
     <div className={style['group-detail-container']}>
-      <GroupInfo group={group} owner={owner}/>
-      <InfoList type='co-owner' list={coOwners}/>
-      <InfoList type='member' list={members}/>
+      <GroupInfo group={group}/>
+      <InfoList type='co-owner' list={group.coOwnerId}/>
+      <InfoList type='member' list={group.memberId}/>
     </div>
   );
 };

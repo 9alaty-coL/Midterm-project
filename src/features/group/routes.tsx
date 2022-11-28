@@ -16,7 +16,7 @@ export const groupRoutes: RouteObject[] = [
         element: <GroupPage />,
       },
       {
-        path: 'group/:id',
+        path: 'group/:groupId',
         element: <GroupDetail />,
       },
       {

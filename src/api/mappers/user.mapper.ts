@@ -1,6 +1,7 @@
 import { User } from 'src/models/user';
 
 import { UserDto } from '../dtos/user-dto';
+import { accountMapper } from './account.mapper';
 
 import { IMapperFromDto } from './mappers';
 
@@ -8,11 +9,11 @@ import { IMapperFromDto } from './mappers';
 class UserMapper implements IMapperFromDto<UserDto, User> {
   /** @inheritdoc */
   public fromDto(dto: UserDto): User {
-    return new User({
-      id: dto.id,
-      name: dto.name,
-      email: dto.email,
-    });
+    return {
+      id: dto._id,
+      avatar: dto.avatar,
+      ...accountMapper.fromRegisterAccountDto(dto),
+    }
   }
 }
 

@@ -1,4 +1,4 @@
-import { memo, FC } from 'react';
+import { memo, FC, useEffect } from 'react';
 import style from './InfoCard.module.css';
 
 import { Avatar, Button, Popover, MenuItem, Paper, Checkbox} from "@mui/material"
@@ -6,10 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons"
 
 import { useState } from "react"
+import { User } from 'src/models/user';
+import { useAppDispatch, useAppSelector } from 'src/store';
+import { selectUser } from 'src/store/profile/selectors';
+import { UserActions } from 'src/store/profile/dispatchers';
 
 interface Props {
     /** Owner */
-    readonly info: any;
+    readonly userId: User['id'];
 
     /** Type */
     readonly type: string;
@@ -25,32 +29,42 @@ interface Props {
 }
 
 const InfoCardComponent: FC<Props> = ({
-    info,
+    userId,
     type,
     isSelecting,
     checkedListID, setCheckedListID
 }) => {
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(state => selectUser(state, userId));
+
+    useEffect(() => {
+        dispatch(UserActions.fetchUser(userId))
+    }, [userId])
+
+    if (user == null) {
+        return <span>User not found</span>
+    }
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
     const handleChangeCheckBox = () => {
-        if (checkedListID.includes(info._id)) {
-            setCheckedListID((prev :any) => prev.filter((each: any) => each !== info._id))
+        if (checkedListID.includes(user.id)) {
+            setCheckedListID((prev :any) => prev.filter((each: any) => each !== user.id))
         }
         else {
-            setCheckedListID((prev :any) => [...prev, info._id])
+            setCheckedListID((prev :any) => [...prev, user.id])
         }
     }
 
     return ( 
         <Paper elevation={2} className={style['card-container']}>
-            {isSelecting && <Checkbox checked={checkedListID.includes(info._id)} onChange={() => handleChangeCheckBox()}/>}
-            <Avatar alt="User Avatar" src={info.avatar} sx={{ width: 75, height: 75 }}/>
+            {isSelecting && <Checkbox checked={checkedListID.includes(user.id)} onChange={() => handleChangeCheckBox()}/>}
+            <Avatar alt="User Avatar" src={user.avatar} sx={{ width: 75, height: 75 }}/>
             <div className={style['card-content']}>
-                <div className={style['card-name']}>{info.firstname} {info.lastname}</div>
-                <div className={style['card-email']}>{info.email}</div>                
+                <div className={style['card-name']}>{user.firstName} {user.lastName}</div>
+                <div className={style['card-email']}>{user.email}</div>                
             </div>
             {!isSelecting && 
             <Button variant="contained" className={style['card-btn']}
