@@ -5,8 +5,7 @@ import {
 } from '@mui/material';
 
 import { Group as GroupItem } from 'src/models/group';
-import style from './Group.module.css';
-import { Link } from 'react-router-dom';
+import style from './GroupCard.module.css';
 
 interface Props {
 
@@ -14,13 +13,13 @@ interface Props {
   readonly group: GroupItem;
 }
 
-const GroupComponent: FC<Props> = ({
+const GroupCardComponent: FC<Props> = ({
   group,
 }) => {
 
   return (
     <div className={style['group']}>
-      <Grid container spacing={2} alignItems="center" component={Link} to={`${group.id}`}>
+      <Grid container spacing={2} alignItems="center">
         <Grid item xs={8}>
           <h3>{group.name}</h3>
         </Grid>
@@ -36,4 +35,4 @@ const GroupComponent: FC<Props> = ({
   );
 };
 
-export const Group = memo(GroupComponent);
+export const GroupCard = memo(GroupCardComponent);
