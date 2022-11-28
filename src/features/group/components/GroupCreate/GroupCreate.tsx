@@ -16,14 +16,8 @@ interface Props {
 const CreateGroupComponent: FC = () => {
 
   return (
-    <div className={style['group']}>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs={8}>
-        </Grid>
-        <Grid item xs={4} display="flex" justifyContent="flex-end">
-        </Grid>
-      </Grid>
-      <hr className={style.divider} />
+    <div className={style['group-create-container']}>
+      
     </div>
   );
 };
