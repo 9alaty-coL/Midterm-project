@@ -4,6 +4,7 @@ import { Group, Group as GroupItem } from 'src/models/group';
 import style from './GroupDetail.module.css';
 import { GroupInfo } from './GroupInfo/GroupInfo';
 import { InfoList } from './InfoList/InfoList';
+import { InviteEmail } from './InviteEmail/InviteEmail';
 
 interface Props {
 
@@ -16,6 +17,7 @@ const GroupDetailComponent: FC<Props> = ({ group }) => {
   return (
     <div className={style['group-detail-container']}>
       <GroupInfo group={group}/>
+      <InviteEmail />
       <InfoList type='co-owner' list={group.coOwnerId}/>
       <InfoList type='member' list={group.memberId}/>
     </div>
