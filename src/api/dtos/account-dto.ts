@@ -8,3 +8,10 @@ export interface AccountDto {
   /** Password dto. */
   password: string;
 }
+
+export interface RegisterAccountDto extends AccountDto {
+  readonly firstname: string;
+  readonly lastname: string;
+  readonly yearOfBirth: number;
+  readonly address: string;
+}

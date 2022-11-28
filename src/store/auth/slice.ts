@@ -26,7 +26,15 @@ export const authSlice = createSlice({
     })
     .addCase(AuthActions.login.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+    })
+    .addCase(AuthActions.register.pending, status => {
+      status.isLoading = true;
+    })
+    .addCase(AuthActions.register.rejected, state => {
+      state.isLoading = false;
+    })
+    .addCase(AuthActions.register.fulfilled, state => {
+      state.isLoading = false;
     })
 });
 
