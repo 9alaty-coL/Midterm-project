@@ -7,7 +7,12 @@ export namespace GroupsActions {
     GroupApiService.getGroups()
   );
 
-  export const addUserToGroup = createAsyncThunk('groups/addUser', (groupId: Group['id'], {rejectWithValue}) =>
-    GroupApiService.addUser(groupId)
+  export const addUserToGroup = createAsyncThunk('groups/addUser', async (groupId: Group['id'], {rejectWithValue}) =>{
+    try {
+      await GroupApiService.addUser(groupId)
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
   );
 }

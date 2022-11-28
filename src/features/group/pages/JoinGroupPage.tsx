@@ -42,8 +42,7 @@ const JoinGroupPageComponent: FC = () => {
     dispatch(GroupsActions.addUserToGroup(groupId)).then(
       (result: any) => {
         if (result.error) {
-          enqueueSnackbar('User already existed in this group', { variant: 'error' });
-          return;
+          return enqueueSnackbar((result.payload?.response?.data as {message: string}).message, { variant: 'error' });
         }
         navigate('/group');
       }

@@ -35,7 +35,7 @@ const InfoListComponent: FC<Props> = ({
     return ( 
         <Paper elevation={2} className={style['list-container']}> 
             <div className={style['list-header']}>
-                <div className={style['list-title']}>{type === 'members' ? "Members" : "Co-Owner"}</div>
+                <div className={style['list-title']}>{type === 'member' ? "Members" : "Co-Owner"}</div>
                 {
                     isOpenDeleting ?
                     <div className={style['list-btn-group']}>

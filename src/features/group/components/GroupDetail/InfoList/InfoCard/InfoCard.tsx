@@ -8,8 +8,9 @@ import { faEllipsis } from "@fortawesome/free-solid-svg-icons"
 import { useState } from "react"
 import { User } from 'src/models/user';
 import { useAppDispatch, useAppSelector } from 'src/store';
-import { selectUser } from 'src/store/profile/selectors';
+import { selectIsUserLoading, selectUser } from 'src/store/profile/selectors';
 import { UserActions } from 'src/store/profile/dispatchers';
+import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 
 interface Props {
     /** Owner */
@@ -37,10 +38,15 @@ const InfoCardComponent: FC<Props> = ({
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const dispatch = useAppDispatch();
     const user = useAppSelector(state => selectUser(state, userId));
+    const isLoadingUser = useAppSelector(selectIsUserLoading);
 
     useEffect(() => {
         dispatch(UserActions.fetchUser(userId))
     }, [userId])
+
+    if (isLoadingUser) {
+        return <AppLoadingSpinner />;
+    }
 
     if (user == null) {
         return <span>User not found</span>

@@ -35,7 +35,7 @@ export namespace AuthActions {
   }
 >('auth/register', async (account: RegisterFormValue, { rejectWithValue }) => {
   try {
-    const message = await AuthApi.register(account);
+    await AuthApi.register(account);
   } catch (error) {
     if (error instanceof AxiosError) {
       return rejectWithValue(error);
