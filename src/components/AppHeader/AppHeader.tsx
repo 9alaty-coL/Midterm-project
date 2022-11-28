@@ -27,6 +27,7 @@ const AppHeaderComponent: FC = () => {
       </Button>
     </Box>
   ) : (
+    <>
     <Button
       component={RouterLink}
       color="inherit"
@@ -35,6 +36,16 @@ const AppHeaderComponent: FC = () => {
     >
       Login
     </Button>
+    <Button
+      sx={{marginLeft: '10px'}}
+      component={RouterLink}
+      color="inherit"
+      variant="outlined"
+      to="register"
+    >
+      Register
+    </Button>
+    </>
   );
 
   return (

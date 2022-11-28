@@ -9,4 +9,5 @@ export interface UserDto {
 
   /** Email. */
   readonly email: string;
+
 }

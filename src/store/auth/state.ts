@@ -11,7 +11,7 @@ export interface AuthState {
   readonly isCheckingAuthorized: boolean;
 
   /** Error. */
-  readonly error?: AppError;
+  readonly error?: any;
 
   /** Whether authorization is loading or not. */
   readonly isLoading: boolean;

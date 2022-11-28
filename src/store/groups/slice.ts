@@ -18,4 +18,13 @@ export const groupsSlice = createSlice({
       state.error = undefined;
       state.isLoading = false;
     })
+    .addCase(GroupsActions.addUserToGroup.pending, state => {
+      state.isAddingUser = true;
+    })
+    .addCase(GroupsActions.addUserToGroup.fulfilled, state => {
+      state.isAddingUser = false;
+    })
+    .addCase(GroupsActions.addUserToGroup.rejected, state => {
+      state.isAddingUser = false;
+    })
 });

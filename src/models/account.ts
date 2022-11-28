@@ -6,3 +6,10 @@ export interface Account {
   /** Password. */
   readonly password: string;
 }
+
+export interface RegisterAccount extends Account {
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly yearOfBirth: number;
+  readonly address: string;
+}

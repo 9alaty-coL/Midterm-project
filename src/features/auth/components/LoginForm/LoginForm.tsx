@@ -8,21 +8,20 @@ import { AuthActions } from 'src/store/auth/dispatchers';
 import { initValues, loginFormSchema, LoginFormValue } from './form-settings';
 import { selectAuthError, selectIsAuthLoading } from 'src/store/auth/selectors';
 import { useSnackbar } from 'notistack';
+import { AxiosError } from 'axios';
 
 const LoginFormComponent: FC = () => {
   const dispatch = useAppDispatch();
-  const error = useAppSelector(selectAuthError);
   const isLoading = useAppSelector(selectIsAuthLoading);
   const { enqueueSnackbar } = useSnackbar();
 
-  useEffect(() => {
-    if (error) {
-      enqueueSnackbar(error.message, { variant: 'error' });
-    }
-  }, [error]);
-
   const handleUserLogin = (values: LoginFormValue): void => {
-    dispatch(AuthActions.login(values));
+    dispatch(AuthActions.login(values)).then(result => {
+      if (result.payload instanceof AxiosError) {
+        return enqueueSnackbar((result.payload?.response?.data as {message: string}).message, { variant: 'error' });
+      }
+      enqueueSnackbar('login successfully', { variant: 'success' });
+    });
     formik.setSubmitting(false);
   };
 

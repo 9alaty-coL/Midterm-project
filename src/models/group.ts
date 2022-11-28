@@ -3,8 +3,17 @@ export interface Group {
   id: string;
 
   /** Group name. */
-  name: string;
+  readonly name: string;
 
   /** Group image. */
-  image: string;
+  readonly image: string;
+
+  /** Owner id. */
+  readonly ownerId: string;
+
+  /** Co-owner id. */
+  readonly coOwnerId: readonly string[];
+
+  /** Member id. */
+  readonly memberId: readonly string[];
 }

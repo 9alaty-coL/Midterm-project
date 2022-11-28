@@ -1,24 +1,20 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
 import { Group } from 'src/models/group';
 
-export const groupAdapter = createEntityAdapter<Group>();
+export const groupDetailAdapter = createEntityAdapter<Group>();
 
-/** Groups state. */
-export interface GroupsState {
+/** Group details state. */
+export interface GroupDetailsState {
 
   /** Error. */
   readonly error?: string;
 
   /** Whether groups are loading or not. */
   readonly isLoading: boolean;
-
-  /** Whether is adding user or not. */
-  readonly isAddingUser: boolean;
 }
 
-export const initialState = groupAdapter.getInitialState<GroupsState>({
+export const initialState = groupDetailAdapter.getInitialState<GroupDetailsState>({
   isLoading: false,
-  isAddingUser: false,
 })
 
 export type State = typeof initialState;

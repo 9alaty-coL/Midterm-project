@@ -16,3 +16,8 @@ export const selectIsGroupLoading = createSelector(
   (state: RootState) => state.groups.isLoading,
   isLoading => isLoading
 );
+
+export const selectIsAddingUser = createSelector(
+  (state: RootState) => state.groups.isAddingUser,
+  isAdding => isAdding
+)
