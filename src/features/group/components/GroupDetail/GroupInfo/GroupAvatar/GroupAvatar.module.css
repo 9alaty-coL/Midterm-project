@@ -1,0 +1,42 @@
+.group-avatar-wrapper {
+    position: relative;
+    width: 175px;
+    height: 175px;
+}
+
+.avatar {
+    position: absolute;
+    width: 175px;
+    height: 175px;
+    border-radius: 50%;
+    border: 3px solid #1976d2;
+    background-size:     cover;
+    background-repeat:   no-repeat;
+    background-position: center center; 
+}
+
+.camera {
+    opacity: 0;
+
+    width: 175px;
+    height: 175px;
+
+    border-radius: 88px;
+
+    z-index: 2;
+
+    position: absolute;
+    padding: 3px;
+    background-color: rgba(58, 59, 60);
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.camera:hover {
+    opacity: 0.5;
+}
+
+.camera-icon {
+    font-size: 50px;
+}

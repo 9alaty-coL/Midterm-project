@@ -1,0 +1,39 @@
+.card-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+
+    padding: 15px !important;
+
+    position: relative !important;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 15px;
+    gap: 5px;
+}
+
+.card-name {
+    font-size: 30px;
+}
+
+.card-email {
+    font-size: 20px;
+}
+
+.card-btn {
+    height: auto !important;
+    background-color: white !important;
+    color: black !important;
+    font-size: 25px !important;
+
+    position: absolute !important;
+    right: 0 !important;
+
+    outline: none !important;
+    box-shadow: none !important;
+}
