@@ -2,6 +2,7 @@ import { User } from 'src/models/user';
 
 import { UserDto } from '../dtos/user-dto';
 import { accountMapper } from './account.mapper';
+import { groupMapper } from './group.mapper';
 
 import { IMapperFromDto } from './mappers';
 
@@ -10,9 +11,12 @@ class UserMapper implements IMapperFromDto<UserDto, User> {
   /** @inheritdoc */
   public fromDto(dto: UserDto): User {
     return {
+      ...accountMapper.fromRegisterAccountDto(dto),
       id: dto._id,
       avatar: dto.avatar,
-      ...accountMapper.fromRegisterAccountDto(dto),
+      owner: dto.roles.owner.map(groupDto => groupMapper.fromDto(groupDto)),
+      co_owner: dto.roles.co_owner.map(groupDto => groupMapper.fromDto(groupDto)),
+      member: dto.roles.member.map(groupDto => groupMapper.fromDto(groupDto)),
     }
   }
 }

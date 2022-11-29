@@ -6,4 +6,8 @@ export namespace UserActions {
   export const fetchUser = createAsyncThunk('user/fetch', (id: User['id']) =>
     UserApiService.fetchUserById(id)
   );
+
+  export const fetchProfile = createAsyncThunk('user/fetchProfile', () =>
+    UserApiService.fetchProfile()
+  );
 }

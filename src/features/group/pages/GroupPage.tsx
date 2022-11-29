@@ -10,14 +10,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import { useState } from "react"
 import { useNavigate, NavigateFunction } from "react-router-dom"
+import { selectIsUserLoading, selectProfile } from 'src/store/profile/selectors';
+import { UserActions } from 'src/store/profile/dispatchers';
 
 const GroupPageComponent: FC = () => {
   const dispatch = useAppDispatch();
-  const groups = useAppSelector(selectGroups)
-  const isLoading = useAppSelector(selectIsGroupLoading);
+  const isLoadingUser = useAppSelector(selectIsUserLoading);
+  const user = useAppSelector(selectProfile);
 
   useEffect(() => {
-    dispatch(GroupsActions.fetchGroups());
+    dispatch(UserActions.fetchProfile());
   }, [dispatch])
 
   const navigate : NavigateFunction = useNavigate();
@@ -28,8 +30,12 @@ const GroupPageComponent: FC = () => {
     setTab(newValue);
   };
 
-  if (isLoading) {
+  if (isLoadingUser) {
     return <AppLoadingSpinner />
+  }
+
+  if (user == null) {
+    return <span>User not found</span>
   }
 
   return (
@@ -44,8 +50,8 @@ const GroupPageComponent: FC = () => {
             </div>} />
         </Tabs>
       </Box>
-      <GroupPanel groups={groups} show={tab === 0}/>
-      <GroupPanel groups={groups.slice(0, groups.length - 2)} show={tab === 1}/>
+      <GroupPanel groups={user.owner} show={tab === 0}/>
+      <GroupPanel groups={[...user.co_owner, ...user.member]} show={tab === 1}/>
     </Box>
 
   )
