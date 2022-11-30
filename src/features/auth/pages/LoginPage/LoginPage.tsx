@@ -6,8 +6,13 @@ import { LockOutlined } from '@mui/icons-material';
 
 import { LoginForm } from '../../components/LoginForm';
 
+import { GoogleLogin } from '@react-oauth/google';
+
+import { AuthApi } from "src/api/services/auth-api"
+
 // Template from MUI docs: https://mui.com/getting-started/templates/
-const LoginPageComponent: FC = () => (
+const LoginPageComponent: FC = () => ( 
+
   <Container maxWidth="xs">
     <Box
       sx={{
@@ -25,6 +30,14 @@ const LoginPageComponent: FC = () => (
       </Typography>
       <LoginForm />
     </Box>
+    <GoogleLogin
+      onSuccess={credentialResponse => {
+        console.log(credentialResponse);
+      }}
+      onError={() => {
+        console.log('Login Failed');
+      }}
+    />
   </Container>
 );
 
