@@ -11,7 +11,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { AuthApi } from "src/api/services/auth-api"
 
 // Template from MUI docs: https://mui.com/getting-started/templates/
-const LoginPageComponent: FC = () => ( 
+const LoginPageComponent: FC = () => (
 
   <Container maxWidth="xs">
     <Box
@@ -30,6 +30,7 @@ const LoginPageComponent: FC = () => (
       </Typography>
       <LoginForm />
     </Box>
+    <div style={{display: 'flex', justifyContent: 'center'}}>
     <GoogleLogin
       onSuccess={credentialResponse => {
         console.log(credentialResponse);
@@ -37,7 +38,9 @@ const LoginPageComponent: FC = () => (
       onError={() => {
         console.log('Login Failed');
       }}
+      width="100%"
     />
+    </div>
   </Container>
 );
 

@@ -7,7 +7,8 @@ import { initialState, groupAdapter, State } from './state';
 export const groupsSlice = createSlice({
   name: 'groups',
   initialState,
-  reducers: {},
+  reducers: {
+  },
   extraReducers: builder => builder
     .addCase(GroupsActions.fetchGroups.pending, state => {
       state.error = undefined;

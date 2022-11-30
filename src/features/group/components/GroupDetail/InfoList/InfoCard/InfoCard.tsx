@@ -11,6 +11,11 @@ import { useAppDispatch, useAppSelector } from 'src/store';
 import { selectIsUserLoading, selectUser } from 'src/store/profile/selectors';
 import { UserActions } from 'src/store/profile/dispatchers';
 import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
+import { GroupApiService } from 'src/api/services/group-api';
+import { group } from 'console';
+import { useSnackbar } from 'notistack';
+import { GroupsActions } from 'src/store/groups/dispatchers';
+import { GroupDetailsActions } from 'src/store/groupDetails/dispatchers';
 
 interface Props {
     /** Owner */
@@ -27,18 +32,24 @@ interface Props {
 
     /** setCheckedListID */
     readonly setCheckedListID: any;
+
+    readonly groupId: string;
+
+    readonly disabled: boolean;
 }
 
 const InfoCardComponent: FC<Props> = ({
     userId,
     type,
     isSelecting,
-    checkedListID, setCheckedListID
+    groupId,
+    checkedListID, setCheckedListID, disabled
 }) => {
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const dispatch = useAppDispatch();
     const user = useAppSelector(state => selectUser(state, userId));
     const isLoadingUser = useAppSelector(selectIsUserLoading);
+    const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
         dispatch(UserActions.fetchUser(userId))
@@ -64,21 +75,21 @@ const InfoCardComponent: FC<Props> = ({
         }
     }
 
-    return ( 
+    return (
         <Paper elevation={2} className={style['card-container']}>
             {isSelecting && <Checkbox checked={checkedListID.includes(user.id)} onChange={() => handleChangeCheckBox()}/>}
             <Avatar alt="User Avatar" src={user.avatar} sx={{ width: 75, height: 75 }}/>
             <div className={style['card-content']}>
                 <div className={style['card-name']}>{user.firstName} {user.lastName}</div>
-                <div className={style['card-email']}>{user.email}</div>                
+                <div className={style['card-email']}>{user.email}</div>
             </div>
-            {!isSelecting && 
-            <Button variant="contained" className={style['card-btn']}
+            {!isSelecting &&
+            !disabled && <Button variant="contained" className={style['card-btn']}
                 onClick={(event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget)}>
                 <FontAwesomeIcon icon={faEllipsis} />
-            </Button>   
-            }  
-            <Popover 
+            </Button>
+            }
+            <Popover
                 id={id}
                 open={open}
                 anchorEl={anchorEl}
@@ -92,13 +103,46 @@ const InfoCardComponent: FC<Props> = ({
                     horizontal: 'left',
                 }}
             >
-                {type === 'member' && <MenuItem>Reassign role as co-owner</MenuItem>}
-                {type === 'co-owner' && <MenuItem>Reassign role as member</MenuItem>}
-                <MenuItem>Remove from the group</MenuItem>
+                {type === 'member' && <MenuItem
+                onClick={() => {
+                  GroupApiService.assignMemberToCoOwner(userId, groupId)
+                    .then(() => {
+                      dispatch(GroupDetailsActions.fetchGroupDetails(groupId))
+                      enqueueSnackbar('Assigned to co-owner successfully!', {variant: 'success'})
+                    })
+                    .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'success'}))
+                }}
+                >Reassign role as co-owner</MenuItem>}
+                {type === 'co-owner' && <MenuItem
+                  onClick={() => {
+                    GroupApiService.assignCoOwnerToMember(userId, groupId)
+                    .then(() => {
+                      dispatch(GroupDetailsActions.fetchGroupDetails(groupId))
+                      enqueueSnackbar('Assigned to member successfully!', {variant: 'success'})
+                    })
+                    .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'success'}))
+                  }}
+                >Reassign role as member</MenuItem>}
+                <MenuItem onClick={() => {
+                  if (type === 'member') {
+                    GroupApiService.removeMember(userId, groupId)
+                      .then(() => {
+                        dispatch(GroupDetailsActions.fetchGroupDetails(groupId))
+                        enqueueSnackbar('Remove member successfully!', {variant: 'success'})
+                      })
+                      .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'success'}))
+                  } else if (type === 'co-owner') {
+                    GroupApiService.removeCoOwner(userId, groupId)
+                      .then(() => {
+                        dispatch(GroupDetailsActions.fetchGroupDetails(groupId))
+                        enqueueSnackbar('Remove co owner successfully!', {variant: 'success'})
+                      })
+                      .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'success'}))
+                  }
+                }}>Remove from the group</MenuItem>
             </Popover>
-
         </Paper>
     );
 }
- 
+
 export const InfoCard = memo(InfoCardComponent);

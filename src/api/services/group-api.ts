@@ -38,4 +38,45 @@ export namespace GroupApiService {
     )
     return;
   }
+
+  export async function removeMember(memberId: string, groupId: string): Promise<void> {
+    return  await http.patch(
+      '/api/group/member/remove',
+      {
+        member_id: memberId,
+        groupId,
+      }
+    )
+  }
+
+  export async function removeCoOwner(coOwnerId: string, groupId: string): Promise<void> {
+    return  await http.patch(
+      '/api/group/co_owner/remove',
+      {
+        co_owner_id: coOwnerId,
+        groupId,
+      }
+    )
+  }
+
+  export async function assignMemberToCoOwner(memberId: string, groupId: string): Promise<void> {
+    return await http.patch(
+      '/api/group/member/toCoowner',
+      {
+        member_id: memberId,
+        groupId,
+      }
+    )
+  }
+
+  export async function assignCoOwnerToMember(coOwnerId: string, groupId: string): Promise<void> {
+    return await http.patch(
+      '/api/group/co_owner/toMember',
+      {
+        co_owner_id: coOwnerId,
+        groupId,
+      }
+    )
+  }
+
 }

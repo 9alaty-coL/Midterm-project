@@ -17,11 +17,17 @@ interface Props {
 
     /** Owner */
     readonly type: string;
+
+    readonly allowEdit: boolean;
+
+    readonly groupId: string;
 }
 
 const InfoListComponent: FC<Props> = ({
     list,
-    type
+    type,
+    allowEdit,
+    groupId,
 }) => {
     const [isOpenDeleting, setOpenDeleting] = useState<boolean>(false)
     const [checkedListID, setCheckedListID] = useState<string[]>([])
@@ -32,11 +38,11 @@ const InfoListComponent: FC<Props> = ({
         }
     }, [isOpenDeleting]);
 
-    return ( 
-        <Paper elevation={2} className={style['list-container']}> 
+    return (
+        <Paper elevation={2} className={style['list-container']}>
             <div className={style['list-header']}>
                 <div className={style['list-title']}>{type === 'member' ? "Members" : "Co-Owner"}</div>
-                {
+                {/* {
                     isOpenDeleting ?
                     <div className={style['list-btn-group']}>
                         <div className={style['btn-icon']}>Multiple removal</div>
@@ -44,22 +50,24 @@ const InfoListComponent: FC<Props> = ({
                         <Button variant="contained" onClick={() => setOpenDeleting(false)} color="error">Cancel</Button>
                     </div>
                     :
-                    <Button variant="contained" onClick={() => setOpenDeleting(true)}>
+                    <Button variant="contained" onClick={() => setOpenDeleting(true)} disabled={!allowEdit}>
                         <FontAwesomeIcon icon={faUserSlash} className={style['btn-icon']}/>
                     </Button>
-                }
+                } */}
             </div>
             <div className={style['list-body']}>
                 {
-                    list.map((member: User['id'], index: number) => 
-                        <InfoCard key={index} userId={member} type={type} isSelecting={isOpenDeleting}
+                  list.length > 0 ?
+                    list.map((member: User['id'], index: number) =>
+                        <InfoCard groupId={groupId} disabled={!allowEdit} key={index} userId={member} type={type} isSelecting={isOpenDeleting}
                             checkedListID={checkedListID} setCheckedListID={setCheckedListID}
                         />
                     )
+                    : 'Empty!'
                 }
-            </div>            
+            </div>
         </Paper>
     );
 }
- 
+
 export const InfoList = memo(InfoListComponent);

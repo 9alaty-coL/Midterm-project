@@ -14,7 +14,7 @@ export const groupDetailsSlice = createSlice({
       state.isLoading = true;
     })
     .addCase(GroupDetailsActions.fetchGroupDetails.fulfilled, (state, action) => {
-      groupDetailAdapter.addOne(state as State, action.payload)
+      groupDetailAdapter.setAll(state as State, [action.payload])
       state.error = undefined;
       state.isLoading = false;
     })
