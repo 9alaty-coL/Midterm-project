@@ -27,6 +27,25 @@ export namespace AuthActions {
     }
   });
 
+  export const loginGoogle = createAsyncThunk<
+    Token,
+    string,
+    {
+      rejectValue: AxiosError;
+    }
+  >('auth/login', async (credential: string, { rejectWithValue }) => {
+    try {
+      const token = await AuthApi.googleLogin(credential);
+      LocalStorageService.setLocalStorage(token.accessToken);
+      return token;
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error);
+      }
+      throw error;
+    }
+  });
+
   export const register = createAsyncThunk<
   void,
   RegisterFormValue,

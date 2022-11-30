@@ -27,11 +27,11 @@ export namespace AuthApi {
     return tokenMapper.fromDto(tokenDto);
   }
 
-  export async function googleLogin(token: string): Promise<Token> {
+  export async function googleLogin(credential: string): Promise<Token> {
     const { data } = await http.post(
       LOGIN_GOOGLE_ROUTE,
-      token
-    )
+      { credential }
+    );
 
     const { data: tokenDto } = data;
     return tokenMapper.fromDto(tokenDto);
@@ -54,7 +54,7 @@ export namespace AuthApi {
     );
 
     const { message } = data;
-    return message;    
+    return message;
   }
 
   /** Logs the current user out. */
