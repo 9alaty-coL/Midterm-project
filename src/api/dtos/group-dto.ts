@@ -12,8 +12,8 @@ export interface GroupDto {
   readonly image: string;
 
   /** Co-owner id. */
-  readonly co_owner_id: readonly string[];
+  readonly co_owner_id: string[];
 
   /** Member id. */
-  readonly member_id: readonly string[];
+  readonly member_id: string[];
 }

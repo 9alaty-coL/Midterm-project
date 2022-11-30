@@ -6,6 +6,8 @@ export const UserAdapter = createEntityAdapter<User>();
 /** User state. */
 export interface UserState {
 
+  readonly profile: User | null;
+
   /** Error. */
   readonly error?: string;
 
@@ -14,6 +16,7 @@ export interface UserState {
 }
 
 export const initialState = UserAdapter.getInitialState<UserState>({
+  profile: null,
   isLoading: false,
 })
 

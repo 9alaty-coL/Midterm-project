@@ -7,12 +7,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUserSlash } from "@fortawesome/free-solid-svg-icons"
 
 import { useState, useEffect } from "react"
+import { UserApiService } from 'src/api/services/user-api';
+import { useParams } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+import { AxiosError } from 'axios';
 
 const InviteEmailComponent: FC = () => {
     const [email, setMail] = useState<string>("")
 
     const [isOpenSnackbar, setOpenSnackbar] = useState<boolean>(false)
     const [isValidEmail, setValidEmail] = useState<boolean>(true)
+    const { enqueueSnackbar } = useSnackbar()
+    const params = useParams()
 
     return (
         <>
@@ -25,7 +31,24 @@ const InviteEmailComponent: FC = () => {
                     value={email} onChange={(event: any) => setMail(event.target.value)}
                 />    
                 <Divider sx={{ height: 30, m: 0.5 }} orientation="vertical" />
-                <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
+                <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions"
+                    onClick={() => {
+                        if (email == null || email == '') {
+                            enqueueSnackbar('Invalid email', {variant: 'error'})
+                            return;
+                        }
+
+                        UserApiService.sendInvitation(email, params.groupId ?? '').then(() => {
+                            enqueueSnackbar('Send invitation successfully (Remember to check your spam)', {variant: 'success'})
+                        }).catch((error) => {
+                            console.log(error)
+                            if (error instanceof AxiosError) {
+                                enqueueSnackbar(error.response?.data.message, {variant: 'error'})
+                            }
+                        })
+
+                    }}
+                >
                     <ForwardToInboxIcon fontSize="large"/>
                 </IconButton>                
             </Paper>

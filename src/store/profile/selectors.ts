@@ -21,3 +21,8 @@ export const selectUserError = createSelector(
   (state: RootState) => state.user.error,
   error => error,
 )
+
+export const selectProfile = createSelector(
+  (state: RootState) => state.user.profile,
+  profile => profile,
+)

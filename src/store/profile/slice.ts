@@ -22,4 +22,17 @@ export const userSlice = createSlice({
       state.error = 'Problem happened!',
       state.isLoading = false;
     })
+    .addCase(UserActions.fetchProfile.pending, state => {
+      state.error = undefined;
+      state.isLoading = true;
+    })
+    .addCase(UserActions.fetchProfile.fulfilled, (state, action) => {
+      state.profile = action.payload;
+      state.error = undefined;
+      state.isLoading = false;
+    })
+    .addCase(UserActions.fetchProfile.rejected, state => {
+      state.error = 'Problem happened!',
+      state.isLoading = false;
+    })
 });

@@ -9,6 +9,7 @@ import { Group as GroupItem } from 'src/models/group';
 import style from './GroupCreate.module.css';
 
 import { useNavigate, NavigateFunction } from "react-router-dom"
+import { GroupApiService } from 'src/api/services/group-api';
 
 const CreateGroupComponent: FC = () => {
   const [group, setGroup] = useState<any>({name: "", image: ""})
@@ -17,9 +18,9 @@ const CreateGroupComponent: FC = () => {
 
   const submitHandler = (event: any) => {
     event.preventDefault();
-
-    console.log(group)
-    //navigate('/group/:id')
+    GroupApiService.createGroup(group.name).then(() => {
+      navigate('/group')
+    });
   }
 
   return (
@@ -31,7 +32,7 @@ const CreateGroupComponent: FC = () => {
           value={group.name} onChange={(event: any) => setGroup({...group, name: event.target.value})}
           required/>
       </div>
-      <div className={style['group-create-formrow']}>
+      {/* <div className={style['group-create-formrow']}>
         <span className={style['group-create-formrow-label']}>Group avatar: </span>
         <TextField
           name="upload-photo"
@@ -40,7 +41,7 @@ const CreateGroupComponent: FC = () => {
           onChange={(event: any) => setGroup({...group, image: event.target.files[0]})}
           // value={group.image} onChange={(event: any) => console.log(event.target.files[0])}
         />        
-      </div>
+      </div> */}
       <div className={style['group-create-btn-group']}>
         <Button variant="contained" color="error" onClick={() => navigate("/group")} sx={{width: 100}}>Cancel</Button>
         <Button variant="contained" type="submit" sx={{width: 100}}>Confirm</Button>

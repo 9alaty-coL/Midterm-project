@@ -12,8 +12,8 @@ export interface Group {
   readonly ownerId: string;
 
   /** Co-owner id. */
-  readonly coOwnerId: readonly string[];
+  readonly coOwnerId: string[];
 
   /** Member id. */
-  readonly memberId: readonly string[];
+  readonly memberId: string[];
 }

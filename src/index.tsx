@@ -12,14 +12,12 @@ if (rootElement === null) {
 }
 
 ReactDOM.createRoot(rootElement).render(
-  <StrictMode>
     <SnackbarProvider
       maxSnack={3}
       action={key => <CloseSnackbarAction id={key} />}
     >
       <App />
     </SnackbarProvider>
-  </StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function
