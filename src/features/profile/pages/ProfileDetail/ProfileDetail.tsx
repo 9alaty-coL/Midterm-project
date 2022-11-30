@@ -22,10 +22,12 @@ const ProfileDetailComponent: FC<Props> = ({
 }) => {
     const [newProfile, setNewProfile] = useState({...profile});
     const [isEditable, setIsEditable] = useState(false)
+    const dispatch = useAppDispatch();
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
         console.log(newProfile)
+        dispatch(UserActions.updateProfile(newProfile))
     }
 
     return (

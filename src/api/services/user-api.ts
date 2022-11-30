@@ -1,8 +1,10 @@
+import { UpdateAccount } from 'src/models/account';
 import { User } from 'src/models/user';
 
 import { http } from '..';
 import { IData } from '../dtos/data-dto';
 import { UserDto } from '../dtos/user-dto';
+import { accountMapper } from '../mappers/account.mapper';
 import { userMapper } from '../mappers/user.mapper';
 
 const USER_ROUTE = '/api/user';
@@ -32,5 +34,14 @@ export namespace UserApiService {
       throw(error)
     }
 
+  }
+
+  export async function updateUserInfo(userId: User['id'], accountData: UpdateAccount): Promise<User> {
+    const { data } = await http.put<IData<{ updatedUser: UserDto}>>('/api/user/updateInfo', 
+    {
+      userId: userId,
+      ...accountMapper.toUpdateAccountDto(accountData),
+    });
+    return userMapper.fromDto(data.data.updatedUser);
   }
 }

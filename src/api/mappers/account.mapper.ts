@@ -1,5 +1,5 @@
-import { Account, RegisterAccount } from 'src/models/account';
-import { AccountDto, RegisterAccountDto } from '../dtos/account-dto';
+import { Account, RegisterAccount, UpdateAccount } from 'src/models/account';
+import { AccountDto, RegisterAccountDto, UpdateAccountDto } from '../dtos/account-dto';
 import { IMapperToDto } from './mappers';
 
 class AccountMapper implements IMapperToDto<AccountDto, Account> {
@@ -28,6 +28,15 @@ class AccountMapper implements IMapperToDto<AccountDto, Account> {
       yearOfBirth: data.yearOfBirth,
       firstName: data.firstname,
       lastName: data.lastname,
+      address: data.address,
+    }
+  }
+
+  public toUpdateAccountDto(data: UpdateAccount): UpdateAccountDto {
+    return {
+      firstname: data.firstName,
+      lastname: data.lastName,
+      yearOfBirth: data.yearOfBirth,
       address: data.address,
     }
   }

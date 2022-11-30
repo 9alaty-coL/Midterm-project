@@ -13,3 +13,11 @@ export interface RegisterAccount extends Account {
   readonly yearOfBirth: number;
   readonly address: string;
 }
+
+export interface UpdateAccount {
+  readonly id: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly yearOfBirth: number;
+  readonly address: string;
+}

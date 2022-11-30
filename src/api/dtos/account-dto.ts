@@ -15,3 +15,10 @@ export interface RegisterAccountDto extends AccountDto {
   readonly yearOfBirth: number;
   readonly address: string;
 }
+
+export interface UpdateAccountDto {
+  readonly firstname: string;
+  readonly lastname: string;
+  readonly yearOfBirth: number;
+  readonly address: string;
+}

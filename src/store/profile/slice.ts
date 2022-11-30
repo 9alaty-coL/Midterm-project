@@ -35,4 +35,17 @@ export const userSlice = createSlice({
       state.error = 'Problem happened!',
       state.isLoading = false;
     })
+    .addCase(UserActions.updateProfile.pending, state => {
+      state.error = undefined;
+      state.isLoading = true;
+    })
+    .addCase(UserActions.updateProfile.fulfilled, (state, action) => {
+      state.profile = action.payload;
+      state.error = undefined;
+      state.isLoading = false;
+    })
+    .addCase(UserActions.updateProfile.rejected, state => {
+      state.error = 'Problem happened!',
+      state.isLoading = false;
+    })
 });
