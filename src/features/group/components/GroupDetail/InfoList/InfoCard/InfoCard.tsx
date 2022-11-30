@@ -105,7 +105,7 @@ const InfoCardComponent: FC<Props> = ({
                     horizontal: 'left',
                 }}
             >
-                {type === 'member' && <MenuItem
+                {type === 'member' && !disabledReAssign  && <MenuItem
                 onClick={() => {
                   GroupApiService.assignMemberToCoOwner(userId, groupId)
                     .then(() => {
