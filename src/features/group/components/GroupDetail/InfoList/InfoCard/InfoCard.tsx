@@ -60,7 +60,7 @@ const InfoCardComponent: FC<Props> = ({
     }
 
     if (user == null) {
-        return <span>User not found</span>
+        return <AppLoadingSpinner />
     }
 
     const open = Boolean(anchorEl);
