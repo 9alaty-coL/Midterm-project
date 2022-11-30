@@ -36,6 +36,8 @@ interface Props {
     readonly groupId: string;
 
     readonly disabled: boolean;
+
+    readonly disabledReAssign: boolean;
 }
 
 const InfoCardComponent: FC<Props> = ({
@@ -43,7 +45,7 @@ const InfoCardComponent: FC<Props> = ({
     type,
     isSelecting,
     groupId,
-    checkedListID, setCheckedListID, disabled
+    checkedListID, setCheckedListID, disabled, disabledReAssign,
 }) => {
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const dispatch = useAppDispatch();
@@ -60,7 +62,7 @@ const InfoCardComponent: FC<Props> = ({
     }
 
     if (user == null) {
-        return <span>User not found</span>
+        return <AppLoadingSpinner />
     }
 
     const open = Boolean(anchorEl);
@@ -103,7 +105,7 @@ const InfoCardComponent: FC<Props> = ({
                     horizontal: 'left',
                 }}
             >
-                {type === 'member' && <MenuItem
+                {type === 'member' && !disabledReAssign  && <MenuItem
                 onClick={() => {
                   GroupApiService.assignMemberToCoOwner(userId, groupId)
                     .then(() => {
@@ -113,7 +115,7 @@ const InfoCardComponent: FC<Props> = ({
                     .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'success'}))
                 }}
                 >Reassign role as co-owner</MenuItem>}
-                {type === 'co-owner' && <MenuItem
+                {type === 'co-owner' && !disabledReAssign && <MenuItem
                   onClick={() => {
                     GroupApiService.assignCoOwnerToMember(userId, groupId)
                     .then(() => {

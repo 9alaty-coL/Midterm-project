@@ -35,7 +35,7 @@ const GroupPageComponent: FC = () => {
   }
 
   if (user == null) {
-    return <span>User not found</span>
+    return <AppLoadingSpinner />
   }
 
   return (
