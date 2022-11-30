@@ -73,6 +73,17 @@ const AppHeaderComponent: FC = () => {
         >
           Group
         </Link>
+        <Link
+          sx={{ marginLeft: 2 }}
+          component={RouterLink}
+          to="/profile"
+          variant="h5"
+          color="inherit"
+          underline="none"
+          noWrap
+        >
+          Profile
+        </Link>
         <div />
         <Box sx={{ flexGrow: 1 }} />
         {rightSection}
