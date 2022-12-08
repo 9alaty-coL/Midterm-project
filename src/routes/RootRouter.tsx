@@ -5,6 +5,8 @@ import { authRoutes } from 'src/features/auth/routes';
 import { homeRoutes } from 'src/features/home/routes';
 import { groupRoutes } from 'src/features/group/routes';
 import { profileRoutes } from 'src/features/profile/routes';
+import { presentationRoutes } from 'src/features/presentation/routes';
+import { viewRoutes } from 'src/features/view/routes'
 
 const routes: RouteObject[] = [
   {
@@ -16,6 +18,8 @@ const routes: RouteObject[] = [
   ...postsRoutes,
   ...groupRoutes,
   ...profileRoutes,
+  ...presentationRoutes,
+  ...viewRoutes
 ];
 
 export const RootRouter: FC = () => useRoutes(routes);
