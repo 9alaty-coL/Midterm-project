@@ -14,7 +14,7 @@ const HomePageComponent: FC = () => {
       <h1 className={style['home-title']}>Home page</h1>
       <div className={style['home-btn-wrapper']}>
         <Paper elevation={2} className={style['home-card']} onClick={() => navigate("/presentation")}>
-          <span>Presentations</span>
+          <span>Presents</span>
           <FontAwesomeIcon icon={faNewspaper} />
         </Paper>
         <Paper elevation={2} className={style['home-card']} onClick={() => navigate("/group")}>
