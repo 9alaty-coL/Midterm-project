@@ -1,0 +1,8 @@
+.edit-container {
+    width: 30vw;
+
+    background-color: white;
+
+    overflow: scroll;
+    overflow-x: hidden;
+}

@@ -26,6 +26,10 @@
     font-weight: bold;
 }
 
+.card-tittle:hover {
+    cursor: pointer;
+}
+
 .card-text {
     font-size: 25px;
 }

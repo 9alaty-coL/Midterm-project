@@ -1,7 +1,7 @@
 import { FC, memo, useEffect } from 'react';
 import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
-import { PresentationCard } from '../components/PresentationCard/PresentationCard'
-import { NewCard } from '../components/NewCard/NewCard'
+import { PresentationCard } from '../../components/PresentationPage/PresentationCard/PresentationCard'
+import { NewCard } from '../../components/PresentationPage/NewCard/NewCard'
 
 import style from "./PresentationPage.module.css";
 
@@ -22,11 +22,9 @@ const PresentationPageComponent: FC = () => {
         return <h1>Presentation not found</h1>
     }
 
-
-    console.log(presentations)
     return (
         <div className={style['presentation-container']}>
-            <NewCard totalPresentation={presentations.length} />
+            <NewCard totalPresentation={presentations.length} type="public"/>
             {
                 presentations.map((each: any, index: number) => <PresentationCard key={index} presentation={each}/>)
             }

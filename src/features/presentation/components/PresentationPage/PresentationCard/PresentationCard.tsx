@@ -4,10 +4,12 @@ import style from "./PresentationCard.module.css"
 import { Paper, Divider, IconButton } from "@mui/material"
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
+import { useNavigate } from "react-router-dom"
+
 const PresentationCardComponent: FC<any> = ({
     presentation
 }) => {
-    console.log(presentation.slides)
+    const navigate = useNavigate();
 
     const countVoted: any = () => {
         return presentation.slides.reduce(
@@ -17,11 +19,12 @@ const PresentationCardComponent: FC<any> = ({
         , 0);
     }
 
-    //className={style['']}
     return (
         <Paper elevation={2} className={style['card-container']}>
             <div className={style['info-wrapper']}>
-                <span className={style['card-tittle']}>{presentation.name}</span>
+                <span className={style['card-tittle']} onClick={() => navigate('/presentation/edit/' + presentation.id)}>
+                    {presentation.name}
+                </span>
                 <span className={style['card-text']}>{presentation.slides.length} slides</span>
             </div>
             <Divider orientation="vertical" flexItem />
@@ -29,7 +32,7 @@ const PresentationCardComponent: FC<any> = ({
                 <span className={style['card-vote-text']}><b>{countVoted()}</b> voted</span>
             </div>
             <Divider orientation="vertical" flexItem />
-            <IconButton>
+            <IconButton onClick={() => console.log("public presentation " + presentation.name)}>
                 <PlayCircleOutlineIcon sx={{fontSize: 50}}/>
             </IconButton>
         </Paper>

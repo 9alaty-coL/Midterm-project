@@ -1,0 +1,8 @@
+.list-container {
+    width: 16.5vw;
+
+    background-color: white;
+
+    overflow: scroll;
+    overflow-x: hidden;
+}

@@ -1,0 +1,27 @@
+.detail-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+    width: 100vw;
+    height: 100vh;
+
+    position: fixed !important;
+    margin: 0 !important;
+    top: 65px;
+    left: 0;
+    background-color: #e7e8eb;
+}
+
+.detail-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    gap: 0;
+    
+    width: 100vw;
+    flex-flow: row;
+    height: 84vh;
+}

@@ -269,7 +269,7 @@ export namespace PresentationApiService {
 
   export async function getPresentationById(id: string): Promise<any> {
     // const { data } = await http.get<IData<ListGroupDto>>(GROUP_ROUTE);
-    return mocks[parseInt(id)]
+    return mocks.filter((mock:any) => mock.id === parseInt(id))[0]
   }
 
   export async function addPresentation(): Promise<any[]> {

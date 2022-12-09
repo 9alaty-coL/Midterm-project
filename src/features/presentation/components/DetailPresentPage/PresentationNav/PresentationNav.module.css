@@ -1,0 +1,48 @@
+.nav-container {
+    height: 50px;
+    border-bottom: 2px solid #d2d2d2;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100vw;
+
+    background-color: white;
+
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.nav-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-text {
+    font-size: 30px;
+}
+
+.nav-input {
+    font-size: 30px;
+    width: 30vw;
+}
+
+.nav-input-error {
+    font-size: 30px;
+    width: 30vw;
+    border-color: red;
+}
+
+.nav-input-error:focus {
+    border-color: red;
+}
