@@ -8,6 +8,8 @@ const ListSlideComponent: FC<any> = ({
     presentation,
     listControl,
 }) => {
+    console.log(presentation)
+
     return (
         <div className={style['list-container']}>
             {

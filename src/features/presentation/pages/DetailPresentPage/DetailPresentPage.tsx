@@ -43,6 +43,7 @@ const DetailPresentPageComponent: FC = () => {
 
     if (presentation.current === -1) {
         setPresentation(data)
+        console.log(data)
     }
 
     const addSlide = () => {

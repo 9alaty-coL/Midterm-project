@@ -264,11 +264,12 @@ const mocks: any = [
 export namespace PresentationApiService {
   export async function getPresentations(): Promise<any[]> {
     // const { data } = await http.get<IData<ListGroupDto>>(GROUP_ROUTE);
+    console.log("getPresentations")
     return mocks
   }
 
   export async function getPresentationById(id: string): Promise<any> {
-    // const { data } = await http.get<IData<ListGroupDto>>(GROUP_ROUTE);
+    console.log("getPresentationById")
     return mocks.filter((mock:any) => mock.id === parseInt(id))[0]
   }
 
