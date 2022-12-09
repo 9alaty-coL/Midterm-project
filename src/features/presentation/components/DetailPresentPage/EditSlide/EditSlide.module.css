@@ -6,3 +6,52 @@
     overflow: scroll;
     overflow-x: hidden;
 }
+
+.edit-wrapper {
+    padding: 15px 25px 0 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.edit-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.edit-btn-container {
+    padding: 15px 25px 0 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.edit-btn-wrapper {
+    display: grid;
+    grid-template-columns: 8vw 8vw 8vw;
+    grid-gap: 0.5vw;
+}
+
+.edit-btn {
+    width: 8vw;
+    height: 8vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    background-color: white;
+    border: 1px solid #b7bac2;
+    border-radius: 10px;
+}
+
+.edit-btn:hover {
+    cursor: pointer;
+    border: 2px solid #75a7ff;
+}
+
+.edit-btn-text {
+    font-size: 20px;
+}
