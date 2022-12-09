@@ -61,7 +61,7 @@ const mocks: any = [
                 answers: [
                     {answer: 'Orange', count: 3},
                     {answer: 'Blue', count: 2},
-                    {answer: 'Purple', count: 0},
+                    {answer: 'Purple', count: 1},
                     {answer: 'Yellow', count: 5}
                 ],
             },
@@ -79,7 +79,7 @@ const mocks: any = [
                     {answer: 'Italy', count: 2},
                     {answer: 'China', count: 2},
                     {answer: 'New Zealand', count: 0},
-                    {answer: 'USA', count: 5},
+                    {answer: 'USA', count: 2},
                     {answer: 'Japan', count: 4}
                 ],
             },
@@ -129,7 +129,7 @@ const mocks: any = [
                 question: 'What country is the largest producer of kiwi fruit?',
                 answers: [
                     {answer: 'Italy', count: 2},
-                    {answer: 'China', count: 2},
+                    {answer: 'China', count: 4},
                     {answer: 'New Zealand', count: 0},
                     {answer: 'USA', count: 5},
                     {answer: 'Japan', count: 4}
@@ -141,7 +141,7 @@ const mocks: any = [
                     {answer: 'Orange', count: 3},
                     {answer: 'Blue', count: 2},
                     {answer: 'Purple', count: 0},
-                    {answer: 'Yellow', count: 5}
+                    {answer: 'Yellow', count: 4}
                 ],
             },
             {
@@ -172,9 +172,9 @@ const mocks: any = [
             {
                 question: 'Where does the Rambutan come from?',
                 answers: [
-                    {answer: 'Europe', count: 3},
-                    {answer: 'Africa', count: 2},
-                    {answer: 'Asia', count: 2}
+                    {answer: 'Europe', count: 0},
+                    {answer: 'Africa', count: 0},
+                    {answer: 'Asia', count: 0}
                 ],
             },
             {
@@ -215,7 +215,7 @@ const mocks: any = [
             {
                 question: 'What colour is the Mangosteen?',
                 answers: [
-                    {answer: 'Orange', count: 3},
+                    {answer: 'Orange', count: 13},
                     {answer: 'Blue', count: 2},
                     {answer: 'Purple', count: 0},
                     {answer: 'Yellow', count: 5}
@@ -226,7 +226,7 @@ const mocks: any = [
                 answers: [
                     {answer: 'Europe', count: 3},
                     {answer: 'Africa', count: 2},
-                    {answer: 'Asia', count: 2}
+                    {answer: 'Asia', count: 12}
                 ],
             },
             {
@@ -236,7 +236,7 @@ const mocks: any = [
                     {answer: 'China', count: 2},
                     {answer: 'New Zealand', count: 0},
                     {answer: 'USA', count: 5},
-                    {answer: 'Japan', count: 4}
+                    {answer: 'Japan', count: 14}
                 ],
             },
             {
@@ -252,7 +252,7 @@ const mocks: any = [
                 question: 'What is the most consumed fruit in the world?',
                 answers: [
                     {answer: 'Apple', count: 1},
-                    {answer: 'Banana', count: 2},
+                    {answer: 'Banana', count: 12},
                     {answer: 'Peach', count: 2},
                     {answer: 'Pear', count: 1}
                 ],

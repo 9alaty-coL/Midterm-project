@@ -1,0 +1,35 @@
+.card-container {
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+}
+
+.vote-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 20%;
+}
+
+.card-tittle {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 25px;
+}
+
+.card-vote-text {
+    font-size: 30px;
+}
