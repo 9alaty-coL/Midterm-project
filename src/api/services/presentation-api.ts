@@ -1,6 +1,8 @@
-const mocks: any = [
+import { Presentation } from 'src/models/presentation'
+
+const mocks: Presentation[] = [
     {
-        id: 1,
+        id: '1',
         name: 'Presentation about fruit',
         current: 1,
         slides: [
@@ -10,7 +12,7 @@ const mocks: any = [
                     {answer: 'Orange', count: 3},
                     {answer: 'Blue', count: 2},
                     {answer: 'Purple', count: 0},
-                    {answer: 'Yellow', count: 5}
+                    {answer: 'Yellow', count: 5},
                 ],
             },
             {
@@ -18,7 +20,7 @@ const mocks: any = [
                 answers: [
                     {answer: 'Europe', count: 3},
                     {answer: 'Africa', count: 2},
-                    {answer: 'Asia', count: 2}
+                    {answer: 'Asia', count: 2},
                 ],
             },
             {
@@ -52,7 +54,7 @@ const mocks: any = [
         ]
     },
     {
-        id: 2,
+        id: '2',
         name: 'Presentation about fruit 2',
         current: 1,
         slides: [
@@ -104,7 +106,7 @@ const mocks: any = [
         ]
     },
     {
-        id: 3,
+        id: '3',
         name: 'Presentation about fruit 3333',
         current: 1,
         slides: [
@@ -156,7 +158,7 @@ const mocks: any = [
         ]
     },
     {
-        id: 4,
+        id: '4',
         name: 'Presentation 44444444444444 fruit',
         current: 1,
         slides: [
@@ -208,7 +210,7 @@ const mocks: any = [
         ]
     },
     {
-        id: 5,
+        id: '5',
         name: 'Presentation 5? fruit',
         current: 1,
         slides: [
@@ -268,7 +270,7 @@ export namespace PresentationApiService {
   }
 
   export async function getPresentationById(id: string): Promise<any> {
-    return mocks.filter((mock:any) => mock.id === parseInt(id))[0]
+    return mocks.filter((mock:any) => mock.id === id)[0]
   }
 
   export async function addPresentation(): Promise<any[]> {

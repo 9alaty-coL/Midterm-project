@@ -12,6 +12,7 @@ import { Slide } from '../../components/DetailPresentPage/Slide/Slide';
 
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom'
+import { Presentation } from 'src/models/presentation';
 
 const DetailPresentPageComponent: FC = () => {
     const { id } = useParams()
@@ -22,7 +23,7 @@ const DetailPresentPageComponent: FC = () => {
             current: 1,
             slides: []
         }}:
-        useQuery<any>('getPresentations', () => PresentationApiService.getPresentationById(id!))
+        useQuery<Presentation>('getPresentationDetails', () => PresentationApiService.getPresentationById(id!))
     )
 
     const [presentation, setPresentation] = useState<any>({

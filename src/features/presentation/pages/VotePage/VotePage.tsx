@@ -1,0 +1,51 @@
+import { FormControl, FormLabel, FormControlLabel, Radio, RadioGroup, Button } from '@mui/material';
+import { FC, memo, useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
+import { PresentationApiService } from 'src/api/services/presentation-api';
+import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
+import { Presentation } from 'src/models/presentation';
+import { io } from 'socket.io-client';
+
+import styles from "./VotePage.module.css";
+import { Socket } from 'socket.io-client/build/esm/socket';
+
+const VotePageComponent: FC = () => {
+  const { id } = useParams();
+  const data = useQuery<Presentation>('getPresentationJoin', PresentationApiService.getPresentationById.bind(null, id!))
+  const [socket, setSocket] = useState<Socket>();
+
+  useEffect(() => {
+    // setSocket(io('https://dnlearning-socket-server.vercel.app/'))
+  }, [])
+
+  const { data: detail } = data;
+  
+  useEffect(() => {
+    socket?.emit("AddStudent", id)
+  }, [socket])
+
+  if (data.isLoading) {
+    return <AppLoadingSpinner />;
+  }
+  
+  if (data.isError || detail == null) {
+    return <h1>Presentation not found</h1>
+  }
+
+  const slide = detail.slides[detail.current];
+
+  return <div className={styles['presentation']}>
+    <div className={styles['presentation__name']}>{detail.name}</div>
+    <FormControl>
+      <FormLabel className={styles['presentation__question']} id="demo-radio-buttons-group-label">{slide.question}</FormLabel>
+      <RadioGroup className={styles['presentation__options']}>
+        {slide.answers.map((option, index) => 
+        <FormControlLabel className={styles['presentation__option']} key={index} value={option.answer} control={<Radio />} label={option.answer} />)}
+      </RadioGroup>
+      <Button className={styles['presentation__button']} type='submit' variant='contained'>Submit</Button>
+    </FormControl>
+  </div>
+}
+
+export const VotePage = memo(VotePageComponent);

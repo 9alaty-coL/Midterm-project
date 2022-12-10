@@ -1,0 +1,39 @@
+.presentation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.presentation__name {
+  font-size: 35px;
+  margin: 20px;
+}
+
+.presentation__question {
+  font-size: 20px !important;
+  margin: 10px;
+}
+
+.presentation__options {
+  display: flex !important;
+  flex-direction: column  !important;
+  flex-wrap: nowrap  !important;
+  max-height: 300px  !important;
+  overflow-y: scroll  !important;
+}
+
+.presentation__option {
+  display: block;
+  transition: all ease-out 0.2s;
+  padding: 10px 10px;
+  border-radius: 10px;
+  margin: 0 !important;
+}
+
+.presentation__option:hover {
+  background-color: #eee;
+}
+
+.presentation__button {
+  margin-block-start: 20px !important;
+}

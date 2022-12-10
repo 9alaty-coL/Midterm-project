@@ -8,9 +8,10 @@ import style from "./PresentationPage.module.css";
 import { PresentationApiService } from 'src/api/services/presentation-api'
 
 import { useQuery } from 'react-query';
+import { Presentation } from 'src/models/presentation';
 
 const PresentationPageComponent: FC = () => {
-    const { isLoading, isError, data: presentations } = useQuery<any>('getPresentations', PresentationApiService.getPresentations)
+    const { isLoading, isError, data: presentations } = useQuery<Presentation[]>('getPresentations', PresentationApiService.getPresentations)
 
     console.log({ isLoading, isError, presentations })
 
@@ -18,7 +19,7 @@ const PresentationPageComponent: FC = () => {
         return <AppLoadingSpinner />
     }
 
-    if (isError) {
+    if (isError || presentations == null) {
         return <h1>Presentation not found</h1>
     }
 
