@@ -1,8 +1,8 @@
-import { Slide } from 'src/api/services/slide';
+import { Slide } from 'src/models/slide';
 
 export interface Presentation {
   readonly id: string;
   readonly name: string;
-  readonly current: number;
-  readonly slides: readonly Slide[];
+  readonly current: Slide['id'];
+  readonly slides: Slide[];
 }

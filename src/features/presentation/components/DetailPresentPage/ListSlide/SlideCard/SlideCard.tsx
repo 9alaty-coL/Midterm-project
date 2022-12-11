@@ -21,7 +21,7 @@ const SlideCardComponent: FC<any> = ({
                 <div className={style['index-play']}>
                     <span>{index}</span>
                     <PlayArrowIcon sx={{fontSize: 20, color: "#1a6cff"}} 
-                        style={currentPresent === index ? {visibility: "visible"} : {visibility: "hidden"}}
+                        style={currentPresent === slide.id ? {visibility: "visible"} : {visibility: "hidden"}}
                     />                    
                 </div>
                 <HighlightOffIcon sx={{fontSize: 20, color: "black"}} className={style['index-delete']}

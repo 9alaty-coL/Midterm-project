@@ -19,7 +19,7 @@
   flex-direction: column  !important;
   flex-wrap: nowrap  !important;
   max-height: 300px  !important;
-  overflow-y: scroll  !important;
+  overflow-y: auto  !important;
 }
 
 .presentation__option {

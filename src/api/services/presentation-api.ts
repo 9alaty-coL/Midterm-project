@@ -4,9 +4,10 @@ const mocks: Presentation[] = [
     {
         id: '1',
         name: 'Presentation about fruit',
-        current: 1,
+        current: '1',
         slides: [
             {
+                id: '1',
                 question: 'What colour is the Mangosteen?',
                 answers: [
                     {answer: 'Orange', count: 3},
@@ -16,6 +17,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '2',
                 question: 'Where does the Rambutan come from?',
                 answers: [
                     {answer: 'Europe', count: 3},
@@ -24,6 +26,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '3',
                 question: 'What country is the largest producer of kiwi fruit?',
                 answers: [
                     {answer: 'Italy', count: 2},
@@ -34,6 +37,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '4',
                 question: 'What colour is the Mangosteen?',
                 answers: [
                     {answer: 'Orange', count: 3},
@@ -43,6 +47,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '5',
                 question: 'What is the most consumed fruit in the world?',
                 answers: [
                     {answer: 'Apple', count: 1},
@@ -56,9 +61,10 @@ const mocks: Presentation[] = [
     {
         id: '2',
         name: 'Presentation about fruit 2',
-        current: 1,
+        current: '7',
         slides: [
             {
+                id: '6',
                 question: 'What colour is the Mangosteen?',
                 answers: [
                     {answer: 'Orange', count: 3},
@@ -68,6 +74,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '7',
                 question: 'Where does the Rambutan come from?',
                 answers: [
                     {answer: 'Europe', count: 3},
@@ -76,6 +83,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '8',
                 question: 'What country is the largest producer of kiwi fruit?',
                 answers: [
                     {answer: 'Italy', count: 2},
@@ -86,6 +94,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '9',
                 question: 'What colour is the Mangosteen?',
                 answers: [
                     {answer: 'Orange', count: 3},
@@ -95,6 +104,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '11',
                 question: 'What is the most consumed fruit in the world?',
                 answers: [
                     {answer: 'Apple', count: 1},
@@ -108,9 +118,10 @@ const mocks: Presentation[] = [
     {
         id: '3',
         name: 'Presentation about fruit 3333',
-        current: 1,
+        current: '44',
         slides: [
             {
+                id: '21',
                 question: 'What colour is the Mangosteen?',
                 answers: [
                     {answer: 'Orange', count: 3},
@@ -120,6 +131,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '13',
                 question: 'Where does the Rambutan come from?',
                 answers: [
                     {answer: 'Europe', count: 3},
@@ -128,6 +140,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '44',
                 question: 'What country is the largest producer of kiwi fruit?',
                 answers: [
                     {answer: 'Italy', count: 2},
@@ -138,6 +151,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '55',
                 question: 'What colour is the Mangosteen?',
                 answers: [
                     {answer: 'Orange', count: 3},
@@ -147,6 +161,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '66',
                 question: 'What is the most consumed fruit in the world?',
                 answers: [
                     {answer: 'Apple', count: 1},
@@ -160,9 +175,10 @@ const mocks: Presentation[] = [
     {
         id: '4',
         name: 'Presentation 44444444444444 fruit',
-        current: 1,
+        current: '222',
         slides: [
             {
+                id: '77',
                 question: 'What colour is the Mangosteen?',
                 answers: [
                     {answer: 'Orange', count: 3},
@@ -172,6 +188,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '88',
                 question: 'Where does the Rambutan come from?',
                 answers: [
                     {answer: 'Europe', count: 0},
@@ -180,6 +197,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '99',
                 question: 'What country is the largest producer of kiwi fruit?',
                 answers: [
                     {answer: 'Italy', count: 2},
@@ -190,6 +208,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '111',
                 question: 'What colour is the Mangosteen?',
                 answers: [
                     {answer: 'Orange', count: 3},
@@ -199,6 +218,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '222',
                 question: 'What is the most consumed fruit in the world?',
                 answers: [
                     {answer: 'Apple', count: 1},
@@ -212,9 +232,10 @@ const mocks: Presentation[] = [
     {
         id: '5',
         name: 'Presentation 5? fruit',
-        current: 1,
+        current: '333',
         slides: [
             {
+                id: '333',
                 question: 'What colour is the Mangosteen?',
                 answers: [
                     {answer: 'Orange', count: 13},
@@ -224,6 +245,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '444',
                 question: 'Where does the Rambutan come from?',
                 answers: [
                     {answer: 'Europe', count: 3},
@@ -232,6 +254,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '555',
                 question: 'What country is the largest producer of kiwi fruit?',
                 answers: [
                     {answer: 'Italy', count: 2},
@@ -242,6 +265,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '666',
                 question: 'What colour is the Mangosteen?',
                 answers: [
                     {answer: 'Orange', count: 3},
@@ -251,6 +275,7 @@ const mocks: Presentation[] = [
                 ],
             },
             {
+                id: '123123',
                 question: 'What is the most consumed fruit in the world?',
                 answers: [
                     {answer: 'Apple', count: 1},
@@ -270,7 +295,11 @@ export namespace PresentationApiService {
   }
 
   export async function getPresentationById(id: string): Promise<any> {
-    return mocks.filter((mock:any) => mock.id === id)[0]
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(mocks.filter((mock:any) => mock.id === id)[0])
+        }, 2000)
+    })
   }
 
   export async function addPresentation(): Promise<any[]> {

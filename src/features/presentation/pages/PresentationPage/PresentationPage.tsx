@@ -13,8 +13,6 @@ import { Presentation } from 'src/models/presentation';
 const PresentationPageComponent: FC = () => {
     const { isLoading, isError, data: presentations } = useQuery<Presentation[]>('getPresentations', PresentationApiService.getPresentations)
 
-    console.log({ isLoading, isError, presentations })
-
     if (isLoading) {
         return <AppLoadingSpinner />
     }

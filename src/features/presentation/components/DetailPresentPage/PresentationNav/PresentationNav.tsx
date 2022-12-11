@@ -48,7 +48,9 @@ const PresentationNavComponent: FC<any> = ({
                 <Button variant="contained" sx={{backgroundColor: '#dbdce1', color: 'black'}} startIcon={<ShareIcon />}>
                     Share
                 </Button>
-                <Button variant="contained" color='info' startIcon={<PlayArrowIcon />}>
+                <Button variant="contained" color='info' startIcon={<PlayArrowIcon />} onClick={() => navigate('present', {
+                    replace: false,
+                })}>
                     Present
                 </Button>
             </div>
