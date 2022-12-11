@@ -288,6 +288,8 @@ const mocks: Presentation[] = [
     }
 ]
 
+const PRESENTATION_ROUTE = 'api/presentation'
+
 export namespace PresentationApiService {
   export async function getPresentations(): Promise<any[]> {
     // const { data } = await http.get<IData<ListGroupDto>>(GROUP_ROUTE);

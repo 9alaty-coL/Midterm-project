@@ -21,11 +21,15 @@ const PresentationPageComponent: FC = () => {
         return <h1>Presentation not found</h1>
     }
 
+    if (presentations.length === 0) {
+        return <span>Empty!</span>
+    }
+
     return (
         <div className={style['presentation-container']}>
             <NewCard totalPresentation={presentations.length} type="public"/>
             {
-                presentations.map((each: any, index: number) => <PresentationCard key={index} presentation={each}/>)
+                presentations.map((each: Presentation) => <PresentationCard key={each.id} presentation={each}/>)
             }
         </div>
     )

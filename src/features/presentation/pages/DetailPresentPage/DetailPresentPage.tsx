@@ -27,7 +27,7 @@ const DetailPresentPageComponent: FC = () => {
     const [socket, setSocket] = useState<Socket>();
 
     useEffect(() => {
-        setSocket(io('http://localhost:8080'))
+        setSocket(io('https://dnlearning-socket-server.onrender.com',  {transports: ['websocket']}))
       }, [])
 
     const { isLoading, isError, data } = (id === undefined ?
@@ -100,16 +100,24 @@ const DetailPresentPageComponent: FC = () => {
     }
 
     const previousSlideFn = () => {
-        socket?.emit("ChangeSlide", id, data?.slides[currentSlide - 1].id)
+        socket?.emit("ChangeSlide", id, presentation.slides[currentSlide - 1].id)
+        setPresentation(prev => ({
+            ...prev,
+            current: presentation.slides[currentSlide - 1].id,
+        }))
         setCurrentSlide(currentSlide - 1)
     }
 
     const nextSlideFn = () => {
-        socket?.emit("ChangeSlide", id, data?.slides[currentSlide + 1].id)
+        socket?.emit("ChangeSlide", id, presentation.slides[currentSlide + 1].id)
+        setPresentation(prev => ({
+            ...prev,
+            current: presentation.slides[currentSlide + 1].id,
+        }))
         setCurrentSlide(currentSlide + 1)
     }
 
-    const slide = data?.slides[currentSlide - 1];
+    const slide = presentation.slides[currentSlide - 1];
 
     return (
         <div className={style['detail-container']}>

@@ -18,7 +18,7 @@ const VotePageComponent: FC = () => {
   const [detail, setDetail] = useState<Presentation>();
 
   useEffect(() => {
-    setSocket(io('http://localhost:8080'))
+    setSocket(io('https://dnlearning-socket-server.onrender.com', {transports: ['websocket']}))
   }, [])
 
   useEffect(() => {
