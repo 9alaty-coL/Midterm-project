@@ -5,6 +5,7 @@ import { IMapperFromDto } from './mappers';
 class AnswerMapper implements IMapperFromDto<AnswerDto, Answer> {
   public fromDto(dto: AnswerDto): Answer {
     return {
+      id: dto._id,
       answer: dto.answer,
       count: dto.count,
     }

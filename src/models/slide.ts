@@ -1,6 +1,7 @@
 export interface Answer {
+  readonly id: string;
   readonly answer: string;
-  readonly count: number;
+  count: number;
 }
 
 export interface Slide {

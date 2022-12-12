@@ -30,10 +30,10 @@ export const presentationRoutes: RouteObject[] = [
           }
         ]
       },
-      {
-        path: 'presentation/join/:id',
-        element: <VotePage />
-      }
     ],
   },
+  {
+    path: 'presentation/join/:id',
+    element: <VotePage />
+  }
 ];

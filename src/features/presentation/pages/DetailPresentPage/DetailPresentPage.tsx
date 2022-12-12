@@ -29,25 +29,38 @@ const DetailPresentPageComponent: FC = () => {
     const [socket, setSocket] = useState<Socket>();
     const [isChangingSlide, setIsChangingSlide] = useState<boolean>(false);
     const { enqueueSnackbar } = useSnackbar()
+    const [presentation, setPresentation] = useState<Presentation>({
+        id: '123',
+        name: '',
+        current: '-1',
+        slides: []
+    })   
     useEffect(() => {
-        setSocket(io('https://dnlearning-socket-server.onrender.com',  {transports: ['websocket']}))
+        setSocket(io('http://localhost:8080',  {transports: ['websocket']}))
       }, [])
 
-    
 
-    const { isLoading, isError, data } = (id === undefined ?
-        { isLoading: false, isError: false, data: {
-            id: '1',
-            name: 'New presentation',
-            current: '1',
-            slides: []
-        }}:
-        useQuery<Presentation>('getPresentationDetails', () => PresentationApiService.getPresentationById(id!))
-    )
+
+    const { isLoading, isError, data } = useQuery<Presentation>(['getPresentationDetails', id], () => PresentationApiService.getPresentationById(id!))
 
     useEffect(() => {
         socket?.emit("AddPresentation", id, null)
-    
+        socket?.on("AnsweredQuestion", answerId => {
+            console.log('AAAAAAAAAAAA')
+            setPresentation(prev => {
+                const newPresentation = JSON.parse(JSON.stringify(prev)) as Presentation
+                const current = newPresentation.slides.find(s => s.id === prev.current)
+                if (current == null) {
+                    return prev;
+                }
+                current.answers.forEach(each => {
+                    if (each.id === answerId) {
+                        each.count ++;
+                    }
+                })
+                return newPresentation;
+            })
+        })
     }, [socket])
 
     useEffect(() => {
@@ -56,12 +69,7 @@ const DetailPresentPageComponent: FC = () => {
         }
     }, [socket, data])
 
-    const [presentation, setPresentation] = useState<Presentation>({
-        id: '123',
-        name: '',
-        current: '-1',
-        slides: []
-    })   
+
 
     const [currentSlide, setCurrentSlide] = useState(1)
 
@@ -84,10 +92,10 @@ const DetailPresentPageComponent: FC = () => {
             id: '123',
             question: 'New question?',
             answers: [
-                {answer: 'Orange', count: 3},
-                {answer: 'Blue', count: 2},
-                {answer: 'Purple', count: 0},
-                {answer: 'Yellow', count: 5}
+                {id: '123', answer: 'Orange', count: 3},
+                {id: '123', answer: 'Blue', count: 2},
+                {id: '123', answer: 'Purple', count: 0},
+                {id: '123', answer: 'Yellow', count: 5}
             ]
         }]})
     }
