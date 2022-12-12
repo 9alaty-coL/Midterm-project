@@ -6,10 +6,12 @@ import { slideMapper } from './slide.mapper';
 class PresentationMapper implements IMapperFromDto<PresentationDto, Presentation> {
   public fromDto(dto: PresentationDto): Presentation {
     return {
-      id: dto.data._id,
-      name: dto.data.name,
-      current: dto.data.currentSlide._id,
-      slides: dto.data.slides.map(slideDto => slideMapper.fromDto(slideDto)),
+      id: dto._id,
+      name: dto.name,
+      current: dto.currentSlide._id,
+      slides: dto.slides.map(slideDto => slideMapper.fromDto(slideDto)),
     }
   } 
 }
+
+export const presentationMapper = new PresentationMapper();

@@ -5,16 +5,22 @@ import { Paper, Divider, IconButton } from "@mui/material"
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 import { useNavigate } from "react-router-dom"
+import { Presentation } from 'src/models/presentation';
+import { Answer, Slide } from 'src/models/slide';
 
-const PresentationCardComponent: FC<any> = ({
+interface Props {
+    readonly presentation: Presentation;
+}
+
+const PresentationCardComponent: FC<Props> = ({
     presentation
 }) => {
     const navigate = useNavigate();
 
-    const countVoted: any = () => {
+    const countVoted = () => {
         return presentation.slides.reduce(
-            (sum : number, slide: any) => sum + slide.answers.reduce(
-                (voted : number, answer: any) => voted + answer.count
+            (sum : number, slide: Slide) => sum + slide.answers.reduce(
+                (voted : number, answer: Answer) => voted + answer.count
             , 0)
         , 0);
     }

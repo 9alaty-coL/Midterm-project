@@ -1,4 +1,8 @@
 import { Presentation } from 'src/models/presentation'
+import { http } from '..'
+import { IData } from '../dtos/data-dto'
+import { PresentationDto } from '../dtos/presentation-dto'
+import { presentationMapper } from '../mappers/presentation.mapper'
 
 const mocks: Presentation[] = [
     {
@@ -291,17 +295,14 @@ const mocks: Presentation[] = [
 const PRESENTATION_ROUTE = 'api/presentation'
 
 export namespace PresentationApiService {
-  export async function getPresentations(): Promise<any[]> {
-    // const { data } = await http.get<IData<ListGroupDto>>(GROUP_ROUTE);
-    return mocks
+  export async function getPresentations(): Promise<Presentation[]> {
+    const { data } = await http.get<IData<{ presentations: PresentationDto[] }>>(PRESENTATION_ROUTE + '/all')
+    return data.data.presentations.map(dto => presentationMapper.fromDto(dto))
   }
 
-  export async function getPresentationById(id: string): Promise<any> {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(mocks.filter((mock:any) => mock.id === id)[0])
-        }, 2000)
-    })
+  export async function getPresentationById(id: string): Promise<Presentation> {
+    const { data } = await http.get<IData<{ presentation: PresentationDto }>>(PRESENTATION_ROUTE + '/' + id)
+    return presentationMapper.fromDto(data.data.presentation);
   }
 
   export async function addPresentation(): Promise<any[]> {
