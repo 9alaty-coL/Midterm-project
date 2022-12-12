@@ -3,13 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Fab } from '@mui/material';
 import { FC, memo } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
+import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 import { DetailSlide } from '../../components/DetailSlide/DetailSlide';
 import { PresentationOutletProps } from '../DetailPresentPage/DetailPresentPage';
 import style from "./PresentPage.module.css";
 
 const PresentPageComponent: FC = () => {
 
-  const { presentation, nextSlideFn, previousSlideFn } = useOutletContext<PresentationOutletProps>()
+  const { presentation, nextSlideFn, previousSlideFn, isChangingSlide } = useOutletContext<PresentationOutletProps>()
 
   const index = presentation.slides.findIndex(slide => slide.id === presentation.current)
 
@@ -18,13 +19,13 @@ const PresentPageComponent: FC = () => {
       <FontAwesomeIcon icon={faX}/>
     </Link>
     <Fab className={style['presenting__previous']} color='primary'
-      disabled={index === 0}
+      disabled={isChangingSlide || index === 0}
       onClick={previousSlideFn}
     >
       <FontAwesomeIcon icon={faArrowLeft} />
     </Fab>
     <Fab className={style['presenting__next']} color='primary'
-      disabled={index === presentation.slides.length - 1}
+      disabled={isChangingSlide || index === presentation.slides.length - 1}
       onClick={nextSlideFn}
     >
       <FontAwesomeIcon icon={faArrowRight} />

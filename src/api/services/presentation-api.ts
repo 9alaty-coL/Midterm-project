@@ -1,4 +1,5 @@
 import { Presentation } from 'src/models/presentation'
+import { Slide } from 'src/models/slide'
 import { http } from '..'
 import { IData } from '../dtos/data-dto'
 import { PresentationDto } from '../dtos/presentation-dto'
@@ -303,6 +304,14 @@ export namespace PresentationApiService {
   export async function getPresentationById(id: string): Promise<Presentation> {
     const { data } = await http.get<IData<{ presentation: PresentationDto }>>(PRESENTATION_ROUTE + '/' + id)
     return presentationMapper.fromDto(data.data.presentation);
+  }
+
+  export async function changePresentationSlide(currentSlideId: Slide['id'], presentationId: Presentation['id']): Promise<Presentation> {
+    const { data } = await http.patch<IData<{ updatedPresentation: PresentationDto}>>(PRESENTATION_ROUTE + '/currentSlide', {
+        currSlideId: currentSlideId,
+        presentationId,
+    })
+    return presentationMapper.fromDto(data.data.updatedPresentation);
   }
 
   export async function addPresentation(): Promise<any[]> {

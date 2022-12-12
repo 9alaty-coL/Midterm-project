@@ -15,20 +15,25 @@ import { Presentation } from 'src/models/presentation';
 import { DetailSlide } from '../../components/DetailSlide/DetailSlide';
 import { Slide } from 'src/models/slide';
 import { io, Socket } from 'socket.io-client';
+import { useSnackbar } from 'notistack';
 
 export interface PresentationOutletProps {
     readonly presentation: Presentation;
     readonly nextSlideFn: () => void;
     readonly previousSlideFn: () => void;
+    readonly isChangingSlide: boolean;
 }
 
 const DetailPresentPageComponent: FC = () => {
     const { id } = useParams()
     const [socket, setSocket] = useState<Socket>();
-
+    const [isChangingSlide, setIsChangingSlide] = useState<boolean>(false);
+    const { enqueueSnackbar } = useSnackbar()
     useEffect(() => {
         setSocket(io('https://dnlearning-socket-server.onrender.com',  {transports: ['websocket']}))
       }, [])
+
+    
 
     const { isLoading, isError, data } = (id === undefined ?
         { isLoading: false, isError: false, data: {
@@ -72,6 +77,8 @@ const DetailPresentPageComponent: FC = () => {
         setPresentation(data)
     }
 
+    const slide = presentation.slides[currentSlide - 1];
+
     const addSlide = () => {
         setPresentation({...presentation, slides: [...presentation.slides, {
             id: '123',
@@ -99,25 +106,42 @@ const DetailPresentPageComponent: FC = () => {
         if (currentSlide >= index) setCurrentSlide(currentSlide - 1)
     }
 
+    const changeSlide = (newSlideId: Slide['id']): Promise<Presentation> => {
+        setIsChangingSlide(true);
+        return PresentationApiService.changePresentationSlide(newSlideId, presentation.id);
+    }
+
     const previousSlideFn = () => {
-        socket?.emit("ChangeSlide", id, presentation.slides[currentSlide - 1].id)
-        setPresentation(prev => ({
-            ...prev,
-            current: presentation.slides[currentSlide - 1].id,
-        }))
-        setCurrentSlide(currentSlide - 1)
+        const currentSlideIndex = presentation.slides.findIndex(s => s.id === presentation.current)
+        if (currentSlideIndex === -1) {
+            return;
+        }
+        const newSlideId = presentation.slides[currentSlideIndex - 1].id;
+        changeSlide(newSlideId).then(newPresentation => {
+            setIsChangingSlide(false)
+            setPresentation(newPresentation)
+            socket?.emit("ChangeSlide", id, presentation.slides[currentSlideIndex - 1].id)
+        }).catch(() => {
+            enqueueSnackbar('Something went wrong. Please try again!')
+            setIsChangingSlide(false)
+        })
     }
 
     const nextSlideFn = () => {
-        socket?.emit("ChangeSlide", id, presentation.slides[currentSlide + 1].id)
-        setPresentation(prev => ({
-            ...prev,
-            current: presentation.slides[currentSlide + 1].id,
-        }))
-        setCurrentSlide(currentSlide + 1)
+        const currentSlideIndex = presentation.slides.findIndex(s => s.id === presentation.current)
+        if (currentSlideIndex === -1) {
+            return;
+        }
+        const newSlideId = presentation.slides[currentSlideIndex + 1].id;
+        changeSlide(newSlideId).then(newPresentation => {
+            setIsChangingSlide(false)
+            setPresentation(newPresentation)
+            socket?.emit("ChangeSlide", id, presentation.slides[currentSlideIndex + 1].id)
+        }).catch(() => {
+            enqueueSnackbar('Something went wrong. Please try again!')
+            setIsChangingSlide(false)
+        })
     }
-
-    const slide = presentation.slides[currentSlide - 1];
 
     return (
         <div className={style['detail-container']}>
@@ -125,6 +149,7 @@ const DetailPresentPageComponent: FC = () => {
                 presentation,
                 previousSlideFn,
                 nextSlideFn,
+                isChangingSlide,
             }}/>
             <PresentationNav isPublic={true} 
                 nameControl={{value: presentation.name, setValue: (event: any) => setPresentation({...presentation, name: event.target.value})}}/>
