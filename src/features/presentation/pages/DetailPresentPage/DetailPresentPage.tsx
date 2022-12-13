@@ -34,9 +34,9 @@ const DetailPresentPageComponent: FC = () => {
         name: '',
         current: '-1',
         slides: []
-    })   
+    })
     useEffect(() => {
-        setSocket(io('http://localhost:8080',  {transports: ['websocket']}))
+        setSocket(io('https://dnlearning-socket-server.onrender.com',  {transports: ['websocket']}))
       }, [])
 
 
@@ -46,7 +46,6 @@ const DetailPresentPageComponent: FC = () => {
     useEffect(() => {
         socket?.emit("AddPresentation", id, null)
         socket?.on("AnsweredQuestion", answerId => {
-            console.log('AAAAAAAAAAAA')
             setPresentation(prev => {
                 const newPresentation = JSON.parse(JSON.stringify(prev)) as Presentation
                 const current = newPresentation.slides.find(s => s.id === prev.current)
@@ -159,12 +158,12 @@ const DetailPresentPageComponent: FC = () => {
                 nextSlideFn,
                 isChangingSlide,
             }}/>
-            <PresentationNav isPublic={true} 
+            <PresentationNav isPublic={true}
                 nameControl={{value: presentation.name, setValue: (event: any) => setPresentation({...presentation, name: event.target.value})}}/>
             <div className={style['detail-wrapper']}>
-                <ListSlide presentation={presentation} 
+                <ListSlide presentation={presentation}
                     listControl={{
-                        current: currentSlide, setCurrent: setCurrentSlide, 
+                        current: currentSlide, setCurrent: setCurrentSlide,
                         addSlide: addSlide,
                         deleteSlide: deleteSlide
                             }}/>

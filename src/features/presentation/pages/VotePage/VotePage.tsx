@@ -43,7 +43,7 @@ const VotePageComponent: FC = () => {
   const [isVoted, setIsVoted] = useState(false);
 
   useEffect(() => {
-    setSocket(io("http://localhost:8080", { transports: ["websocket"] }));
+    setSocket(io("https://dnlearning-socket-server.onrender.com", { transports: ["websocket"] }));
   }, []);
 
   useEffect(() => {
