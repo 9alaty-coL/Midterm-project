@@ -1,6 +1,8 @@
 import { memo, FC } from 'react';
 import style from "./EditSlide.module.css"
 
+import { AnswerField } from './AnswerField/AnswerField';
+
 import { TextField, Button } from "@mui/material"
 
 import BarChartIcon from '@mui/icons-material/BarChart';
@@ -9,7 +11,8 @@ import PieChartIcon from '@mui/icons-material/PieChart';
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 
 const EditSlideComponent: FC<any> = ({
-
+    slide,
+    editSlide
 }) => {
 
     //className={style['']}
@@ -20,20 +23,17 @@ const EditSlideComponent: FC<any> = ({
                 <TextField
                     multiline
                     maxRows={3}
-                    // value={value}
-                    // onChange={handleChange}
+                    value={slide.question}
+                    onChange={(event: any) => editSlide({...slide, question: event.target.value})}
                 />
             </div>
             <div className={style['edit-wrapper']}>
                 <span className={style['edit-title']}>Options: </span>
-                <TextField
-                    // value={value}
-                    // onChange={handleChange}
-                />
-                <TextField
-                    // value={value}
-                    // onChange={handleChange}
-                />
+                {
+                    slide.answers.map(
+                        (answer: any, index: number) => <AnswerField answer={answer} editSlide={editSlide}/>
+                    )
+                }
                 <Button fullWidth variant="contained" color="info" sx={{fontSize: 20}}>New Option</Button>
             </div>
             <div className={style['edit-wrapper']}>

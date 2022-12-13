@@ -3,6 +3,8 @@ import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 
 import style from "./DetailPresentPage.module.css";
 
+import { useChangeSlides } from "../../components/DetailPresentPage/useChangeSlides"
+
 import { PresentationApiService } from 'src/api/services/presentation-api';
 
 import { EditSlide } from '../../components/DetailPresentPage/EditSlide/EditSlide';
@@ -25,24 +27,15 @@ export interface PresentationOutletProps {
 const DetailPresentPageComponent: FC = () => {
     const { id } = useParams()
     const [socket, setSocket] = useState<Socket>();
+    const { isLoading, isError, data } = useQuery<Presentation>('getPresentationDetails', () => PresentationApiService.getPresentationById(id!))
 
+    // Socket
     useEffect(() => {
         setSocket(io('https://dnlearning-socket-server.onrender.com',  {transports: ['websocket']}))
-      }, [])
-
-    const { isLoading, isError, data } = (id === undefined ?
-        { isLoading: false, isError: false, data: {
-            id: '1',
-            name: 'New presentation',
-            current: '1',
-            slides: []
-        }}:
-        useQuery<Presentation>('getPresentationDetails', () => PresentationApiService.getPresentationById(id!))
-    )
-
+    }, [])
+    
     useEffect(() => {
         socket?.emit("AddPresentation", id, null)
-    
     }, [socket])
 
     useEffect(() => {
@@ -51,6 +44,7 @@ const DetailPresentPageComponent: FC = () => {
         }
     }, [socket, data])
 
+    // Data state
     const [presentation, setPresentation] = useState<Presentation>({
         id: '123',
         name: '',
@@ -58,8 +52,9 @@ const DetailPresentPageComponent: FC = () => {
         slides: []
     })   
 
-    const [currentSlide, setCurrentSlide] = useState(1)
+    const slidesControl = useChangeSlides(presentation.slides)
 
+    // Check loading state
     if (isLoading) {
         return <AppLoadingSpinner />
     }
@@ -70,55 +65,31 @@ const DetailPresentPageComponent: FC = () => {
 
     if (data != null && presentation.current === '-1') {
         setPresentation(data)
+        slidesControl.initNewSlide(data.slides)
     }
 
-    const addSlide = () => {
-        setPresentation({...presentation, slides: [...presentation.slides, {
-            id: '123',
-            question: 'New question?',
-            answers: [
-                {answer: 'Orange', count: 3},
-                {answer: 'Blue', count: 2},
-                {answer: 'Purple', count: 0},
-                {answer: 'Yellow', count: 5}
-            ]
-        }]})
-    }
-
-    const editSlide = (index: number, newSlide: Slide) => {
-        let slides = presentation.slides
-        slides[index - 1] = newSlide
-
-        setPresentation({...presentation, slides: slides})
-    }
-
-    const deleteSlide = (index: number) => {
-        let slides = presentation.slides
-        slides.splice(index - 1, 1)
-        setPresentation({...presentation, slides: [...slides]})
-        if (currentSlide >= index) setCurrentSlide(currentSlide - 1)
-    }
-
+    // Move function
     const previousSlideFn = () => {
-        socket?.emit("ChangeSlide", id, presentation.slides[currentSlide - 1].id)
+        socket?.emit("ChangeSlide", id, presentation.slides[slidesControl.currentIndex.number - 1].id)
         setPresentation(prev => ({
             ...prev,
-            current: presentation.slides[currentSlide - 1].id,
+            current: presentation.slides[slidesControl.currentIndex.number - 1].id,
         }))
-        setCurrentSlide(currentSlide - 1)
+        slidesControl.currentIndex.setSlide(slidesControl.currentIndex.number - 1)
     }
 
     const nextSlideFn = () => {
-        socket?.emit("ChangeSlide", id, presentation.slides[currentSlide + 1].id)
+        socket?.emit("ChangeSlide", id, presentation.slides[slidesControl.currentIndex.number + 1].id)
         setPresentation(prev => ({
             ...prev,
-            current: presentation.slides[currentSlide + 1].id,
+            current: presentation.slides[slidesControl.currentIndex.number + 1].id,
         }))
-        setCurrentSlide(currentSlide + 1)
+        slidesControl.currentIndex.setSlide(slidesControl.currentIndex.number + 1)
     }
 
-    const slide = presentation.slides[currentSlide - 1];
+    const slide = slidesControl.currentSlide
 
+    // Component
     return (
         <div className={style['detail-container']}>
             <Outlet context={{
@@ -129,14 +100,9 @@ const DetailPresentPageComponent: FC = () => {
             <PresentationNav isPublic={true} 
                 nameControl={{value: presentation.name, setValue: (event: any) => setPresentation({...presentation, name: event.target.value})}}/>
             <div className={style['detail-wrapper']}>
-                <ListSlide presentation={presentation} 
-                    listControl={{
-                        current: currentSlide, setCurrent: setCurrentSlide, 
-                        addSlide: addSlide,
-                        deleteSlide: deleteSlide
-                            }}/>
+                <ListSlide slidesControl={slidesControl} />
                 <DetailSlide slide={slide}/>
-                <EditSlide editSlide={editSlide}/>
+                <EditSlide slidesControl={slidesControl} />
             </div>
         </div>
     )

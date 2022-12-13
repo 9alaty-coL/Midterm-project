@@ -13,10 +13,10 @@ const HomePageComponent: FC = () => {
     <div className={style['home-container']}>
       <h1 className={style['home-title']}>Home page</h1>
       <div className={style['home-btn-wrapper']}>
-        {/* <Paper elevation={3} className={style['home-card']} onClick={() => navigate("/presentation")}>
-          <span>Publics</span>
+        <Paper elevation={3} className={style['home-card']} onClick={() => navigate("/presentation")}>
+          <span>Presents</span>
           <FontAwesomeIcon icon={faNewspaper} />
-        </Paper> */}
+        </Paper>
         <Paper elevation={3} className={style['home-card']} onClick={() => navigate("/group")}>
           <span>Groups</span>
           <FontAwesomeIcon icon={faUsersBetweenLines} />

@@ -5,19 +5,17 @@ import { SlideCard } from "./SlideCard/SlideCard"
 import { NewSlideCard } from "./SlideCard/NewSlideCard"
 
 const ListSlideComponent: FC<any> = ({
-    presentation,
-    listControl,
+    slidesControl
 }) => {
-    console.log(presentation)
 
     return (
         <div className={style['list-container']}>
             {
-                presentation.slides.map((slide: any, index: number) => 
-                    <SlideCard key={index} index={index + 1} slide={slide} listControl={listControl} currentPresent={presentation.current}/>
+                slidesControl.slides.map((slide: any, index: number) => 
+                    <SlideCard key={index} index={index + 1} slide={slide} slidesControl={slidesControl}/>
                 )
             }
-            <NewSlideCard addSlide={listControl.addSlide}/>
+            <NewSlideCard addSlide={() => slidesControl.addSlide()}/>
         </div>
     );
 };

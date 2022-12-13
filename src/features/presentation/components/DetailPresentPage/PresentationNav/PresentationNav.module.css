@@ -46,3 +46,7 @@
 .nav-input-error:focus {
     border-color: red;
 }
+
+.nav-btn {
+    width: 250px;
+}

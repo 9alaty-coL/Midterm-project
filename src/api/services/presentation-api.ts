@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios'
 import { Presentation } from 'src/models/presentation'
 import { http } from '..'
 import { IData } from '../dtos/data-dto'
@@ -305,15 +306,40 @@ export namespace PresentationApiService {
     return presentationMapper.fromDto(data.data.presentation);
   }
 
-  export async function addPresentation(): Promise<any[]> {
-    return mocks
+  export async function createPresentation(presentation: any): Promise<any> {
+    const { data } = await http.post(
+        PRESENTATION_ROUTE + "/create",
+        { presentation },
+    )
+    return data
   }
 
-  export async function createPresentation(): Promise<void> {
-    return
+  export async function updatePresentationName(presentationId: string, newName: string): Promise<any>  {
+    const { data } = await http.patch(
+        PRESENTATION_ROUTE + "/create",
+        {
+            presentationId, newName
+        })
+    return data
   }
 
-  export async function removePresentation(): Promise<void> {
-    return
+  export async function updatePresentationSlides(presentationId: string, slides: any[]): Promise<any> {
+    const { data } = await http.patch(
+        PRESENTATION_ROUTE + "/changeAllSlides",
+        {
+            slides, presentationId
+        })
+    return data
+  }
+
+  export async function removePresentation(presentationId: string): Promise<any> {
+    const { data } = await http.delete<AxiosRequestConfig>(
+        PRESENTATION_ROUTE + "/delete",
+        {
+            data: {
+                presentationId
+            }
+        })
+    return data
   }
 }
