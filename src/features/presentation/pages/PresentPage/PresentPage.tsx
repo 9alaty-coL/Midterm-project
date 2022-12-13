@@ -31,9 +31,7 @@ const PresentPageComponent: FC = () => {
       <FontAwesomeIcon icon={faArrowRight} />
     </Fab>
     <div className={style['presenting__container']}>
-      <div className={style['presenting__content']}>
-        <DetailSlide slide={presentation.slides.find(slide => slide.id === presentation.current)} />
-      </div>
+      <DetailSlide slide={presentation.slides.find(slide => slide.id === presentation.current)} />
     </div>
   </div>
 }

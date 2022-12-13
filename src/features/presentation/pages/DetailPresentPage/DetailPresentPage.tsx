@@ -167,7 +167,9 @@ const DetailPresentPageComponent: FC = () => {
                         addSlide: addSlide,
                         deleteSlide: deleteSlide
                             }}/>
-                <DetailSlide slide={slide}/>
+                <div className={style['detail-slide']}>
+                  <DetailSlide slide={slide}/>
+                </div>
                 <EditSlide editSlide={editSlide}/>
             </div>
         </div>
