@@ -15,7 +15,6 @@
     "axios": "^0.27.2",
     "chart.js": "^4.0.1",
     "chartjs-plugin-datalabels": "^2.2.0",
-    "faker": "^6.6.6",
     "formik": "^2.2.9",
     "formik-mui": "^4.0.0-alpha.3",
     "immer": "^9.0.15",
