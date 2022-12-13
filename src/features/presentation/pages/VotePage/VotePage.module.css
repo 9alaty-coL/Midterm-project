@@ -37,3 +37,7 @@
 .presentation__button {
   margin-block-start: 20px !important;
 }
+
+.presentation__note {
+  font-size: 20px;
+}

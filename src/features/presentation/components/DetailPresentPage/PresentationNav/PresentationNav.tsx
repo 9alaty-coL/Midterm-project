@@ -1,4 +1,4 @@
-import { memo, FC, useState } from 'react';
+import { memo, FC, useState, useEffect } from 'react';
 import style from "./PresentationNav.module.css"
 
 import EditIcon from '@mui/icons-material/Edit';
@@ -14,13 +14,14 @@ import { useNavigate } from 'react-router-dom'
 
 const PresentationNavComponent: FC<any> = ({
     isPublic,
-    nameControl
+    isChanged,
+    nameControl,
+    slidesControl
 }) => {
     const navigate = useNavigate()
 
     const [isEditName, setEditName] = useState(false)
 
-    //className={style['']}
     return (
         <div className={style['nav-container']}>
             <div className={style['nav-wrapper']}>
@@ -39,7 +40,7 @@ const PresentationNavComponent: FC<any> = ({
                     isEditName && <>
                         <input value={nameControl.value} onChange={nameControl.setValue} 
                             className={style[nameControl.value === '' ? 'nav-input-error' : 'nav-input']}/>
-                        <IconButton onClick={() => setEditName(false)} disabled={nameControl.value === ''}>
+                        <IconButton onClick={() => {nameControl.pushNewName(nameControl.value); setEditName(false)}} disabled={nameControl.value === ''}>
                             <CheckCircleOutlineIcon sx={{fontSize: 30}}/>
                         </IconButton>                     
                     </>
@@ -48,11 +49,15 @@ const PresentationNavComponent: FC<any> = ({
             </div>
             <div className={style['nav-wrapper']} style={{paddingRight: 15}}>
                 {
-                    true && <>
-                        <Button variant="contained" color="error" startIcon={<BackspaceIcon />} sx={{width: 100}}>
+                    isChanged && <>
+                        <Button variant="contained" color="error" startIcon={<BackspaceIcon />} sx={{width: 100}}
+                            onClick={() => slidesControl.cancelSlide()}
+                        >
                             Cancel
                         </Button>
-                        <Button variant="contained" color="success" startIcon={<SaveIcon />} sx={{width: 100}}>
+                        <Button variant="contained" color="success" startIcon={<SaveIcon />} sx={{width: 100}}
+                            onClick={() => slidesControl.saveSlides()}
+                        >
                             Save
                         </Button>
                         <Divider orientation="vertical" flexItem />
@@ -66,6 +71,7 @@ const PresentationNavComponent: FC<any> = ({
                     onClick={() => navigate('present', {
                         replace: false,
                     })}
+                    disabled={slidesControl.isChanged()}
                 >
                     Present
                 </Button>

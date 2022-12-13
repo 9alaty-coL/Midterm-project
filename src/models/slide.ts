@@ -1,4 +1,5 @@
 export interface Answer {
+  readonly id?: string;
   answer: string;
   count: number;
 }

@@ -7,7 +7,8 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 const SlideCardComponent: FC<any> = ({
     index,
     slide,
-    slidesControl
+    slidesControl,
+    currentPresent
 }) => {
     const [displayMore, setDisplayMore] = useState(false)
 
@@ -21,11 +22,11 @@ const SlideCardComponent: FC<any> = ({
                 <div className={style['index-play']}>
                     <span>{index}</span>
                     <PlayArrowIcon sx={{fontSize: 20, color: "#1a6cff"}} 
-                        style={slidesControl.currentIndex.number === slide.id ? {visibility: "visible"} : {visibility: "hidden"}}
+                        style={currentPresent === slide.id ? {visibility: "visible"} : {visibility: "hidden"}}
                     />
                 </div>
                 <HighlightOffIcon sx={{fontSize: 20, color: "black"}} className={style['index-delete']}
-                    style={displayMore ? {visibility: "visible"} : {visibility: "hidden"}}
+                    style={(displayMore && slidesControl.slides.length > 1) ? {visibility: "visible"} : {visibility: "hidden"}}
                     onClick={() => slidesControl.deleteSlide(index)}
                 />
             </div>

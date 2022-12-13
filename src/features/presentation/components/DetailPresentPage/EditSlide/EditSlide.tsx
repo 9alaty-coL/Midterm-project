@@ -11,11 +11,12 @@ import PieChartIcon from '@mui/icons-material/PieChart';
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 
 const EditSlideComponent: FC<any> = ({
-    slide,
-    editSlide
+    slidesControl
 }) => {
+    if (slidesControl.currentSlide === undefined) {
+        return <div className={style['edit-container']}></div>
+    }
 
-    //className={style['']}
     return (
         <div className={style['edit-container']}>
             <div className={style['edit-wrapper']}>
@@ -23,51 +24,55 @@ const EditSlideComponent: FC<any> = ({
                 <TextField
                     multiline
                     maxRows={3}
-                    value={slide.question}
-                    onChange={(event: any) => editSlide({...slide, question: event.target.value})}
+                    value={slidesControl.currentSlide.question}
+                    onChange={(event: any) => slidesControl.editSlideQuestion(event.target.value)}
                 />
             </div>
             <div className={style['edit-wrapper']}>
                 <span className={style['edit-title']}>Options: </span>
                 {
-                    slide.answers.map(
-                        (answer: any, index: number) => <AnswerField answer={answer} editSlide={editSlide}/>
+                    slidesControl.currentSlide.answers.map(
+                        (answer: any, index: number) => <AnswerField key={index} index={index} answer={answer} slidesControl={slidesControl}/>
                     )
                 }
-                <Button fullWidth variant="contained" color="info" sx={{fontSize: 20}}>New Option</Button>
+                <Button fullWidth variant="contained" color="info" sx={{fontSize: 20}}
+                    onClick={() => slidesControl.addSlideAnswer()}
+                >
+                    New Option
+                </Button>
             </div>
-            <div className={style['edit-wrapper']}>
+            {/* <div className={style['edit-wrapper']}>
                 <span className={style['edit-title']}>Image: </span>
                 <TextField
                     // value={value}
                     // onChange={handleChange}
                     type="file"
                 />
-            </div>
+            </div> */}
             <div className={style['edit-btn-container']}>
                 <span className={style['edit-title']}>Result layout: </span>
                 <div className={style['edit-btn-wrapper']}>
-                    <button className={style['edit-btn']}>
+                    <button className={style['edit-btn']} onClick={() => slidesControl.editSlideChartType('bar')}>
                         <BarChartIcon style={{fontSize: 70}}/>
                         <span className={style['edit-btn-text']}>Bars chart</span>
                     </button>
-                    <button className={style['edit-btn']}>
+                    <button className={style['edit-btn']} onClick={() => slidesControl.editSlideChartType('donut')}>
                         <DataUsageIcon style={{fontSize: 70}}/>
                         <span className={style['edit-btn-text']}>Donut chart</span>
                     </button>
-                    <button className={style['edit-btn']}>
+                    <button className={style['edit-btn']} onClick={() => slidesControl.editSlideChartType('pie')}>
                         <PieChartIcon style={{fontSize: 70}}/>
                         <span className={style['edit-btn-text']}>Pie chart</span>
                     </button>
-                    <button className={style['edit-btn']}>
+                    {/* <button className={style['edit-btn']}>
                         <BubbleChartIcon style={{fontSize: 70}}/>
                         <span className={style['edit-btn-text']}>Dots chart</span>
-                    </button>
+                    </button> */}
                 </div>
             </div>
-            <div className={style['edit-wrapper']}>
+            {/* <div className={style['edit-wrapper']}>
                 <span className={style['edit-title']}>Extra: </span>
-            </div>
+            </div> */}
         </div>
     );
 };

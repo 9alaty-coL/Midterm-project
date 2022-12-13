@@ -1,4 +1,4 @@
-import { FC, memo, useEffect } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 import { PresentationCard } from '../../components/PresentationPage/PresentationCard/PresentationCard'
 import { NewCard } from '../../components/PresentationPage/NewCard/NewCard'
@@ -10,8 +10,16 @@ import { PresentationApiService } from 'src/api/services/presentation-api'
 import { useQuery } from 'react-query';
 import { Presentation } from 'src/models/presentation';
 
+import { useMutation } from 'react-query'
+
 const PresentationPageComponent: FC = () => {
-    const { isLoading, isError, data: presentations } = useQuery<Presentation[]>('getPresentations', PresentationApiService.getPresentations)
+    const { isLoading, isError, data: presentations, refetch } = useQuery<Presentation[]>('getPresentations', PresentationApiService.getPresentations)
+
+    const deletePresentMutation = useMutation(PresentationApiService.removePresentation, {
+        onSuccess: async(data: any) => {
+          refetch()
+        }
+    })
 
     if (isLoading) {
         return <AppLoadingSpinner />
@@ -25,11 +33,15 @@ const PresentationPageComponent: FC = () => {
         return <span>Empty!</span>
     }
 
+    const deleteHandler = (id: string) => {
+        deletePresentMutation.mutate(id)
+    }
+
     return (
         <div className={style['presentation-container']}>
             <NewCard totalPresentation={presentations.length} type="public"/>
             {
-                presentations.map((each: Presentation) => <PresentationCard key={each.id} presentation={each}/>)
+                presentations.map((each: Presentation) => <PresentationCard key={each.id} presentation={each} deleteHandler={() => deleteHandler(each.id)}/>)
             }
         </div>
     )
