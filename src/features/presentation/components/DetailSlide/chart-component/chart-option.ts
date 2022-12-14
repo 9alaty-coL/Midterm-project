@@ -5,4 +5,5 @@ export interface ChartOption {
 
 export interface ChartProps {
   readonly dataset: readonly ChartOption[],
+  readonly colors: readonly string[],
 }

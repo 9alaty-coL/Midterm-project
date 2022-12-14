@@ -6,6 +6,9 @@ import {
   RadioGroup,
   Button,
   CircularProgress,
+  Box,
+  Modal,
+  Typography,
 } from "@mui/material";
 import {
   ChangeEvent,
@@ -29,6 +32,20 @@ import { useSnackbar } from "notistack";
 import { LocalStorageService } from "src/api/services/local-storage";
 import { AxiosError } from 'axios';
 
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 1,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
+
 const VotePageComponent: FC = () => {
   const { id } = useParams();
   const data = useQuery<Presentation>(
@@ -41,6 +58,7 @@ const VotePageComponent: FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [isVoting, setIsVoting] = useState(false);
   const [isVoted, setIsVoted] = useState(false);
+  const [requireReload, setRequireReload] = useState(false);
 
   useEffect(() => {
     setSocket(io("https://dnlearning-socket-server.onrender.com", { transports: ["websocket"] }));
@@ -70,7 +88,7 @@ const VotePageComponent: FC = () => {
       });
     });
     socket?.on("Reloaded", (presentationId: Presentation['id']) => {
-      console.log("Reloaded", presentationId)
+      setRequireReload(true)
     })
   }, [socket]);
 
@@ -156,6 +174,19 @@ const VotePageComponent: FC = () => {
           {isVoting ? <CircularProgress size={20}/> : 'Submit'}
         </Button>
       </FormControl>}
+      <Modal
+        open={requireReload}
+        onClose={() => {}}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div id="modal-modal-description">
+            The presentation has been updated. Please reload to see changes!
+            <Button onClick={() => window.location.reload()}>Reload</Button>
+          </div>
+        </Box>
+      </Modal>
     </div>
   );
 };

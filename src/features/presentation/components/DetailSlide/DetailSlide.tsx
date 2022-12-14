@@ -6,6 +6,8 @@ import { PieChart } from './chart-component/PieChart/PieChart';
 
 import style from "./DetailSlide.module.css";
 
+const colors = Array.from({ length: 100 }, (_, i) => `rgba(${Math.random() * 210}, ${Math.random() * 210}, ${Math.random() * 210}, 0.7)`)
+
 interface Props {
   readonly slide: Slide | undefined;
 }
@@ -19,15 +21,18 @@ const DetailSlideComponent: FC<Props> = ({ slide }) => {
   return <div className={style['detail-slide']}>
     <h1 className={style['detail-slide__title']}>{slide.question}</h1>
     {
-      slide.chartType === 'donut' ? <DonutChart dataset={slide.answers.map(answer => ({
+      slide.chartType === 'donut' ? <DonutChart colors={colors} dataset={slide.answers.map(answer => ({
         label: answer.answer,
         count: answer.count,
-      }))} /> : slide.chartType === 'pie' ? <PieChart dataset={slide.answers.map(answer => ({
+        colors,
+      }))} /> : slide.chartType === 'pie' ? <PieChart colors={colors} dataset={slide.answers.map(answer => ({
         label: answer.answer,
         count: answer.count,
-      }))} /> : <BarChart dataset={slide.answers.map(answer => ({
+        colors,
+      }))} /> : <BarChart colors={colors} dataset={slide.answers.map(answer => ({
         label: answer.answer,
         count: answer.count,
+        colors,
       }))} />
     }
 
