@@ -69,6 +69,7 @@ export const useChangeSlides = (initSlides: any) => {
     }
     const editSlideChartType = (newChartType: string) => {
         slides[currentIndex - 1].chartType = newChartType
+        setSlides([...slides])
     }
 
     return {

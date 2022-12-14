@@ -8,7 +8,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import SaveIcon from '@mui/icons-material/Save';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { IconButton, Button, TextField, Divider } from '@mui/material/'
+import { IconButton, Button, CircularProgress, Divider } from '@mui/material/'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -67,11 +67,11 @@ const PresentationNavComponent: FC<any> = ({
                 <Button variant="contained" sx={{backgroundColor: '#dbdce1', color: 'black', width: 100}} startIcon={<ShareIcon />} >
                     Share
                 </Button>
-                <Button variant="contained" color='info' startIcon={<PlayArrowIcon />} sx={{width: 100}} 
+                <Button variant="contained" color='info' startIcon={slidesControl.pushStatus.isNeedToPush ? <CircularProgress size={15} color="primary"/>: <PlayArrowIcon />} sx={{width: 100}} 
                     onClick={() => navigate('present', {
                         replace: false,
                     })}
-                    disabled={slidesControl.isChanged()}
+                    disabled={slidesControl.isChanged() || slidesControl.pushStatus.isNeedToPush}
                 >
                     Present
                 </Button>

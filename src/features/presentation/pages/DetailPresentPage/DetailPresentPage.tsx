@@ -57,6 +57,7 @@ const DetailPresentPageComponent: FC = () => {
             if (result.data) {
               setPresentation(result.data)
             }
+            slidesControl.pushStatus.setNeedToPush(false)
           })
         }
     }, [mutateChangeSlides.isSuccess])
@@ -64,7 +65,6 @@ const DetailPresentPageComponent: FC = () => {
     useEffect(() => {
         if (slidesControl.pushStatus.isNeedToPush) {
             mutateChangeSlides.mutate({presentationId: id, slides: slidesControl.slides})
-            slidesControl.pushStatus.setNeedToPush(false)
         }
     }, [slidesControl.pushStatus.isNeedToPush]);
 

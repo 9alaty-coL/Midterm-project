@@ -1,6 +1,5 @@
 import { FC, memo } from 'react';
 import { Slide } from 'src/models/slide';
-import { useChangeSlides } from '../DetailPresentPage/useChangeSlides';
 import { BarChart } from './chart-component/BarChart/BarChart';
 import { DonutChart } from './chart-component/DonutChart/DonutChart';
 import { PieChart } from './chart-component/PieChart/PieChart';
@@ -20,7 +19,7 @@ const DetailSlideComponent: FC<Props> = ({ slide }) => {
   return <div className={style['detail-slide']}>
     <h1 className={style['detail-slide__title']}>{slide.question}</h1>
     {
-      slide.chartType === 'bar' ? <DonutChart dataset={slide.answers.map(answer => ({
+      slide.chartType === 'donut' ? <DonutChart dataset={slide.answers.map(answer => ({
         label: answer.answer,
         count: answer.count,
       }))} /> : slide.chartType === 'pie' ? <PieChart dataset={slide.answers.map(answer => ({
