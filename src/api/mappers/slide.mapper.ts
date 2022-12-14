@@ -9,6 +9,7 @@ class SlideMapper implements IMapperFromDto<SlideDto, Slide> {
       id: dto._id,
       question: dto.question,
       answers: dto.answers.map(answerDto => answerMapper.fromDto(answerDto)),
+      chartType: dto.chartType,
     }
   }
 }

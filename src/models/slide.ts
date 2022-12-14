@@ -8,4 +8,5 @@ export interface Slide {
   id?: string;
   question: string;
   answers: Answer[];
+  chartType: string;
 }

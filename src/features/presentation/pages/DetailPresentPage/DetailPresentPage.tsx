@@ -29,7 +29,7 @@ export interface PresentationOutletProps {
 const DetailPresentPageComponent: FC = () => {
     const { id } = useParams()
     const [ socket, setSocket ] = useState<Socket>();
-    const { isLoading, isError, data, refetch } = useQuery<Presentation>('getPresentationDetails', () => PresentationApiService.getPresentationById(id!))
+    const { isLoading, isError, data, refetch } = useQuery<Presentation>(['getPresentationDetails', id], () => PresentationApiService.getPresentationById(id!))
     const [ isChangingSlide, setIsChangingSlide ] = useState<boolean>(false);
     const { enqueueSnackbar } = useSnackbar()
     const [ presentation, setPresentation ] = useState<Presentation>({
@@ -52,7 +52,12 @@ const DetailPresentPageComponent: FC = () => {
 
     useEffect(()=>{
         if (mutateChangeSlides.isSuccess){
-            refetch()
+          socket?.emit("Reload", presentation.id)
+          refetch().then((result) => {
+            if (result.data) {
+              setPresentation(result.data)
+            }
+          })
         }
     }, [mutateChangeSlides.isSuccess])
 
@@ -67,7 +72,7 @@ const DetailPresentPageComponent: FC = () => {
     useEffect(() => {
         setSocket(io('https://dnlearning-socket-server.onrender.com',  {transports: ['websocket']}))
     }, [])
-    
+
     useEffect(() => {
         socket?.emit("AddPresentation", id, null)
         socket?.on("AnsweredQuestion", answerId => {
@@ -154,9 +159,9 @@ const DetailPresentPageComponent: FC = () => {
                 nextSlideFn,
                 isChangingSlide,
             }}/>
-            <PresentationNav isPublic={true} isChanged={slidesControl.isChanged()} 
+            <PresentationNav isPublic={true} isChanged={slidesControl.isChanged()}
                 nameControl={{
-                    value: presentation.name, 
+                    value: presentation.name,
                     setValue: (event: any) => setPresentation({...presentation, name: event.target.value}),
                     pushNewName: pushNewName
                 }}

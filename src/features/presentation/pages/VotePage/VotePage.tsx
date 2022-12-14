@@ -69,6 +69,9 @@ const VotePageComponent: FC = () => {
         return prev;
       });
     });
+    socket?.on("Reloaded", (presentationId: Presentation['id']) => {
+      console.log("Reloaded", presentationId)
+    })
   }, [socket]);
 
   if (data.isLoading) {
