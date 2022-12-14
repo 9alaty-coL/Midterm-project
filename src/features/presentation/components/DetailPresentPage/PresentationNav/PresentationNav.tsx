@@ -8,11 +8,14 @@ import ShareIcon from '@mui/icons-material/Share';
 import SaveIcon from '@mui/icons-material/Save';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { IconButton, Button, CircularProgress, Divider } from '@mui/material/'
+import { IconButton, Button, CircularProgress, Divider, Snackbar, Alert } from '@mui/material/'
+
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { useNavigate } from 'react-router-dom'
 
 const PresentationNavComponent: FC<any> = ({
+    id,
     isPublic,
     isChanged,
     nameControl,
@@ -21,6 +24,7 @@ const PresentationNavComponent: FC<any> = ({
     const navigate = useNavigate()
 
     const [isEditName, setEditName] = useState(false)
+    const [isOpenSnackbar, setOpenSnackbar] = useState(false)
 
     return (
         <div className={style['nav-container']}>
@@ -63,10 +67,12 @@ const PresentationNavComponent: FC<any> = ({
                         <Divider orientation="vertical" flexItem />
                     </>
                 }
-                
-                <Button variant="contained" sx={{backgroundColor: '#dbdce1', color: 'black', width: 100}} startIcon={<ShareIcon />} >
-                    Share
-                </Button>
+                <CopyToClipboard text={"https://group-master.vercel.app/presentation/join/" + id} 
+                    onCopy={() => setOpenSnackbar(true)}>
+                    <Button variant="contained" sx={{backgroundColor: '#dbdce1', color: 'black', width: 100}} startIcon={<ShareIcon />} >
+                        Share
+                    </Button>
+                </CopyToClipboard>
                 <Button variant="contained" color='info' startIcon={slidesControl.pushStatus.isNeedToPush ? <CircularProgress size={15} color="primary"/>: <PlayArrowIcon />} sx={{width: 100}} 
                     onClick={() => navigate('present', {
                         replace: false,
@@ -75,6 +81,11 @@ const PresentationNavComponent: FC<any> = ({
                 >
                     Present
                 </Button>
+                <Snackbar open={isOpenSnackbar} autoHideDuration={4000} onClose={() => setOpenSnackbar(false)}>
+                    <Alert severity="success" sx={{ width: '100%' }}>
+                        Successfully copied to clipboard!
+                    </Alert>
+                </Snackbar>
             </div>
         </div>
     );

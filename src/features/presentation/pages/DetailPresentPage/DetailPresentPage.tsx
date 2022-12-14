@@ -159,7 +159,7 @@ const DetailPresentPageComponent: FC = () => {
                 nextSlideFn,
                 isChangingSlide,
             }}/>
-            <PresentationNav isPublic={true} isChanged={slidesControl.isChanged()}
+            <PresentationNav isPublic={true} isChanged={slidesControl.isChanged()} id={id}
                 nameControl={{
                     value: presentation.name,
                     setValue: (event: any) => setPresentation({...presentation, name: event.target.value}),
