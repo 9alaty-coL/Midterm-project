@@ -6,7 +6,7 @@ import style from './DonutChart.module.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DonutChartComponent: FC<ChartProps> = ({ dataset }) => {
+const DonutChartComponent: FC<ChartProps> = ({ dataset, colors }) => {
 
   const data = {
     labels: dataset.map(option => option.label),
@@ -14,7 +14,7 @@ const DonutChartComponent: FC<ChartProps> = ({ dataset }) => {
       {
         label: 'Answers',
         data: dataset.map(option => option.count),
-        backgroundColor: dataset.map(() => `rgba(${Math.random() * 210}, ${Math.random() * 210}, ${Math.random() * 210}, 0.7)`),
+        backgroundColor: dataset.map((_, index) => colors[index]),
         borderWidth: 1,
       },
     ],

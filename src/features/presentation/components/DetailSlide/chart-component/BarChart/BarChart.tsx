@@ -23,7 +23,7 @@ ChartJS.register(
   ChartDataLabels,
 );
 
-const BarChartComponent: FC<ChartProps> = ({ dataset }) => {
+const BarChartComponent: FC<ChartProps> = ({ dataset, colors }) => {
   const options = {
     responsive: true,
     plugins: {
@@ -43,10 +43,10 @@ const BarChartComponent: FC<ChartProps> = ({ dataset }) => {
 
   const data = {
     labels: ['Answers'],
-    datasets: dataset.map(option => ({
+    datasets: dataset.map((option, index) => ({
       label: option.label,
       data: [option.count],
-      backgroundColor: `rgba(${Math.random() * 210}, ${Math.random() * 210}, ${Math.random() * 210}, 0.7)`,
+      backgroundColor: colors[index],
     })),
   };
 
