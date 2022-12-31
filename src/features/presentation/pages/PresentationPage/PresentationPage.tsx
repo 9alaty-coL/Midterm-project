@@ -13,7 +13,11 @@ import { Presentation } from 'src/models/presentation';
 import { useMutation } from 'react-query'
 
 const PresentationPageComponent: FC = () => {
-    const { isLoading, isError, data: presentations, refetch } = useQuery<Presentation[]>('getPresentations', PresentationApiService.getPresentations)
+    const { isLoading, isError, data: presentations, refetch } = useQuery<Presentation[]>({
+        queryKey: 'GetPresentations',
+        queryFn: PresentationApiService.getPresentations,
+        refetchOnWindowFocus: false,
+    })
 
     const deletePresentMutation = useMutation(PresentationApiService.removePresentation, {
         onSuccess: async(data: any) => {
@@ -26,11 +30,15 @@ const PresentationPageComponent: FC = () => {
     }
 
     if (isError || presentations == null) {
-        return <h1>Presentation not found</h1>
+        return <>
+            <NewCard totalPresentation={0} type="public"/>
+        </>
     }
 
     if (presentations.length === 0) {
-        return <span>Empty!</span>
+        return <>
+            <NewCard totalPresentation={0} type="public"/>
+        </>    
     }
 
     const deleteHandler = (id: string) => {

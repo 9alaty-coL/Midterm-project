@@ -76,6 +76,17 @@ const AppHeaderComponent: FC = () => {
         <Link
           sx={{ marginLeft: 2 }}
           component={RouterLink}
+          to="/presentation"
+          variant="h5"
+          color="inherit"
+          underline="none"
+          noWrap
+        >
+          Presentation
+        </Link>
+        <Link
+          sx={{ marginLeft: 2 }}
+          component={RouterLink}
           to="/profile"
           variant="h5"
           color="inherit"
