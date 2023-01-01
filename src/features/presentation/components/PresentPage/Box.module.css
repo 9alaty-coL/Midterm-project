@@ -1,0 +1,71 @@
+.box-container {
+    width: 29vw !important;
+    height: 48vh !important;
+    margin: 0.5vw 0.5vw !important;
+}
+
+.box-title {
+    width: 28.6vw !important;
+    height: 6vh !important;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+
+    font-size: 2em;
+    background-color: white;
+    padding-left: 5px;
+    vertical-align: middle;
+
+    margin-bottom: 1px;
+}
+
+.box-icon {
+    font-size: 1em;
+    color: black;
+    right: 0;
+    top: 0;
+}
+
+.box-content {
+    width: 29vw;
+    height: 37vh;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    border-bottom: 1px solid black;
+
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.box-content-high {
+    width: 29vw;
+    height: 41.5vh;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+
+.box-send {
+    width: 29vw;
+    height: 7vh;
+}
+
+.box-input {
+    width: 25.5vw;
+    height: 4vh;
+
+    font-size: 1.2em;
+    border: none;
+    text-indent: 5px;
+}

@@ -6,6 +6,11 @@
   height: 100vh;
   background-color: white;
   z-index: 100;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .presenting__exit {
@@ -43,13 +48,18 @@
   right: 50px;
 }
 
-.presenting__container {
-  position: absolute;
-  top: 100px;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 80vh;
+.presenting__slide_wrapper {
+  width: 70vw;
+  height: 105vh;
+
+  position: relative;
 }
+
+.presenting__box_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+

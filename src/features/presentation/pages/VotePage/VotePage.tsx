@@ -32,6 +32,9 @@ import { useSnackbar } from "notistack";
 import { LocalStorageService } from "src/api/services/local-storage";
 import { AxiosError } from 'axios';
 
+import { ChatBox } from "../../components/PresentPage/ChatBox/ChatBox";
+import { QuestionBox } from "../../components/PresentPage/QuestionBox/QuestionBox";
+
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -138,42 +141,49 @@ const VotePageComponent: FC = () => {
 
   return (
     <div className={styles["presentation"]}>
-      <div className={styles["presentation__name"]}>{detail.name}</div>
-      {isVoted ?
-        <div className={styles['presentation__note']}>
-        Voted successfully! Waiting for next slide...
+      <div className={styles['presentation__content']}>
+        <div className={styles["presentation__name"]}>{detail.name}</div>
+        {isVoted ?
+          <div className={styles['presentation__note']}>
+          Voted successfully! Waiting for next slide...
+        </div>
+        : <FormControl>
+          <FormLabel
+            className={styles["presentation__question"]}
+            id="demo-radio-buttons-group-label"
+          >
+            {slide.question}
+          </FormLabel>
+          <RadioGroup
+            className={styles["presentation__options"]}
+            onChange={voteChangeHandler}
+          >
+            {slide.answers.map((option, index) => (
+              <FormControlLabel
+                className={styles["presentation__option"]}
+                key={index}
+                value={option.id}
+                control={<Radio />}
+                label={option.answer}
+              />
+            ))}
+          </RadioGroup>
+          <Button
+            disabled={isVoting || slide.answers.find(a => a.id === selectedVote) == null}
+            onClick={voteHandler}
+            className={styles["presentation__button"]}
+            type="submit"
+            variant="contained"
+          >
+            {isVoting ? <CircularProgress size={20}/> : 'Submit'}
+          </Button>
+        </FormControl>}
       </div>
-       : <FormControl>
-        <FormLabel
-          className={styles["presentation__question"]}
-          id="demo-radio-buttons-group-label"
-        >
-          {slide.question}
-        </FormLabel>
-        <RadioGroup
-          className={styles["presentation__options"]}
-          onChange={voteChangeHandler}
-        >
-          {slide.answers.map((option, index) => (
-            <FormControlLabel
-              className={styles["presentation__option"]}
-              key={index}
-              value={option.id}
-              control={<Radio />}
-              label={option.answer}
-            />
-          ))}
-        </RadioGroup>
-        <Button
-          disabled={isVoting || slide.answers.find(a => a.id === selectedVote) == null}
-          onClick={voteHandler}
-          className={styles["presentation__button"]}
-          type="submit"
-          variant="contained"
-        >
-          {isVoting ? <CircularProgress size={20}/> : 'Submit'}
-        </Button>
-      </FormControl>}
+      
+      <div className={styles['presentation__box_wrapper']}>
+        <ChatBox side="join"/>
+        <QuestionBox side="join"/>
+      </div>
       <Modal
         open={requireReload}
         onClose={() => {}}

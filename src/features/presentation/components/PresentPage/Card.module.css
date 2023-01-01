@@ -1,0 +1,85 @@
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+
+    margin: 5px;
+}
+
+.card-label {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.card-sender {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.card-sender-answered {
+    font-size: 17px;
+}
+
+.card-time {
+    font-size: 17px;
+}
+
+.card-content {
+    background-color: #e4e4e4;
+    border-radius: 0 25px 25px 25px;
+    font-size: 15px;
+    padding: 3px 0;
+    padding-left: 15px;
+}
+
+.card-question {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #e4e4e4;
+    border-radius: 0 25px 25px 25px;
+    padding: 3px 0;
+}
+
+.card-question-answered {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #f8f8f8;
+    border-radius: 0 25px 25px 25px;
+    padding: 3px 0;
+}
+
+.card-ques {
+    font-size: 15px;
+    padding: 3px 0;
+    padding-left: 15px;
+    background-color: transparent;
+}
+
+.card-ques-answered {
+    font-size: 15px;
+    padding: 3px 0;
+    padding-left: 15px;
+    background-color: transparent;
+    color: #45444492;
+}
+
+.card-vote {
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+
+    margin-right: 15px;
+    min-width: 60px;
+
+    text-align: right;
+}

@@ -1,6 +1,24 @@
 .presentation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  z-index: 100;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.presentation__content {
   display: flex;
   flex-direction: column;
+  gap: 50px;
+  width: 70vw;
+  justify-content: center;
   align-items: center;
 }
 
@@ -40,4 +58,11 @@
 
 .presentation__note {
   font-size: 20px;
+}
+
+.presentation__box_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
 }
