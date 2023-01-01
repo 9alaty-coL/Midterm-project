@@ -1,0 +1,36 @@
+.notification {
+    background-color: #fff;
+    padding: 25px 10px;
+    padding-left: 25px;
+    cursor: pointer;
+    transition: all ease 0.2s;
+    position: relative;
+    border: 1px solid #eee;
+}
+
+.notification:hover {
+    background-color: #eee;
+}
+
+.notification_unread {
+    background-color: rgba(93, 152, 236, 0.358);
+}
+
+.notification__time-ago {
+    color: #666;
+    position: absolute;
+    right: 5px;
+    top: 0px;
+    font-size: 13px;
+}
+
+.dot {
+    position: absolute;
+    background-color: blue;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+}

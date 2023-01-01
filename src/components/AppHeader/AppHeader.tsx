@@ -1,31 +1,91 @@
-import { memo, FC } from 'react';
+import { memo, FC, useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
-  AppBar, Box, Button, Link, Toolbar,
+  AppBar, Badge, Box, Button, CircularProgress, IconButton, Link, Menu, MenuItem, Toolbar,
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'src/store';
 import { User } from 'src/models/user';
 import { logout } from 'src/store/auth/slice';
 import { selectIsAuthorized } from 'src/store/auth/selectors';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { selectIsNotificationLoading, selectNotifications } from 'src/store/notification/selectors';
+import { NotificationsActions } from 'src/store/notification/dispatchers';
+import { Notification } from './Notification/Notification';
+import style from "./AppHeader.module.css";
+import { useInfiniteScroll } from 'src/hooks/useInfiniteScroll';
 
 const AppHeaderComponent: FC = () => {
   const isAuthorized = useAppSelector(selectIsAuthorized)
   const dispatch = useAppDispatch();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const isMenuOpen = Boolean(anchorEl);
+  const { setLastElement } = useInfiniteScroll(() => {
+    dispatch(NotificationsActions.fetchMoreNotifications())
+  });
+
+  useEffect(() => {
+    dispatch(NotificationsActions.fetchNotifications());
+  }, [])
+  const notifications = useAppSelector(selectNotifications);
+  const isNotificationLoading = useAppSelector(selectIsNotificationLoading);
 
   const handleUserLogout = () => {
     dispatch(logout());
   };
 
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={() => setAnchorEl(null)}
+    >
+      <div className={style['notifications']}>
+        {notifications.map((notification, index) => {
+          if (index === notifications.length - 1) {
+            return <Notification key={notification.id} notification={notification} ref={setLastElement} />;
+          }
+          return <Notification key={notification.id} notification={notification} />;
+        })}
+        {isNotificationLoading && <div className={style['circle']}><CircularProgress size={25}/></div>}
+      </div>
+    </Menu>
+  );
+
   const rightSection = isAuthorized ? (
-    <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
-      <Button
+    <>
+      <IconButton
+        size="large"
+        aria-label="show 17 new notifications"
         color="inherit"
-        onClick={handleUserLogout}
-        sx={{ mx: 1 }}
-      >
-        Logout
-      </Button>
-    </Box>
+        onClick={(event: React.MouseEvent<HTMLElement>) => {
+          setAnchorEl(event.currentTarget);
+        }}
+        >
+        <Badge badgeContent={0} color="error">
+          <FontAwesomeIcon icon={faBell} />
+        </Badge>
+      </IconButton>
+      <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
+        <Button
+          color="inherit"
+          onClick={handleUserLogout}
+          sx={{ mx: 1 }}
+          >
+          Logout
+        </Button>
+        {renderMenu}
+      </Box>
+    </>
   ) : (
     <>
     <Button
