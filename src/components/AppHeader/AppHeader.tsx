@@ -1,31 +1,69 @@
-import { memo, FC } from 'react';
+import { memo, FC, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
-  AppBar, Box, Button, Link, Toolbar,
+  AppBar, Badge, Box, Button, IconButton, Link, Menu, MenuItem, Toolbar,
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'src/store';
 import { User } from 'src/models/user';
 import { logout } from 'src/store/auth/slice';
 import { selectIsAuthorized } from 'src/store/auth/selectors';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 const AppHeaderComponent: FC = () => {
   const isAuthorized = useAppSelector(selectIsAuthorized)
   const dispatch = useAppDispatch();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const isMenuOpen = Boolean(anchorEl);
 
   const handleUserLogout = () => {
     dispatch(logout());
   };
 
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={() => setAnchorEl(null)}
+    >
+      
+    </Menu>
+  );
+
   const rightSection = isAuthorized ? (
-    <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
-      <Button
-        color="inherit"
-        onClick={handleUserLogout}
-        sx={{ mx: 1 }}
-      >
-        Logout
-      </Button>
-    </Box>
+    <>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+          onClick={(event: React.MouseEvent<HTMLElement>) => {
+            setAnchorEl(event.currentTarget);
+          }}
+          >
+          <Badge badgeContent={0} color="error">
+            <FontAwesomeIcon icon={faBell} />
+          </Badge>
+      </IconButton>
+      <Box sx={{ display: 'flex', alignItems: 'baseline' }}>
+        <Button
+          color="inherit"
+          onClick={handleUserLogout}
+          sx={{ mx: 1 }}
+          >
+          Logout
+        </Button>
+        {renderMenu}
+      </Box>
+    </>
   ) : (
     <>
     <Button
