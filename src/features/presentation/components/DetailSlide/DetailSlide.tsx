@@ -13,15 +13,19 @@ interface Props {
 }
 
 const DetailSlideComponent: FC<Props> = ({ slide }) => {
-
   if (slide == null) {
     return <h1>Slide not found!</h1>
   }
 
-  return <div className={style['detail-slide']}>
-    <h1 className={style['detail-slide__title']}>{slide.question}</h1>
-    {
-      slide.chartType === 'donut' ? <DonutChart colors={colors} dataset={slide.answers.map(answer => ({
+  let type = 'multi'
+
+  console.log(slide.question)
+
+  return (
+  <div className={style['detail-slide']}>
+    <h1 className={style['detail-slide__title']} style={{fontSize: 40}}>{slide.question}</h1>
+    { type === 'multi' &&
+      (slide.chartType === 'donut' ? <DonutChart colors={colors} dataset={slide.answers.map(answer => ({
         label: answer.answer,
         count: answer.count,
         colors,
@@ -33,10 +37,16 @@ const DetailSlideComponent: FC<Props> = ({ slide }) => {
         label: answer.answer,
         count: answer.count,
         colors,
-      }))} />
+      }))} />)
     }
-
+    {
+      type === 'heading' && <h2 style={{fontSize: 25, whiteSpace: 'pre-line'}}>{slide.question}</h2>
+    }
+    {
+      type === 'paragraph' && <span style={{fontSize: 25, whiteSpace: 'pre-line'}}>{slide.question}</span>
+    }
   </div>
+  )
 }
 
 export const DetailSlide = DetailSlideComponent;

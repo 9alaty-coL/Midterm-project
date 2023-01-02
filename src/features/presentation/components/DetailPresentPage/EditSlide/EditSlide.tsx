@@ -1,14 +1,11 @@
-import { memo, FC } from 'react';
+import { memo, FC, useState } from 'react';
 import style from "./EditSlide.module.css"
 
-import { AnswerField } from './AnswerField/AnswerField';
+import { FormControl, Select, MenuItem, Divider } from "@mui/material"
 
-import { TextField, Button } from "@mui/material"
-
-import BarChartIcon from '@mui/icons-material/BarChart';
-import DataUsageIcon from '@mui/icons-material/DataUsage';
-import PieChartIcon from '@mui/icons-material/PieChart';
-import BubbleChartIcon from '@mui/icons-material/BubbleChart';
+import { MultiChoice } from './Slide/MultiChoice'
+import { Paragraph } from './Slide/Paragraph'
+import { Heading } from './Slide/Heading'
 
 const EditSlideComponent: FC<any> = ({
     slidesControl
@@ -17,62 +14,29 @@ const EditSlideComponent: FC<any> = ({
         return <div className={style['edit-container']}></div>
     }
 
+    // Temp state
+    const [slideType, setSlideType] = useState("multi")
+    // End temp
+
     return (
         <div className={style['edit-container']}>
             <div className={style['edit-wrapper']}>
-                <span className={style['edit-title']}>Your question: </span>
-                <TextField
-                    multiline
-                    maxRows={3}
-                    value={slidesControl.currentSlide.question}
-                    onChange={(event: any) => slidesControl.editSlideQuestion(event.target.value)}
-                />
+                <span className={style['edit-title']}>Slide type: </span>
+                <FormControl fullWidth>
+                    <Select
+                        value={slideType}
+                        onChange={(event: any) => setSlideType(event.target.value)}
+                    >
+                        <MenuItem value="multi">Multiple Choice</MenuItem>
+                        <MenuItem value="para">Paragraph</MenuItem>
+                        <MenuItem value="heading">Heading</MenuItem>
+                    </Select>
+                </FormControl>
             </div>
-            <div className={style['edit-wrapper']}>
-                <span className={style['edit-title']}>Options: </span>
-                {
-                    slidesControl.currentSlide.answers.map(
-                        (answer: any, index: number) => <AnswerField key={index} index={index} answer={answer} slidesControl={slidesControl}/>
-                    )
-                }
-                <Button fullWidth variant="contained" color="info" sx={{fontSize: 20}}
-                    onClick={() => slidesControl.addSlideAnswer()}
-                >
-                    New Option
-                </Button>
-            </div>
-            {/* <div className={style['edit-wrapper']}>
-                <span className={style['edit-title']}>Image: </span>
-                <TextField
-                    // value={value}
-                    // onChange={handleChange}
-                    type="file"
-                />
-            </div> */}
-            <div className={style['edit-btn-container']}>
-                <span className={style['edit-title']}>Result layout: </span>
-                <div className={style['edit-btn-wrapper']}>
-                    <button className={style['edit-btn']} onClick={() => slidesControl.editSlideChartType('bar')}>
-                        <BarChartIcon style={{fontSize: 70}}/>
-                        <span className={style['edit-btn-text']}>Bars chart</span>
-                    </button>
-                    <button className={style['edit-btn']} onClick={() => slidesControl.editSlideChartType('donut')}>
-                        <DataUsageIcon style={{fontSize: 70}}/>
-                        <span className={style['edit-btn-text']}>Donut chart</span>
-                    </button>
-                    <button className={style['edit-btn']} onClick={() => slidesControl.editSlideChartType('pie')}>
-                        <PieChartIcon style={{fontSize: 70}}/>
-                        <span className={style['edit-btn-text']}>Pie chart</span>
-                    </button>
-                    {/* <button className={style['edit-btn']}>
-                        <BubbleChartIcon style={{fontSize: 70}}/>
-                        <span className={style['edit-btn-text']}>Dots chart</span>
-                    </button> */}
-                </div>
-            </div>
-            {/* <div className={style['edit-wrapper']}>
-                <span className={style['edit-title']}>Extra: </span>
-            </div> */}
+            <Divider orientation='horizontal' flexItem style={{marginTop: '20px'}}/>
+            { slideType === 'multi' && <MultiChoice slidesControl={slidesControl} /> }
+            { slideType === 'para' && <Paragraph slidesControl={slidesControl} /> }
+            { slideType === 'heading' && <Heading slidesControl={slidesControl} /> }
         </div>
     );
 };

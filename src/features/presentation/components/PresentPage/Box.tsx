@@ -23,7 +23,6 @@ const BoxComponent: FC<any> = ({
                     </> : <>
                         <span><QuizIcon className={style['box-icon']} /> Question</span>
                         <FormControl size="small">
-                            <InputLabel id="demo-simple-select-label"></InputLabel>
                             <Select
                                 value={sort}
                                 onChange={(event: any) => setSort(event.target.value)}

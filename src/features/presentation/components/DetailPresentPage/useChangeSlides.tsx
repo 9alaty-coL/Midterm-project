@@ -72,6 +72,11 @@ export const useChangeSlides = (initSlides: any) => {
         setSlides([...slides])
     }
 
+    // ChangeSlideType
+    const changeSlideType = (newSlideType: string) => {
+
+    }
+
     return {
         // data
         slides: slides,
@@ -82,7 +87,7 @@ export const useChangeSlides = (initSlides: any) => {
         },
         
         // check changes
-        isChanged: isChanged,
+        isChanged,
         // check push
         pushStatus: {
             isNeedToPush,
@@ -90,17 +95,20 @@ export const useChangeSlides = (initSlides: any) => {
         },
 
         // changeSlide: 
-        initNewSlide: initNewSlide,
-        saveSlides: saveSlides,
-        cancelSlide: cancelSlide,
-        addSlide: addSlide,
-        deleteSlide: deleteSlide,
+        initNewSlide,
+        saveSlides,
+        cancelSlide,
+        addSlide,
+        deleteSlide,
         
         // changeAnswerQuestion: 
-        editSlideQuestion: editSlideQuestion,
-        addSlideAnswer: addSlideAnswer,
-        editSlideAnswer: editSlideAnswer,
-        deleteSlideAnswer: deleteSlideAnswer,
-        editSlideChartType: editSlideChartType,
+        editSlideQuestion,
+        addSlideAnswer,
+        editSlideAnswer,
+        deleteSlideAnswer,
+        editSlideChartType,
+
+        // changeSlideType
+        changeSlideType
     }
 }
