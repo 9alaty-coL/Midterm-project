@@ -1,4 +1,4 @@
-import { memo, FC, useState, useEffect } from 'react';
+import { memo, FC, useState, useEffect, useMemo } from 'react';
 import { Box } from "../Box";
 import { QuestionCard } from "./QuestionCard/QuestionCard";
 
@@ -55,13 +55,13 @@ const QuestionBoxComponent: FC<any> = ({
     const [sort, setSort] = useState('unanswer')
 
     const compareAnswered = (a: any, b: any) => {
-        if (a.isAnswered && !b.isAnswered) return 1;
-        else if (!a.isAnswered && b.isAnswered) return -1;
+        if (!a.isAnswered && b.isAnswered) return 1;
+        else if (a.isAnswered && !b.isAnswered) return -1;
         return 0;
     }
     const compareUnanswer = (a: any, b: any) => {
-        if (!a.isAnswered && b.isAnswered) return 1;
-        else if (a.isAnswered && !b.isAnswered) return -1;
+        if (a.isAnswered && !b.isAnswered) return 1;
+        else if (!a.isAnswered && b.isAnswered) return -1;
         return 0;
     }
     const compareVote = (a: any, b: any) => {
@@ -75,7 +75,7 @@ const QuestionBoxComponent: FC<any> = ({
         return 0;
     }
 
-    useEffect(() => {
+    useMemo(() => {
         switch(sort) {
             case "unanswer": question.sort(compareUnanswer); break;
             case "answered": question.sort(compareAnswered); break;
@@ -89,7 +89,8 @@ const QuestionBoxComponent: FC<any> = ({
         <Box type="ques" side={side} sort={sort} setSort={setSort}>
             {
                 question.map((each: any, index: number) => 
-                    <QuestionCard key={index} sender={each.user} isAnswered={each.isAnswered} time={each.time} vote={each.vote} content={each.content}/>)
+                    <QuestionCard key={index} side={side}
+                        sender={each.user} isAnswered={each.isAnswered} time={each.time} vote={each.vote} content={each.content}/>)
             }
         </Box>
     );

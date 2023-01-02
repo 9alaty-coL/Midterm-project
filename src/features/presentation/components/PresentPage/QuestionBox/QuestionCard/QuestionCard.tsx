@@ -1,9 +1,10 @@
 import { memo, FC } from 'react';
 import style from "../../Card.module.css"
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
-import { Card } from "@mui/material"
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 const QuestionCardComponent: FC<any> = ({
+    side,
     sender,
     isAnswered,
     time,
@@ -18,9 +19,11 @@ const QuestionCardComponent: FC<any> = ({
             </div>
             <div className={style[isAnswered ? 'card-question-answered' : 'card-question']}>
                 <div className={style[isAnswered ? 'card-ques-answered' : 'card-ques']}>{content}</div>
-                <button className={style['card-vote']}>
+                <button className={style['card-vote']} disabled={isAnswered && side === 'present'} onClick={() => console.log("Vote OR Tick")}>
                     {vote}
-                    <ThumbUpIcon fontSize="small"/>
+                    {side === 'join' ? <ThumbUpIcon fontSize="small"/> : 
+                        (!isAnswered ? <CheckCircleOutlineIcon fontSize="small"/>: <></>)}
+                    
                 </button>
             </div>
         </div>

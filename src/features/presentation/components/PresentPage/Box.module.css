@@ -69,3 +69,15 @@
     border: none;
     text-indent: 5px;
 }
+
+.box-btn {
+    font-size: 1.2em;
+    height: 4vh !important;
+    width: 3vw !important;
+    font-weight: bold;
+    border: none;
+}
+
+.box-btn:hover {
+    cursor: pointer;
+}

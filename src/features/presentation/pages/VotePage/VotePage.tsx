@@ -32,6 +32,10 @@ import { useSnackbar } from "notistack";
 import { LocalStorageService } from "src/api/services/local-storage";
 import { AxiosError } from 'axios';
 
+import { Link } from 'react-router-dom';
+import { faX } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { ChatBox } from "../../components/PresentPage/ChatBox/ChatBox";
 import { QuestionBox } from "../../components/PresentPage/QuestionBox/QuestionBox";
 
@@ -142,6 +146,9 @@ const VotePageComponent: FC = () => {
   return (
     <div className={styles["presentation"]}>
       <div className={styles['presentation__content']}>
+        <Link className={styles['presentation__exit']} to='..'>
+            <FontAwesomeIcon icon={faX}/>
+        </Link>
         <div className={styles["presentation__name"]}>{detail.name}</div>
         {isVoted ?
           <div className={styles['presentation__note']}>
