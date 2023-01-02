@@ -32,4 +32,12 @@ export namespace NotificationApiService {
         });
         return data.data.notifications.map(dto => notificationMapper.fromDto(dto));
     }
+
+    export async function notifyUser(userId: string, content: string): Promise<Notification> {
+        const { data } = await http.post<IData<{NotificationSaved: NotificationDto}>>(NOTIFICATION_ROUTE + '/add', {
+            userId,
+            content,
+        })
+        return notificationMapper.fromDto(data.data.NotificationSaved);
+    }
 }

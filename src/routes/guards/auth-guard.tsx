@@ -1,13 +1,18 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import {
   Navigate, Outlet, To, useLocation,
 } from 'react-router-dom';
-import { useAppSelector } from 'src/store';
+import { useAppDispatch, useAppSelector } from 'src/store';
 import { selectIsAuthorized } from 'src/store/auth/selectors';
+import { UserActions } from 'src/store/profile/dispatchers';
 
 export const AuthGuard: FC = () => {
   const isAuthorized = useAppSelector(selectIsAuthorized);
   const location = useLocation();
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(UserActions.fetchProfile())
+  }, [])
 
   const redirect: To = {
     pathname: 'login',

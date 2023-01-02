@@ -1,5 +1,5 @@
 .notifications {
-    height: 500px;
+    max-height: 500px;
     width: 300px;
 }
 
@@ -27,4 +27,13 @@
     display: flex;
     justify-content: center;
     padding: 5px;
+  }
+
+  .notifications__empty {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    color: #999;
   }

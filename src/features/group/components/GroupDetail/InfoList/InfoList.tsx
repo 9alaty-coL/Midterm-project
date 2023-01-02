@@ -23,6 +23,8 @@ interface Props {
     readonly groupId: string;
 
     readonly disabledReAssign: boolean;
+
+    readonly groupName: string;
 }
 
 const InfoListComponent: FC<Props> = ({
@@ -31,6 +33,7 @@ const InfoListComponent: FC<Props> = ({
     allowEdit,
     groupId,
     disabledReAssign,
+    groupName
 }) => {
     const [isOpenDeleting, setOpenDeleting] = useState<boolean>(false)
     const [checkedListID, setCheckedListID] = useState<string[]>([])
@@ -62,7 +65,7 @@ const InfoListComponent: FC<Props> = ({
                 {
                   list.length > 0 ?
                     list.map((member: User['id'], index: number) =>
-                        <InfoCard disabledReAssign={disabledReAssign} groupId={groupId} disabled={!allowEdit} key={index} userId={member} type={type} isSelecting={isOpenDeleting}
+                        <InfoCard groupName={groupName} disabledReAssign={disabledReAssign} groupId={groupId} disabled={!allowEdit} key={index} userId={member} type={type} isSelecting={isOpenDeleting}
                             checkedListID={checkedListID} setCheckedListID={setCheckedListID}
                         />
                     )

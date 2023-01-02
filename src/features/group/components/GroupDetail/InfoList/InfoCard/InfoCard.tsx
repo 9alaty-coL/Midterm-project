@@ -16,6 +16,9 @@ import { group } from 'console';
 import { useSnackbar } from 'notistack';
 import { GroupsActions } from 'src/store/groups/dispatchers';
 import { GroupDetailsActions } from 'src/store/groupDetails/dispatchers';
+import { NotificationApiService } from 'src/api/services/notification-api';
+import { io, Socket } from 'socket.io-client';
+import { NotificationsActions } from 'src/store/notification/dispatchers';
 
 interface Props {
     /** Owner */
@@ -38,6 +41,8 @@ interface Props {
     readonly disabled: boolean;
 
     readonly disabledReAssign: boolean;
+
+    readonly groupName: string;
 }
 
 const InfoCardComponent: FC<Props> = ({
@@ -45,17 +50,21 @@ const InfoCardComponent: FC<Props> = ({
     type,
     isSelecting,
     groupId,
-    checkedListID, setCheckedListID, disabled, disabledReAssign,
+    checkedListID, setCheckedListID, disabled, disabledReAssign, groupName,
 }) => {
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const dispatch = useAppDispatch();
     const user = useAppSelector(state => selectUser(state, userId));
     const isLoadingUser = useAppSelector(selectIsUserLoading);
     const { enqueueSnackbar } = useSnackbar();
-
+    const [socket, setSocket] = useState<Socket>();
+    useEffect(() => {
+      setSocket(io('http://localhost:8080/',  {transports: ['websocket']}))
+    }, [])
     useEffect(() => {
         dispatch(UserActions.fetchUser(userId))
     }, [userId])
+
 
     if (isLoadingUser) {
         return <AppLoadingSpinner />;
@@ -112,7 +121,13 @@ const InfoCardComponent: FC<Props> = ({
                       dispatch(GroupDetailsActions.fetchGroupDetails(groupId))
                       enqueueSnackbar('Assigned to co-owner successfully!', {variant: 'success'})
                     })
-                    .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'success'}))
+                    .then(() => {
+                      NotificationApiService.notifyUser(userId, 'You have been assigned as co-owner in ' + groupName)
+                    })
+                    .then(() => {
+                      socket?.emit("NotifyUser", userId, 'You have been assigned as co-owner in ' + groupName)
+                    })
+                    .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'error'}))
                 }}
                 >Reassign role as co-owner</MenuItem>}
                 {type === 'co-owner' && !disabledReAssign && <MenuItem
@@ -122,7 +137,13 @@ const InfoCardComponent: FC<Props> = ({
                       dispatch(GroupDetailsActions.fetchGroupDetails(groupId))
                       enqueueSnackbar('Assigned to member successfully!', {variant: 'success'})
                     })
-                    .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'success'}))
+                    .then(() => {
+                      NotificationApiService.notifyUser(userId, 'You have been assigned as member in ' + groupName)
+                    })
+                    .then(() => {
+                      socket?.emit("NotifyUser", userId, 'You have been assigned as member in ' + groupName)
+                    })
+                    .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'error'}))
                   }}
                 >Reassign role as member</MenuItem>}
                 <MenuItem onClick={() => {
@@ -132,14 +153,26 @@ const InfoCardComponent: FC<Props> = ({
                         dispatch(GroupDetailsActions.fetchGroupDetails(groupId))
                         enqueueSnackbar('Remove member successfully!', {variant: 'success'})
                       })
-                      .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'success'}))
+                      .then(() => {
+                        NotificationApiService.notifyUser(userId, 'You have been removed from ' + groupName)
+                      })
+                      .then(() => {
+                        socket?.emit("NotifyUser", userId, 'You have been removed from ' + groupName)
+                      })
+                      .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'error'}))
                   } else if (type === 'co-owner') {
                     GroupApiService.removeCoOwner(userId, groupId)
                       .then(() => {
                         dispatch(GroupDetailsActions.fetchGroupDetails(groupId))
                         enqueueSnackbar('Remove co owner successfully!', {variant: 'success'})
                       })
-                      .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'success'}))
+                      .then(() => {
+                        NotificationApiService.notifyUser(userId, 'You have been removed from ' + groupName)
+                      })
+                      .then(() => {
+                        socket?.emit("NotifyUser", userId, 'You have been removed from ' + groupName)
+                      })
+                      .catch(() => enqueueSnackbar('Problem happened. Please try again!', {variant: 'error'}))
                   }
                 }}>Remove from the group</MenuItem>
             </Popover>
