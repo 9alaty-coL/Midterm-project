@@ -33,7 +33,7 @@ const AppHeaderComponent: FC = () => {
     dispatch(UserActions.fetchProfile());
   }, [])
   useEffect(() => {
-    setSocket(io('http://localhost:8080/',  {transports: ['websocket']}))
+    setSocket(io('https://dnlearning-socket-server.onrender.com',  {transports: ['websocket']}))
 }, [])
   const profile = useAppSelector(selectProfile);
   useEffect(() => {

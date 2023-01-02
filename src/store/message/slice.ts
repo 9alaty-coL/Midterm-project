@@ -4,6 +4,8 @@ import { MessagesActions } from './dispatchers';
 
 import { initialState, messageAdapter, State } from './state';
 
+const { selectAll } = messageAdapter.getSelectors()
+
 export const messagesSlice = createSlice({
   name: 'messages',
   initialState,
@@ -25,6 +27,15 @@ export const messagesSlice = createSlice({
     })
     .addCase(MessagesActions.fetchMoreMessages.fulfilled, (state, action) => {
       messageAdapter.addMany(state as State, action.payload)
+      state.error = undefined;
+      state.isLoading = false;
+    })
+    .addCase(MessagesActions.sendMessage.pending, state => {
+      state.error = undefined;
+      state.isLoading = true;
+    })
+    .addCase(MessagesActions.sendMessage.fulfilled, (state, action) => {
+      messageAdapter.setAll(state as State, [action.payload, ...selectAll(state)])
       state.error = undefined;
       state.isLoading = false;
     })

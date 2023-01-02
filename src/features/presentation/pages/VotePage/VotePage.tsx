@@ -188,7 +188,7 @@ const VotePageComponent: FC = () => {
       </div>
       
       <div className={styles['presentation__box_wrapper']}>
-        <ChatBox side="join"/>
+        <ChatBox presentationId={id} side="join"/>
         <QuestionBox side="join"/>
       </div>
       <Modal

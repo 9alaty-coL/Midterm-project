@@ -22,14 +22,15 @@
 }
 
 .card-time {
-    font-size: 17px;
+    font-size: 13px;
 }
 
 .card-content {
     background-color: #e4e4e4;
-    border-radius: 0 25px 25px 25px;
+    border-radius: 0 15px 15px 15px;
     font-size: 15px;
-    padding: 3px 0;
+    padding: 14px 4px;
+    margin-block-end: 10px;
     padding-left: 15px;
 }
 

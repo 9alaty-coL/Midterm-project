@@ -59,7 +59,7 @@ const InfoCardComponent: FC<Props> = ({
     const { enqueueSnackbar } = useSnackbar();
     const [socket, setSocket] = useState<Socket>();
     useEffect(() => {
-      setSocket(io('http://localhost:8080/',  {transports: ['websocket']}))
+      setSocket(io('https://dnlearning-socket-server.onrender.com',  {transports: ['websocket']}))
     }, [])
     useEffect(() => {
         dispatch(UserActions.fetchUser(userId))

@@ -1,15 +1,15 @@
-import { memo, FC } from 'react';
+import { memo, FC, forwardRef } from 'react';
 import style from "../../Card.module.css"
 import { Card } from "@mui/material"
 
-const ChatCardComponent: FC<any> = ({
+export const ChatCard = forwardRef<HTMLDivElement, any>(({
     sender,
     time,
     content
-}) => {
+}, ref) => {
 
     return (
-        <div className={style['card-container']}>
+        <div ref={ref} className={style['card-container']}>
             <div className={style['card-label']}>
                 <div className={style['card-sender']}>{sender}</div>
                 <div className={style['card-time']}>{time}</div>
@@ -17,6 +17,4 @@ const ChatCardComponent: FC<any> = ({
             <div className={style['card-content']}>{content}</div>
         </div>
     );
-};
-
-export const ChatCard = memo(ChatCardComponent);
+});

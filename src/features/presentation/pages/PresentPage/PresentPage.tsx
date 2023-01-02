@@ -38,7 +38,7 @@ const PresentPageComponent: FC = () => {
         </Fab>        
       </div>
       <div className={style['presenting__box_wrapper']}>
-        <ChatBox side="present"/>
+        <ChatBox presentationId={presentation.id} side="present"/>
         <QuestionBox side="present"/>
       </div>
   </div>

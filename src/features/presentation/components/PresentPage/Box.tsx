@@ -5,14 +5,34 @@ import { Paper, Button, FormControl, InputLabel, Select, MenuItem} from "@mui/ma
 import SendIcon from '@mui/icons-material/Send';
 import ChatIcon from '@mui/icons-material/Chat';
 import QuizIcon from '@mui/icons-material/Quiz';
+import { useAppDispatch, useAppSelector } from 'src/store';
+import { UserActions } from 'src/store/profile/dispatchers';
+import { selectProfile } from 'src/store/profile/selectors';
+import { MessagesActions } from 'src/store/message/dispatchers';
 
 const BoxComponent: FC<any> = ({
     type,
     side,
     sort, setSort,
-    children
+    children,
+    presentationId,
 }) => {
+    const dispatch = useAppDispatch()
+    const profile = useAppSelector(selectProfile)
     const [input, setInput] = useState("")
+
+    const submitForm = () => {
+        let name = null;
+        if (profile) {
+            name = profile.firstName + ' ' + profile.lastName;
+        }
+        dispatch(MessagesActions.sendMessage({
+            message: input,
+            createdBy: name,
+            presentationId: presentationId,
+        }))
+        setInput("");
+    }
 
     return (
         <Paper elevation={6} className={style['box-container']}>
@@ -51,9 +71,7 @@ const BoxComponent: FC<any> = ({
                         }}
                         placeholder={type === 'chat' ? "Enter your message" : "Enter your question"}/>      
                     <Button
-                        onClick={() => {
-                            
-                        }}
+                        onClick={submitForm}
                         variant="outlined"
                         style={{maxWidth: '3vw', maxHeight: '4vh', minWidth: '3vw', minHeight: '4vh', fontSize: 20}}
                         >

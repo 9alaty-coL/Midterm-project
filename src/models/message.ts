@@ -1,12 +1,4 @@
-import TimeAgo from 'javascript-time-ago'
-
-// English.
-import en from 'javascript-time-ago/locale/en'
-
-TimeAgo.addDefaultLocale(en)
-
-// Create formatter (English).
-const timeAgo = new TimeAgo('en-US')
+import { timeAgo } from "./notification";
 
 type MessageCreationData = Omit<Message, 'timeAfterCreate'>;
 
@@ -26,4 +18,9 @@ export class Message {
     get timeAfterCreate(): string {
         return timeAgo.format(this.createdAt)
     }
+}
+
+export type PostMessage = Pick<Message, 'message'> & {
+    presentationId: string,
+    createdBy: string | null,
 }

@@ -6,7 +6,7 @@ import en from 'javascript-time-ago/locale/en'
 TimeAgo.addDefaultLocale(en)
 
 // Create formatter (English).
-const timeAgo = new TimeAgo('en-US')
+export const timeAgo = new TimeAgo('en-US')
 
 
 type NotificationCreationData = Omit<Notification, 'timeAfterCreate'>;

@@ -1,5 +1,5 @@
-import { Message } from "src/models/message";
-import { MessageDto } from "../dtos/message-dto";
+import { Message, PostMessage } from "src/models/message";
+import { MessageDto, PostMessageDto } from "../dtos/message-dto";
 import { IMapperFromDto } from "./mappers";
 
 class MessageMapper implements IMapperFromDto<MessageDto, Message> {
@@ -10,6 +10,14 @@ class MessageMapper implements IMapperFromDto<MessageDto, Message> {
             createdAt: new Date(dto.createdAt),
             createdBy: dto.createdUserName,
         })
+    }
+
+    toPostDto(data: PostMessage): PostMessageDto {
+        return {
+            message: data.message,
+            createdUserName: data.createdBy ?? 'anonymous',
+            presentationId: data.presentationId,
+        }
     }
 }
 

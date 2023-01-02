@@ -4,3 +4,7 @@ export interface MessageDto {
     createdUserName: string;
     createdAt: string;
 }
+
+export type PostMessageDto = Pick<MessageDto, 'message' | 'createdUserName'> & {
+    presentationId: string;
+}
