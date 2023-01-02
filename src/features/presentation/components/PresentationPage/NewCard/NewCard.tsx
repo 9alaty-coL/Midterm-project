@@ -43,10 +43,13 @@ const NewCardComponent: FC<any> = ({
     return (
         <div className={style['container']}>
             { type === "public" && <span className={style['title']}>You have {totalPresentation} public presentations</span> }
-            { type === "group" &&  <span className={style['title']}>Your group has {totalPresentation} presentations</span> }
-            <IconButton onClick={() => setOpen(true)}>
-                <ControlPointIcon sx={{fontSize: 40}}/>
-            </IconButton>
+            { type === "group" &&  <span className={style['title']}>You are owner or co-owner of {totalPresentation} group presentations</span> }
+            {
+                type === "public" && <IconButton onClick={() => setOpen(true)}>
+                    <ControlPointIcon sx={{fontSize: 30}}/>
+                </IconButton>
+            }
+            
             <Modal
                 open={open}
                 onClose={() => setOpen(false)}

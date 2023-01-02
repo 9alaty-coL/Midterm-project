@@ -2,7 +2,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap: 15px;
     width: 100%;
+}
+
+.tab-label {
+    font-size: 1.5em;
+    width: 125px;
 }

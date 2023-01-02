@@ -3,6 +3,8 @@ import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 import { PresentationCard } from '../../components/PresentationPage/PresentationCard/PresentationCard'
 import { NewCard } from '../../components/PresentationPage/NewCard/NewCard'
 
+import { Box, Tabs, Tab, Divider } from "@mui/material"
+
 import style from "./PresentationPage.module.css";
 
 import { PresentationApiService } from 'src/api/services/presentation-api'
@@ -25,6 +27,8 @@ const PresentationPageComponent: FC = () => {
         }
     })
 
+    const [tab, setTab] = useState(0)
+
     if (isLoading) {
         return <AppLoadingSpinner />
     }
@@ -46,10 +50,25 @@ const PresentationPageComponent: FC = () => {
     }
 
     return (
+
         <div className={style['presentation-container']}>
-            <NewCard totalPresentation={presentations.length} type="public"/>
+            <Box sx={{ borderColor: 'divider', display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '20px', width: '70vw'}}>
+                <Tabs value={tab} onChange={(event: any, num: number) => setTab(num) } sx={{width: '400px'}}>
+                    <Tab label="Public" className={style['tab-label']} />
+                    <Tab label="Group" className={style['tab-label']} />    
+                </Tabs>
+                <Divider orientation='vertical' variant="middle" flexItem />
+                <NewCard totalPresentation={presentations.length} type={tab === 0 ? "public" : "group"}/>
+            </Box>
             {
-                presentations.map((each: Presentation) => <PresentationCard key={each.id} presentation={each} deleteHandler={() => deleteHandler(each.id)}/>)
+                tab === 0 &&
+                presentations.map((each: Presentation) => <PresentationCard key={each.id} type="public" isOwned={true} presentation={each} deleteHandler={() => deleteHandler(each.id)}/>)
+                // presentations.map((each: Presentation) => !each.isPrivate && <PresentationCard key={each.id} type="public" isOwned={true} presentation={each} deleteHandler={() => deleteHandler(each.id)}/>)
+            }
+            {
+                tab === 1 &&
+                presentations.map((each: Presentation) => <PresentationCard key={each.id} type="group" isOwned={false} presentation={each} deleteHandler={() => deleteHandler(each.id)}/>)
+                // presentations.map((each: Presentation) => each.isPrivate && <PresentationCard key={each.id} type="group" isOwned={true} presentation={each} deleteHandler={() => deleteHandler(each.id)}/>)
             }
         </div>
     )
