@@ -14,22 +14,42 @@ import { NotificationsActions } from 'src/store/notification/dispatchers';
 import { Notification } from './Notification/Notification';
 import style from "./AppHeader.module.css";
 import { useInfiniteScroll } from 'src/hooks/useInfiniteScroll';
+import { io, Socket } from 'socket.io-client';
+import { UserActions } from 'src/store/profile/dispatchers';
+import { selectProfile } from 'src/store/profile/selectors';
 
 const AppHeaderComponent: FC = () => {
   const isAuthorized = useAppSelector(selectIsAuthorized)
-  const dispatch = useAppDispatch();
+    const [ socket, setSocket ] = useState<Socket>();
+    const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
   const { setLastElement } = useInfiniteScroll(() => {
     dispatch(NotificationsActions.fetchMoreNotifications())
   });
-
+  
   useEffect(() => {
     dispatch(NotificationsActions.fetchNotifications());
+    dispatch(UserActions.fetchProfile());
   }, [])
+  useEffect(() => {
+    setSocket(io('http://localhost:8080/',  {transports: ['websocket']}))
+}, [])
+  const profile = useAppSelector(selectProfile);
+  useEffect(() => {
+    if (profile && socket) {
+      socket.emit("AddUser", profile.id)
+    }
+  }, [socket, profile])
+  useEffect(() => {
+    socket?.on("Notify", message => {
+      console.log(message)
+      dispatch(NotificationsActions.fetchNotifications())
+      dispatch(UserActions.fetchProfile())
+    })
+  }, [socket])
   const notifications = useAppSelector(selectNotifications);
   const isNotificationLoading = useAppSelector(selectIsNotificationLoading);
-
   const handleUserLogout = () => {
     dispatch(logout());
   };
@@ -50,6 +70,7 @@ const AppHeaderComponent: FC = () => {
       onClose={() => setAnchorEl(null)}
     >
       <div className={style['notifications']}>
+        {notifications.length === 0 && !isNotificationLoading && <i className={style['notifications__empty']}>Empty!</i>}
         {notifications.map((notification, index) => {
           if (index === notifications.length - 1) {
             return <Notification key={notification.id} notification={notification} ref={setLastElement} />;
