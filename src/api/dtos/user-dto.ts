@@ -10,4 +10,5 @@ export interface UserDto extends RegisterAccountDto {
     readonly co_owner: GroupDto[];
     readonly member: GroupDto[];
   }
+  unread_count?: number;
 }

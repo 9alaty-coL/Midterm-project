@@ -17,6 +17,7 @@ class UserMapper implements IMapperFromDto<UserDto, User> {
       owner: dto.roles.owner.map(groupDto => groupMapper.fromDto(groupDto)),
       co_owner: dto.roles.co_owner.map(groupDto => groupMapper.fromDto(groupDto)),
       member: dto.roles.member.map(groupDto => groupMapper.fromDto(groupDto)),
+      unreadCount: dto.unread_count
     }
   }
 }

@@ -7,4 +7,5 @@ export interface User extends RegisterAccount {
   readonly owner: Group[];
   readonly co_owner: Group[];
   readonly member: Group[];
+  unreadCount?: number;
 }

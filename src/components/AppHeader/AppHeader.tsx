@@ -92,7 +92,7 @@ const AppHeaderComponent: FC = () => {
           setAnchorEl(event.currentTarget);
         }}
         >
-        <Badge badgeContent={0} color="error">
+        <Badge badgeContent={profile?.unreadCount ?? 0} color="error">
           <FontAwesomeIcon icon={faBell} />
         </Badge>
       </IconButton>
