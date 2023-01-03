@@ -10,6 +10,7 @@ import { notificationsSlice } from './notification/slice';
 
 import { postsSlice } from './posts/slice';
 import { userSlice } from './profile/slice';
+import { questionsSlice } from './question/slice';
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     user: userSlice.reducer,
     notifications: notificationsSlice.reducer,
     messages: messagesSlice.reducer,
+    questions: questionsSlice.reducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware({
     // We need to disable this check to allow ES6 classes in Redux.

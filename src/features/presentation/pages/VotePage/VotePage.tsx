@@ -189,7 +189,7 @@ const VotePageComponent: FC = () => {
       
       <div className={styles['presentation__box_wrapper']}>
         <ChatBox presentationId={id} side="join"/>
-        <QuestionBox side="join"/>
+        <QuestionBox presentationId={id} side="join"/>
       </div>
       <Modal
         open={requireReload}
