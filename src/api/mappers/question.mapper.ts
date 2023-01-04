@@ -1,5 +1,5 @@
-import { Question } from "src/models/question";
-import { QuestionDto } from "../dtos/question-dto";
+import { PostQuestion, Question } from "src/models/question";
+import { PostQuestionDto, QuestionDto } from "../dtos/question-dto";
 import { IMapperFromDto } from "./mappers";
 
 class QuestionMapper implements IMapperFromDto<QuestionDto, Question> {
@@ -13,6 +13,14 @@ class QuestionMapper implements IMapperFromDto<QuestionDto, Question> {
             description: dto.description,
             createdUserName: dto.createdUserName,
         })
+    }
+
+    toPostDto(data: PostQuestion): PostQuestionDto {
+      return {
+        description: data.description,
+        presentationId: data.presentationId,
+        createdUserName: data.createdUserName ?? '',
+      }
     }
 }
 

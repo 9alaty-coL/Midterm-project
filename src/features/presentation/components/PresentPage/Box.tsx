@@ -1,4 +1,4 @@
-import { memo, FC, useState } from 'react';
+import { memo, FC, useState, useEffect } from 'react';
 import style from "./Box.module.css"
 
 import { Paper, Button, FormControl, InputLabel, Select, MenuItem} from "@mui/material"
@@ -9,6 +9,14 @@ import { useAppDispatch, useAppSelector } from 'src/store';
 import { UserActions } from 'src/store/profile/dispatchers';
 import { selectProfile } from 'src/store/profile/selectors';
 import { MessagesActions } from 'src/store/message/dispatchers';
+import { QuestionsActions } from 'src/store/question/dispatchers';
+import { Socket, io } from 'socket.io-client';
+import { PostQuestion, Question } from 'src/models/question';
+import { PostMessage, Message } from 'src/models/message';
+import { MessageApiService } from 'src/api/services/message-api';
+import { pushMessage } from 'src/store/message/slice';
+import { QuestionApiService } from 'src/api/services/question-api';
+import { pushQuestion } from 'src/store/question/slice';
 
 const BoxComponent: FC<any> = ({
     type,
@@ -20,17 +28,54 @@ const BoxComponent: FC<any> = ({
     const dispatch = useAppDispatch()
     const profile = useAppSelector(selectProfile)
     const [input, setInput] = useState("")
+    const [socket, setSocket] = useState<Socket>();
+
+    useEffect(() => {
+      setSocket(io('http://localhost:8080',  {transports: ['websocket']}))
+    }, [])
+
+    useEffect(() => {
+      socket?.emit(type === 'ques' ? "AddQuestionBox" : "AddMessageBox", presentationId);
+    }, [socket, presentationId])
+
+    useEffect(() => {
+      if (type === 'ques') {
+        socket?.on("ReceiveQuestionBox", (question: Question) => {
+          dispatch(pushQuestion(question))
+        })
+      } else if (type === 'chat') {
+        socket?.on("ReceiveMessageBox", (message: Message) => {
+          dispatch(pushMessage(message))
+        })
+      }
+    }, [socket])
 
     const submitForm = () => {
         let name = null;
         if (profile) {
             name = profile.firstName + ' ' + profile.lastName;
         }
-        dispatch(MessagesActions.sendMessage({
+        if (type === "chat") {
+          const sendMessageData = {
             message: input,
             createdBy: name,
             presentationId: presentationId,
-        }))
+        }
+          MessageApiService.sendMessage(sendMessageData)
+            .then(newMessage => {
+              socket?.emit("SendMessage", presentationId, newMessage)
+            })
+        } else if (type === "ques") {
+          const sendQuestionData = {
+            description: input,
+            createdUserName: name,
+            presentationId: presentationId,
+          }
+          QuestionApiService.sendQuestions(sendQuestionData)
+            .then(newQuestion => {
+              socket?.emit("SendQuestion", presentationId, newQuestion);
+            })
+        }
         setInput("");
     }
 
@@ -63,13 +108,12 @@ const BoxComponent: FC<any> = ({
                 (type === 'chat' || (type === 'ques' && side === 'join')) && <div className={style['box-send']}>
                     <input className={style['box-input']}
                         value={input} onChange={(event: any) => setInput(event.target.value)}
-                        onKeyDown={(event: any) => { 
+                        onKeyDown={(event: any) => {
                             if (event.key === "Enter") {
-                                console.log(input)
-                                setInput("")
+                                submitForm()
                             }
                         }}
-                        placeholder={type === 'chat' ? "Enter your message" : "Enter your question"}/>      
+                        placeholder={type === 'chat' ? "Enter your message" : "Enter your question"}/>
                     <Button
                         onClick={submitForm}
                         variant="outlined"

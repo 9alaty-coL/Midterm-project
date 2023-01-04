@@ -9,9 +9,17 @@ import { presentationMapper } from '../mappers/presentation.mapper'
 const PRESENTATION_ROUTE = 'api/presentation'
 
 export namespace PresentationApiService {
+  // Public presentation
     export async function getPresentations(): Promise<Presentation[]> {
-        const { data } = await http.get<IData<{ createdByUserPresentations: PresentationDto[] }>>(PRESENTATION_ROUTE + '/all')
-        return data.data.createdByUserPresentations.map(dto => presentationMapper.fromDto(dto))
+        const { data } = await http.get<IData<{ publicPresentations: PresentationDto[] }>>(PRESENTATION_ROUTE + '/all')
+        return data.data.publicPresentations.map(dto => presentationMapper.fromDto(dto))
+    }
+
+
+    //Private presentation
+    export async function getGroupPresentations(): Promise<Presentation[]> {
+      const { data } = await http.get<IData<{ privatePresentations: PresentationDto[] }>>(PRESENTATION_ROUTE + '/all')
+      return data.data.privatePresentations.map(dto => presentationMapper.fromDto(dto))
     }
 
     export async function getPresentationById(id: string): Promise<Presentation> {
@@ -26,6 +34,7 @@ export namespace PresentationApiService {
         )
         return data
     }
+
     export async function changePresentationSlide(currentSlideId: Slide['id'], presentationId: Presentation['id']): Promise<Presentation> {
         const { data } = await http.patch<IData<{ updatedPresentation: PresentationDto}>>(PRESENTATION_ROUTE + '/currentSlide', {
             currSlideId: currentSlideId,

@@ -25,4 +25,7 @@ export class Question {
     }
 }
 
-export type PostQuestion = Pick<Question, 'description'>;
+export type PostQuestion = Pick<Question, 'description'> & {
+  createdUserName: string | null;
+  presentationId: string;
+};

@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Message, PostMessage } from 'src/models/message';
 
 import { MessagesActions } from './dispatchers';
 
@@ -10,6 +11,9 @@ export const messagesSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
+    pushMessage(state, action: PayloadAction<Message>) {
+      messageAdapter.setAll(state as State, [action.payload , ...selectAll(state)])
+    }
   },
   extraReducers: builder => builder
     .addCase(MessagesActions.fetchMessages.pending, state => {
@@ -35,8 +39,10 @@ export const messagesSlice = createSlice({
       state.isLoading = true;
     })
     .addCase(MessagesActions.sendMessage.fulfilled, (state, action) => {
-      messageAdapter.setAll(state as State, [action.payload, ...selectAll(state)])
+      // messageAdapter.setAll(state as State, [action.payload, ...selectAll(state)])
       state.error = undefined;
       state.isLoading = false;
     })
 });
+
+export const { pushMessage } = messagesSlice.actions;

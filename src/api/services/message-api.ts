@@ -10,7 +10,7 @@ const INITIAL_INDEX = 0;
 
 const MESSAGE_ROUTE = 'api/chat';
 
-const ANONYMOUS_NAME = 'ANONYMOUS_NAME';
+export const ANONYMOUS_NAME = 'ANONYMOUS_NAME';
 
 export namespace MessageApiService {
     let currentPageIndex = INITIAL_INDEX;
@@ -39,12 +39,12 @@ export namespace MessageApiService {
         if (messagePost.createdBy == null) {
             let name = localStorage.getItem(ANONYMOUS_NAME);
             if (name == null) {
-                name = `Anonymous ${Math.ceil(Math.random() * 1000)}` 
+                name = `Anonymous ${Math.ceil(Math.random() * 1000)}`
                 localStorage.setItem(ANONYMOUS_NAME, name);
             }
             messagePost.createdBy = name;
         }
-        const { data } = await http.post<IData<{ChatSaved: MessageDto}>>(MESSAGE_ROUTE + '/add', 
+        const { data } = await http.post<IData<{ChatSaved: MessageDto}>>(MESSAGE_ROUTE + '/add',
             messageMapper.toPostDto(messagePost),
         )
         return messageMapper.fromDto(data.data.ChatSaved);

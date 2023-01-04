@@ -55,9 +55,9 @@ const QuestionBoxComponent: FC<any> = ({
     }, [sort, question]);
 
     return (
-        <Box type="ques" side={side} sort={sort} setSort={setSort}>
+        <Box presentationId={presentationId} type="ques" side={side} sort={sort} setSort={setSort}>
             {
-                question.map((each, index) => 
+                question.map((each, index) =>
                     <QuestionCard key={index} side={side}
                         sender={each.createdUserName} isAnswered={each.isAnswered} time={each.timeAfterCreate} vote={each.voteCount} content={each.description}/>)
             }

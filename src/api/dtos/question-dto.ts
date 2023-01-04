@@ -7,3 +7,7 @@ export interface QuestionDto {
     voteCount: number;
     createdUserName: string;
 }
+
+export type PostQuestionDto = Pick<QuestionDto, 'description' | 'createdUserName'> & {
+  presentationId: string;
+}

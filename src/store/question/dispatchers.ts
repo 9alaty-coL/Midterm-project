@@ -7,7 +7,7 @@ export namespace QuestionsActions {
     QuestionApiService.getQuestions(presentationId)
   );
 
-  // export const sendQuestion = createAsyncThunk('questions/send', (question: PostQuestion) =>
-  //   QuestionApiService.sendQuestion(question)
-  // )
+  export const sendQuestion = createAsyncThunk('questions/send', (question: PostQuestion) =>
+    QuestionApiService.sendQuestions(question)
+  )
 }
