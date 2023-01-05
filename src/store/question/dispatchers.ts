@@ -10,4 +10,17 @@ export namespace QuestionsActions {
   export const sendQuestion = createAsyncThunk('questions/send', (question: PostQuestion) =>
     QuestionApiService.sendQuestions(question)
   )
+
+  export const markAsAnswered = createAsyncThunk('questions/mark', (questionId: string) =>
+    QuestionApiService.markAsAnswered(questionId)
+  )
+
+  export const voteQuestion = createAsyncThunk('questions/vote', (data: VoteQuestion) =>
+    QuestionApiService.voteQuestion(data.questionId, data.userId)
+  )
+}
+
+interface VoteQuestion {
+  questionId: string,
+  userId: string | null,
 }

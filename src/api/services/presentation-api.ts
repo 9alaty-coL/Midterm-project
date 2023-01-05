@@ -61,7 +61,6 @@ export namespace PresentationApiService {
                 presentationId: info.presentationId,
                 newName: info.newName
             })
-        console.log(info)
         return data
     }
 

@@ -41,7 +41,6 @@ const InviteEmailComponent: FC = () => {
                         UserApiService.sendInvitation(email, params.groupId ?? '').then(() => {
                             enqueueSnackbar('Send invitation successfully (Remember to check your spam)', {variant: 'success'})
                         }).catch((error) => {
-                            console.log(error)
                             if (error instanceof AxiosError) {
                                 enqueueSnackbar(error.response?.data.message, {variant: 'error'})
                             }

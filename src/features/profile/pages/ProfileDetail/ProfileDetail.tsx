@@ -26,7 +26,6 @@ const ProfileDetailComponent: FC<Props> = ({
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        console.log(newProfile)
         dispatch(UserActions.updateProfile(newProfile))
     }
 

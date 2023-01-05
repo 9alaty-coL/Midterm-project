@@ -13,6 +13,12 @@ export const questionsSlice = createSlice({
   reducers: {
     pushQuestion(state, action: PayloadAction<Question>) {
       questionAdapter.setAll(state as State, [action.payload, ...selectAll(state)])
+    },
+    markQuestion(state, action: PayloadAction<Question>) {
+      questionAdapter.updateOne(state as State, {
+        id: action.payload.id,
+        changes: action.payload,
+      });
     }
   },
   extraReducers: builder => builder
@@ -36,4 +42,4 @@ export const questionsSlice = createSlice({
     })
 });
 
-export const { pushQuestion } = questionsSlice.actions
+export const { pushQuestion, markQuestion } = questionsSlice.actions

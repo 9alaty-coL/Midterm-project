@@ -16,7 +16,7 @@ import { PostMessage, Message } from 'src/models/message';
 import { MessageApiService } from 'src/api/services/message-api';
 import { pushMessage } from 'src/store/message/slice';
 import { QuestionApiService } from 'src/api/services/question-api';
-import { pushQuestion } from 'src/store/question/slice';
+import { markQuestion, pushQuestion } from 'src/store/question/slice';
 
 const BoxComponent: FC<any> = ({
     type,
@@ -24,6 +24,7 @@ const BoxComponent: FC<any> = ({
     sort, setSort,
     children,
     presentationId,
+    updateQuestion,
 }) => {
     const dispatch = useAppDispatch()
     const profile = useAppSelector(selectProfile)
@@ -31,7 +32,7 @@ const BoxComponent: FC<any> = ({
     const [socket, setSocket] = useState<Socket>();
 
     useEffect(() => {
-      setSocket(io('https://dnlearning-socket-server.onrender.com',  {transports: ['websocket']}))
+      setSocket(io('http://localhost:8080',  {transports: ['websocket']}))
     }, [])
 
     useEffect(() => {
@@ -39,15 +40,27 @@ const BoxComponent: FC<any> = ({
     }, [socket, presentationId])
 
     useEffect(() => {
+      if (updateQuestion) {
+        socket?.emit("UpdateQuestion", presentationId, updateQuestion)
+      }
+    }, [updateQuestion])
+
+    useEffect(() => {
       if (type === 'ques') {
         socket?.on("ReceiveQuestionBox", (question: Question) => {
           dispatch(pushQuestion(question))
+        })
+
+        socket?.on("PollQuestion", (polledQuestion: Question) => {
+          console.log('polled: ', polledQuestion)
+          dispatch(markQuestion(polledQuestion))
         })
       } else if (type === 'chat') {
         socket?.on("ReceiveMessageBox", (message: Message) => {
           dispatch(pushMessage(message))
         })
       }
+
     }, [socket])
 
     const submitForm = () => {

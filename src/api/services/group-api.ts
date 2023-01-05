@@ -27,7 +27,6 @@ export namespace GroupApiService {
 
   export async function getGroupById(id: Group['id']): Promise<Group> {
     const { data } = await http.get<IData<{group: GroupDto}>>(`${GROUP_DETAIL_ROUTE}/${id}`);
-    console.log(data)
     return groupMapper.fromDto(data.data.group);
   }
 

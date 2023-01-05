@@ -60,8 +60,6 @@ export const useChangeSlides = (initSlides: any) => {
     const editSlideAnswer = (indexAnswer: number, answer: string) => {
         slides[currentIndex - 1].answers[indexAnswer].answer = answer
         setSlides([...slides])
-        console.log(slides[0].answers[0].answer)
-        console.log(savedSlides[0].answers[0].answer)
     }
     const deleteSlideAnswer = (indexAnswer: number) => {
         slides[currentIndex - 1].answers.splice(indexAnswer, 1)

@@ -26,4 +26,19 @@ export namespace QuestionApiService{
       const { data } = await http.post<IData<{QuestionSaved: QuestionDto}>>(QUESTION_ROUTE + '/' + 'add', questionMapper.toPostDto(questionPost));
       return questionMapper.fromDto(data.data.QuestionSaved);
     }
+
+    export async function markAsAnswered(questionId: string): Promise<Question> {
+        const { data } = await http.patch<IData<{ updatedQuestion: QuestionDto }>>(QUESTION_ROUTE + '/' + 'markAsAnswered', {
+            questionId,
+        })
+        return questionMapper.fromDto(data.data.updatedQuestion);
+    }
+
+    // User id is null with Anonymous
+    export async function voteQuestion(questionId: string, userId: string | null): Promise<Question> {
+        const { data } = await http.patch<IData<{ updatedQuestion: QuestionDto }>>(QUESTION_ROUTE + '/' + 'vote', {
+            questionId, userId
+        });
+        return questionMapper.fromDto(data.data.updatedQuestion);
+    }
 }

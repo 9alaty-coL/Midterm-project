@@ -14,6 +14,7 @@ const QuestionBoxComponent: FC<any> = ({
     const [sort, setSort] = useState('unanswer')
     const dispatch = useAppDispatch();
     const [question, setQuestion] = useState<Question[]>([]);
+    const [updateQuestion, setUpdateQuestion] = useState<Question>();
 
     useEffect(() => {
         setQuestion(questionData)
@@ -55,10 +56,10 @@ const QuestionBoxComponent: FC<any> = ({
     }, [sort, question]);
 
     return (
-        <Box presentationId={presentationId} type="ques" side={side} sort={sort} setSort={setSort}>
+        <Box presentationId={presentationId} type="ques" side={side} sort={sort} setSort={setSort} updateQuestion={updateQuestion}>
             {
                 question.map((each, index) =>
-                    <QuestionCard key={index} side={side}
+                    <QuestionCard key={index} side={side} questionId={each.id} setUpdateQuestion={setUpdateQuestion}
                         sender={each.createdUserName} isAnswered={each.isAnswered} time={each.timeAfterCreate} vote={each.voteCount} content={each.description}/>)
             }
         </Box>

@@ -19,8 +19,6 @@ const DetailSlideComponent: FC<Props> = ({ slide }) => {
 
   let type = 'multi'
 
-  console.log(slide.question)
-
   return (
   <div className={style['detail-slide']}>
     <h1 className={style['detail-slide__title']} style={{fontSize: 40}}>{slide.question}</h1>

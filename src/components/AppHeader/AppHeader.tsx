@@ -43,7 +43,6 @@ const AppHeaderComponent: FC = () => {
   }, [socket, profile])
   useEffect(() => {
     socket?.on("Notify", message => {
-      console.log(message)
       dispatch(NotificationsActions.fetchNotifications())
       dispatch(UserActions.fetchProfile())
     })
