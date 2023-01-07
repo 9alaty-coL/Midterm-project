@@ -6,7 +6,7 @@ import { PresentationApiService } from 'src/api/services/presentation-api'
 
 import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 import { NewCard } from '../NewCard/NewCard'
-import { PresentationCard } from '../PresentationCard/PresentationCard'
+import { PrivateCard } from '../PresentationCard/PrivateCard'
 
 import { selectProfile } from 'src/store/profile/selectors';
 import { useAppSelector } from 'src/store';
@@ -18,7 +18,7 @@ const PrivatePresentComponent: FC<any> = ({
     const profile = useAppSelector(selectProfile);
 
     const { isLoading, isError, data: presentations, refetch } = useQuery<Presentation[]>({
-        queryKey: 'GetGroupPresentations',
+        queryKey: 'getPrivatePresent',
         queryFn: PresentationApiService.getGroupPresentations,
         refetchOnWindowFocus: false,
         onSuccess: (data) => {
@@ -41,17 +41,17 @@ const PrivatePresentComponent: FC<any> = ({
         return <>{ tab === 1 && <AppLoadingSpinner /> } </>
     }
 
-    if (isError || presentations == null) {
+    if (isError || presentations == null || profile === null ) {
         return <>{ tab === 1 && <NewCard totalPresentation={0} type="public"/> } </>
     }
 
     if (presentations.length === 0) {
         return <>{ tab === 1 && <NewCard totalPresentation={0} type="public"/>} </>    
-    }   
+    }
 
     return <>
         {
-            tab === 1 && presentations.map((each: Presentation) => <PresentationCard key={each.id} type="group" isOwned={profile!.id === each.createdBy} presentation={each} deleteHandler={() => deleteHandler(each.id)}/>)
+            tab === 1 && presentations.map((each: Presentation) => <PrivateCard key={each.id} isOwned={profile!.id === each.createdBy} presentation={each} deleteHandler={() => deleteHandler(each.id)}/>)
         }
     </>
 }

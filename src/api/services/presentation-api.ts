@@ -109,9 +109,9 @@ export namespace PresentationApiService {
         )
         return data
     }
-    export async function isGroupPresenting(groupId: string): Promise<boolean> {
+    export async function getGroupPresenting(groupId: string): Promise<any> {
         const  { data } = await http.get<IData<{isPresenting: boolean}>>(PRESENTATION_ROUTE + "/isGroupPresenting/" + groupId)
-        return data.data.isPresenting;
+        return data.data;
     }
 
     // Present

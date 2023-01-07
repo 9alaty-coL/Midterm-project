@@ -1,5 +1,4 @@
-import { FC, memo, useEffect, useState } from 'react';
-import { PresentationCard } from '../../components/PresentationPage/PresentationCard/PresentationCard'
+import { FC, memo, useState } from 'react';
 import { NewCard } from '../../components/PresentationPage/NewCard/NewCard'
 
 import { PublicPresent } from '../../components/PresentationPage/PublicPresent/PublicPresent'

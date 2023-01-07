@@ -9,6 +9,7 @@ import style from './GroupDetail.module.css';
 import { GroupInfo } from './GroupInfo/GroupInfo';
 import { InfoList } from './InfoList/InfoList';
 import { InviteEmail } from './InviteEmail/InviteEmail';
+import { CreatePrivate } from "./CreatePrivate/CreatePrivate"
 
 interface Props {
 
@@ -35,7 +36,7 @@ const GroupDetailComponent: FC<Props> = ({ group }) => {
     <div className={style['group-detail-container']}>
       <GroupInfo group={group}/>
       <InviteEmail />
-      {/* <CreatePrivate /> */}
+      <CreatePrivate group={group}/>
       <InfoList groupName={group.name} groupId={group.id} disabledReAssign={group.ownerId !== me.id} allowEdit={group.ownerId === me.id} type='co-owner' list={group.coOwnerId}/>
       <InfoList groupName={group.name} groupId={group.id} disabledReAssign={group.ownerId !== me.id} allowEdit={group.coOwnerId.includes(me.id) || group.ownerId === me.id} type='member' list={group.memberId}/>
     </div>
