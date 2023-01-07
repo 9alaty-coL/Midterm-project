@@ -9,12 +9,7 @@ import { Box, Tabs, Tab, Divider } from "@mui/material"
 
 import style from "./PresentationPage.module.css";
 
-import { selectProfile } from 'src/store/profile/selectors';
-import { useAppSelector } from 'src/store';
-
 const PresentationPageComponent: FC = () => {
-    const profile = useAppSelector(selectProfile);
-
     const [tab, setTab] = useState(0)
     const [publicCount, setPublicCount] = useState(0)
     const [groupCount, setGroupCount] = useState(0)

@@ -6,9 +6,11 @@ import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 
-import { useNavigate } from "react-router-dom"
-import { Presentation } from 'src/models/presentation';
+import { useNavigate } from "react-router-dom";
 import { Answer, Slide } from 'src/models/slide';
+
+import { useQuery, useMutation } from 'react-query'
+import { PresentationApiService } from 'src/api/services/presentation-api'
 
 const PresentationCardComponent: FC<any> = ({
     presentation,
@@ -17,6 +19,14 @@ const PresentationCardComponent: FC<any> = ({
     isOwned
 }) => {
     const navigate = useNavigate();
+
+    // const { data: isPresenting, refetch } = useQuery<boolean>({
+    //     queryKey: 'IsPresenting',
+    //     queryFn: () => {
+    //         PresentationApiService.getIsPresenting
+    //     },
+    //     refetchOnWindowFocus: false,
+    // })
 
     const [ isDeleting, setDeleting ] = useState(false)
 
@@ -27,6 +37,8 @@ const PresentationCardComponent: FC<any> = ({
             , 0)
         , 0);
     }
+
+    // const checkIsPresenting = ()
 
     return (
         <Paper elevation={2} className={style['card-container']}>
