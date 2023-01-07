@@ -20,13 +20,11 @@ const PresentationCardComponent: FC<any> = ({
 }) => {
     const navigate = useNavigate();
 
-    // const { data: isPresenting, refetch } = useQuery<boolean>({
-    //     queryKey: 'IsPresenting',
-    //     queryFn: () => {
-    //         PresentationApiService.getIsPresenting
-    //     },
-    //     refetchOnWindowFocus: false,
-    // })
+    const { data: isPresenting, refetch } = useQuery<boolean>({
+        queryKey: 'IsPresenting',
+        queryFn: PresentationApiService.getIsPresenting.bind(null, presentation.id),
+        refetchOnWindowFocus: false,
+    })
 
     const [ isDeleting, setDeleting ] = useState(false)
 
@@ -45,7 +43,7 @@ const PresentationCardComponent: FC<any> = ({
             <IconButton onClick={() => {
                 if ((type === 'public' && isOwned) || (type === 'group' && !presentation.isPresent) )
                     navigate('/presentation/edit/' + presentation.id + '/present')
-                else 
+                else
                     navigate('/presentation/edit/' + presentation.id)
             }}>
                 { type === 'public' && isOwned && <PlayCircleOutlineIcon sx={{fontSize: 50}} />}
@@ -65,7 +63,7 @@ const PresentationCardComponent: FC<any> = ({
                 <span className={style['card-vote-text']}><b>{countVoted()}</b> voted</span>
             </div>
             <Divider orientation="vertical" flexItem />
-            <IconButton onClick={() => {deleteHandler(); setDeleting(true)}} disabled={isDeleting}> 
+            <IconButton onClick={() => {deleteHandler(); setDeleting(true)}} disabled={isDeleting}>
                 {!isDeleting && <BackspaceIcon sx={{fontSize: 50}} />}
                 {isDeleting && <CircularProgress sx={{fontSize: 50}}/>}
             </IconButton>

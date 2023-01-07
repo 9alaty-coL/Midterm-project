@@ -108,8 +108,8 @@ export namespace PresentationApiService {
         return data
     }
     export async function isGroupPresenting(groupId: string): Promise<boolean> {
-        const  { data } = await http.get<any>(PRESENTATION_ROUTE + "/isGroupPresenting/" + groupId)
-        return data
+        const  { data } = await http.get<IData<{isPresenting: boolean}>>(PRESENTATION_ROUTE + "/isGroupPresenting/" + groupId)
+        return data.data.isPresenting;
     }
 
     // Present
@@ -118,17 +118,17 @@ export namespace PresentationApiService {
         return data.data.isPresenting;
     }
 
-    export async function present(presentationId: string): Promise<any> {
-        const { data } = await http.patch<any>(PRESENTATION_ROUTE + '/present', {
-            presentationId,
-        })
-        return data
+    export async function present(presentationId: string): Promise<Presentation> {
+      const { data } = await http.patch<IData<{updatedPresentation: Presentation}>>(PRESENTATION_ROUTE + '/present', {
+          presentationId
+      })
+      return data.data.updatedPresentation;
     }
 
     export async function stopPresent(presentationId: string): Promise<any> {
-        const { data } = await http.patch<any>(PRESENTATION_ROUTE + '/present', {
-            presentationId,
-        })
-        return data
+      const { data } = await http.patch<IData<{updatedPresentation: Presentation}>>(PRESENTATION_ROUTE + '/stopPresent', {
+        presentationId,
+      })
+      return data.data.updatedPresentation;
     }
 }
