@@ -113,9 +113,9 @@ export namespace PresentationApiService {
     }
 
     // Present
-    export async function isPresenting(presentationId: string): Promise<boolean> {
-        const  { data } = await http.get<any>(PRESENTATION_ROUTE + "/isPresenting/" + presentationId)
-        return data
+    export async function getIsPresenting(presentationId: string): Promise<boolean> {
+        const { data } = await http.get<IData<{isPresenting: boolean}>>(PRESENTATION_ROUTE + "/isPresenting/" + presentationId);
+        return data.data.isPresenting;
     }
 
     export async function present(presentationId: string): Promise<any> {
