@@ -11,6 +11,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { AuthApi } from "src/api/services/auth-api"
 import { useAppDispatch } from 'src/store';
 import { AuthActions } from 'src/store/auth/dispatchers';
+import { Link } from 'react-router-dom';
 
 // Template from MUI docs: https://mui.com/getting-started/templates/
 const LoginPageComponent: FC = () => {
@@ -33,7 +34,8 @@ const LoginPageComponent: FC = () => {
         </Typography>
         <LoginForm />
       </Box>
-      <div style={{display: 'flex', justifyContent: 'center'}}>
+      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+        <Link style={{marginBottom: '10px'}} to={'/forgot-password'} >Forgot password?</Link>
       <GoogleLogin
         onSuccess={credentialResponse => {
           dispatch(AuthActions.loginGoogle(credentialResponse.credential ?? ''))
