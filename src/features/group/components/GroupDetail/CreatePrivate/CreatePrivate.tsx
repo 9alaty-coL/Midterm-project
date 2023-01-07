@@ -1,7 +1,5 @@
 import { memo, useState, FC } from 'react';
 
-import { Presentation } from 'src/models/presentation';
-
 import { Paper, Modal, Box, TextField, Button } from "@mui/material"
 import { IconButton } from "@mui/material"
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
@@ -12,6 +10,10 @@ import { PresentationApiService } from 'src/api/services/presentation-api';
 
 import style from './CreatePrivate.module.css';
 import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
+
+import { selectProfile } from 'src/store/profile/selectors';
+import { useAppSelector } from 'src/store';
+import { Presentation } from 'src/models/presentation';
 
 const modalStyle = {
     position: 'absolute' as 'absolute',
@@ -29,7 +31,11 @@ const modalStyle = {
     justifyContent: 'center'
 };
 
+
+
 const CreatePrivateComponent: FC<any> = ({ group }) => {
+    const profile = useAppSelector(selectProfile);
+
     const navigate = useNavigate()
 
     const [open, setOpen] = useState(false);
@@ -38,7 +44,8 @@ const CreatePrivateComponent: FC<any> = ({ group }) => {
     const { isLoading, isError, data: presentingInfo } = useQuery<any>({
         queryKey: 'GetGroupPresentations',
         queryFn: PresentationApiService.getGroupPresenting.bind(null, group.id),
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        onSuccess: (data) => console.log(data)
     })
 
     const createGroupPresentMutation = useMutation(PresentationApiService.createGroupPresentation, {
@@ -46,6 +53,12 @@ const CreatePrivateComponent: FC<any> = ({ group }) => {
           navigate('/presentation/edit/' + data.data.presentationSaved._id)
         }
     })
+    
+    const isAbleToCreate = (): boolean => {
+        if (profile === undefined || profile === null) return false
+        return (profile!.owner.filter((each: any) => each.id === group.id).length > 0 
+            || profile!.co_owner.filter((each: any) => each.id === group.id).length > 0)
+    }
 
     if (isLoading) {
         return <AppLoadingSpinner />;
@@ -64,16 +77,18 @@ const CreatePrivateComponent: FC<any> = ({ group }) => {
         <div className={style['list-header']}>
             <div className={style['list-title']}>
                 Group presentation 
-                <IconButton onClick={() => setOpen(true)}>
-                    <ControlPointIcon sx={{fontSize: 30}}/>
-                </IconButton>
+                {
+                    isAbleToCreate() && <IconButton onClick={() => setOpen(true)}>
+                        <ControlPointIcon sx={{fontSize: 30}}/>
+                    </IconButton>
+                }
             </div>
         </div>
         <div className={style['list-body']}>
             {
                 presentingInfo.isPresenting ? 
-                <span>{presentingInfo.groupPresentingPresentation.name} is being presented in this group</span> :
-                <span>No presentation is presenting . . .</span>
+                <span style={{fontSize: '20px'}}>Presentation <b>{presentingInfo.groupPresentingPresentation[0].name}</b> is being presented in this group!</span> :
+                <span style={{fontSize: '20px'}}>No presentation is presenting . . .</span>
             }
         </div>
         <Modal

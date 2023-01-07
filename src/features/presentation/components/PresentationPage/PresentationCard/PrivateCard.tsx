@@ -17,7 +17,6 @@ import { GroupApiService } from 'src/api/services/group-api';
 import { selectProfile } from 'src/store/profile/selectors';
 import { useAppSelector } from 'src/store';
 import { Presentation } from 'src/models/presentation';
-import { User } from 'src/models/user'
 
 import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 
