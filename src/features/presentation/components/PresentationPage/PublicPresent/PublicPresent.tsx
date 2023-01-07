@@ -21,6 +21,10 @@ const PublicPresentComponent: FC<any> = ({
         queryKey: 'GetPresentations',
         queryFn: PresentationApiService.getPresentations,
         refetchOnWindowFocus: false,
+        onSuccess: (data) => {
+            if (data === null || data === undefined) setPublicCount(0)
+            else setPublicCount(data.length)
+        }
     })
 
     const deletePresentMutation = useMutation(PresentationApiService.removePresentation, {
@@ -41,11 +45,11 @@ const PublicPresentComponent: FC<any> = ({
         return <>{ tab === 0 && <NewCard totalPresentation={0} type="public"/> } </>
     }
 
-    setPublicCount(presentations.length)
-
     if (presentations.length === 0) {
         return <>{ tab === 0 && <NewCard totalPresentation={0} type="public"/> }</>
     }   
+
+    console.log(presentations)
 
     return <>
         {

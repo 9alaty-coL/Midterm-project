@@ -21,6 +21,10 @@ const PrivatePresentComponent: FC<any> = ({
         queryKey: 'GetGroupPresentations',
         queryFn: PresentationApiService.getGroupPresentations,
         refetchOnWindowFocus: false,
+        onSuccess: (data) => {
+            if (data === null || data === undefined) setGroupCount(0)
+            else setGroupCount(data.length)
+        }
     })
 
     const deletePresentMutation = useMutation(PresentationApiService.removePresentation, {
@@ -40,8 +44,6 @@ const PrivatePresentComponent: FC<any> = ({
     if (isError || presentations == null) {
         return <>{ tab === 1 && <NewCard totalPresentation={0} type="public"/> } </>
     }
-
-    setGroupCount(presentations.length)
 
     if (presentations.length === 0) {
         return <>{ tab === 1 && <NewCard totalPresentation={0} type="public"/>} </>    

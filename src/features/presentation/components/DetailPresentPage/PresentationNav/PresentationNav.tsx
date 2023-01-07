@@ -13,6 +13,8 @@ import { IconButton, Button, CircularProgress, Divider, Snackbar, Alert } from '
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { useNavigate } from 'react-router-dom'
+import { useMutation } from 'react-query';
+import { PresentationApiService } from 'src/api/services/presentation-api'
 
 const PresentationNavComponent: FC<any> = ({
     id,
@@ -25,6 +27,15 @@ const PresentationNavComponent: FC<any> = ({
 
     const [isEditName, setEditName] = useState(false)
     const [isOpenSnackbar, setOpenSnackbar] = useState(false)
+
+    const mutatePresenting = useMutation(PresentationApiService.present)
+    useEffect(() => {
+        if (mutatePresenting.isSuccess) {
+            navigate('present', {
+                replace: false,
+            })
+        }
+    }, [mutatePresenting.isSuccess]);
 
     return (
         <div className={style['nav-container']}>
@@ -73,10 +84,12 @@ const PresentationNavComponent: FC<any> = ({
                         Share
                     </Button>
                 </CopyToClipboard>
-                <Button variant="contained" color='info' startIcon={slidesControl.pushStatus.isNeedToPush ? <CircularProgress size={15} color="primary"/>: <PlayArrowIcon />} sx={{width: 100}} 
-                    onClick={() => navigate('present', {
-                        replace: false,
-                    })}
+                <Button variant="contained" color='info' 
+                    startIcon={(slidesControl.pushStatus.isNeedToPush || mutatePresenting.isLoading) ? 
+                        <CircularProgress size={15} sx={{color: 'white'}}/>: 
+                        <PlayArrowIcon />} 
+                        sx={{width: 100}} 
+                    onClick={() => mutatePresenting.mutate(id)}
                     disabled={slidesControl.isChanged() || slidesControl.pushStatus.isNeedToPush}
                 >
                     Present

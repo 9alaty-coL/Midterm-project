@@ -84,26 +84,28 @@ export namespace PresentationApiService {
         )
         return data
     }
-    export async function addCollaborator(presentationId: string, email: string): Promise<any> {
+    export async function addCollaborator(info: any): Promise<any> {
         const { data } = await http.patch<any>(PRESENTATION_ROUTE + '/addCollaborators', {
-            presentationId,
-            email
+            presentationId: info.presentationId,
+            email: info.email
         })
         return data
     }
-    export async function removeCollaborator(presentationId: string, email: string): Promise<any> {
+    export async function removeCollaborator(info: any): Promise<any> {
         const { data } = await http.patch<any>(PRESENTATION_ROUTE + '/removeCollaborators', {
-            presentationId,
-            email
+            presentationId: info.presentationId,
+            email: info.email
         })
         return data
     }
 
     // Group
-    export async function createGroupPresentation(name: string, groupId: string): Promise<any> {
+    export async function createGroupPresentation(info: any): Promise<any> {
         const { data } = await http.post(
-            PRESENTATION_ROUTE + "/createPrivate",
-            { name, groupId },
+            PRESENTATION_ROUTE + "/createPrivate", { 
+                name: info.name, 
+                groupId: info.groupId
+            },
         )
         return data
     }
