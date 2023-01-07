@@ -23,7 +23,7 @@ const ResetPasswordPageComponent: FC = () => {
       <div style={{fontSize: 25}}>UserID: {params.userID}</div>
       <div style={{fontSize: 25}}>Token: {params.token}</div>
     </div>
-    
+
   );
 }
 

@@ -37,11 +37,21 @@ export namespace UserApiService {
   }
 
   export async function updateUserInfo(userId: User['id'], accountData: UpdateAccount): Promise<User> {
-    const { data } = await http.put<IData<{ updatedUser: UserDto}>>('/api/user/updateInfo', 
+    const { data } = await http.put<IData<{ updatedUser: UserDto}>>('/api/user/updateInfo',
     {
       userId: userId,
       ...accountMapper.toUpdateAccountDto(accountData),
     });
     return userMapper.fromDto(data.data.updatedUser);
+  }
+
+  export async function updatePassword(password: string, token: string, userId: string): Promise<string> {
+    const { data } = await http.patch<string>(USER_ROUTE + '/' + 'resetPassword', {
+      token,
+      userId,
+      password,
+    })
+
+    return data;
   }
 }

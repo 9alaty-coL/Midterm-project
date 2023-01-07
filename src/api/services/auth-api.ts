@@ -2,6 +2,7 @@ import { Account, RegisterAccount } from 'src/models/account';
 import { Token } from 'src/models/token';
 
 import { http } from '..';
+import { IData } from '../dtos/data-dto';
 import { TokenDto } from '../dtos/token-dto';
 import { accountMapper } from '../mappers/account.mapper';
 import { tokenMapper } from '../mappers/token.mapper';
@@ -9,6 +10,7 @@ import { tokenMapper } from '../mappers/token.mapper';
 const LOGIN_ROUTE = 'api/auth/signin/';
 const LOGIN_GOOGLE_ROUTE = 'api/auth/signin/google/'
 const REGISTER_ROUTE = 'api/auth/signup/';
+const RESET_PASSWORD_ROUTE = 'api/auth/resetpassword/';
 const REGISTER_GOOGLE_ROUTE = 'api/auth/signin/google/'
 
 /** Auth API. */
@@ -60,5 +62,10 @@ export namespace AuthApi {
   /** Logs the current user out. */
   export function logout(): Promise<void> {
     return Promise.resolve();
+  }
+
+  export async function resetPassword(email: string): Promise<string> {
+    const { data } = await http.post<{message: string}>(RESET_PASSWORD_ROUTE, {email})
+    return data.message;
   }
 }

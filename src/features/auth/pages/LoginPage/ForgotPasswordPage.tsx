@@ -10,9 +10,9 @@ import { GoogleLogin } from '@react-oauth/google';
 
 import { useAppDispatch } from 'src/store';
 import { AuthActions } from 'src/store/auth/dispatchers';
+import { ForgotPasswordForm } from '../../components/ForgotPasswordForm/LoginForm';
 
 const ForgotPasswordPageComponent: FC = () => {
-  const dispatch = useAppDispatch();
   return (
     <Container maxWidth="xs">
       <Box
@@ -29,7 +29,7 @@ const ForgotPasswordPageComponent: FC = () => {
         <Typography component="h1" variant="h5">
           Forgot Password
         </Typography>
-        {/* <ForgotPasswordForm /> */}
+        <ForgotPasswordForm />
       </Box>
     </Container>
   );
