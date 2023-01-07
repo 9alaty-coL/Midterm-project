@@ -35,6 +35,7 @@ const GroupDetailComponent: FC<Props> = ({ group }) => {
     <div className={style['group-detail-container']}>
       <GroupInfo group={group}/>
       <InviteEmail />
+      {/* <CreatePrivate /> */}
       <InfoList groupName={group.name} groupId={group.id} disabledReAssign={group.ownerId !== me.id} allowEdit={group.ownerId === me.id} type='co-owner' list={group.coOwnerId}/>
       <InfoList groupName={group.name} groupId={group.id} disabledReAssign={group.ownerId !== me.id} allowEdit={group.coOwnerId.includes(me.id) || group.ownerId === me.id} type='member' list={group.memberId}/>
     </div>

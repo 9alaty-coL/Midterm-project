@@ -4,7 +4,6 @@ import style from "./PresentationCard.module.css"
 import { Paper, Divider, IconButton, CircularProgress } from "@mui/material"
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import BackspaceIcon from '@mui/icons-material/Backspace';
-import CoPresentIcon from '@mui/icons-material/CoPresent';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 
 import { useNavigate } from "react-router-dom"
@@ -32,16 +31,15 @@ const PresentationCardComponent: FC<any> = ({
     return (
         <Paper elevation={2} className={style['card-container']}>
             <IconButton onClick={() => {
-                if (true)
+                if ((type === 'public' && isOwned) || (type === 'group' && !presentation.isPresent) )
                     navigate('/presentation/edit/' + presentation.id + '/present')
                 else 
                     navigate('/presentation/edit/' + presentation.id)
             }}>
                 { type === 'public' && isOwned && <PlayCircleOutlineIcon sx={{fontSize: 50}} />}
                 { type === 'public' && !isOwned && <DriveFileRenameOutlineIcon sx={{fontSize: 50}} />}
-                { type === 'group' && <PlayCircleOutlineIcon sx={{fontSize: 50}} />}
-                {/* { type === 'group' && !presentation.isPresent && <PlayCircleOutlineIcon sx={{fontSize: 50}} />}
-                { type === 'group' && presentation.isPresent && <CoPresentIcon sx={{fontSize: 50}} />} */}
+                { type === 'group' && !presentation.isPresent && <PlayCircleOutlineIcon sx={{fontSize: 50}} />}
+                { type === 'group' && presentation.isPresent && <DriveFileRenameOutlineIcon sx={{fontSize: 50}} />}
             </IconButton>
             <Divider orientation="vertical" flexItem />
             <div className={style['info-wrapper']}>

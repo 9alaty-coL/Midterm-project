@@ -8,8 +8,13 @@ class PresentationMapper implements IMapperFromDto<PresentationDto, Presentation
     return {
       id: dto._id,
       name: dto.name,
+      isPrivate: dto.isPrivate,
+      isPresenting: dto.isPresenting,
+      createdBy: dto.createdBy,
+      groupId: dto.groupId,
       current: dto.currentSlide._id,
       slides: dto.slides.map(slideDto => slideMapper.fromDto(slideDto)),
+      collaborators: dto.collaborators
     }
   } 
 }

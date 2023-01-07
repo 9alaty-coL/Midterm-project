@@ -2,11 +2,16 @@ export interface Answer {
   readonly id?: string;
   answer: string;
   count: number;
+  answersList: any[];
 }
 
 export interface Slide {
   id?: string;
+  slideType: string;
   question: string;
-  answers: Answer[];
+  paragraph: string;
+  subheading: string;
   chartType: string;
+  answers: Answer[];
+  answeredUser: string[];
 }

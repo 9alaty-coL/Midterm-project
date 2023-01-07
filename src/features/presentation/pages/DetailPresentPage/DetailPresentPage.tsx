@@ -35,8 +35,13 @@ const DetailPresentPageComponent: FC = () => {
     const [ presentation, setPresentation ] = useState<Presentation>({
         id: '123',
         name: '',
+        isPrivate: false,
+        isPresenting: false,
+        groupId: '',
+        createdBy: '',
         current: '-1',
-        slides: []
+        slides: [],
+        collaborators: []
     })
     const slidesControl = useChangeSlides(presentation.slides)
 

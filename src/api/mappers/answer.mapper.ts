@@ -8,6 +8,7 @@ class AnswerMapper implements IMapperFromDto<AnswerDto, Answer> {
       id: dto._id,
       answer: dto.answer,
       count: dto.count,
+      answersList: dto.answersList
     }
   }
 }

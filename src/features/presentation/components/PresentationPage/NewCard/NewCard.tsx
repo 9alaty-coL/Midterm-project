@@ -26,8 +26,9 @@ const modalStyle = {
 };
 
 const NewCardComponent: FC<any> = ({
-    totalPresentation,
-    type
+    type,
+    publicCount,
+    groupCount
 }) => {
     const navigate = useNavigate()
 
@@ -42,8 +43,8 @@ const NewCardComponent: FC<any> = ({
 
     return (
         <div className={style['container']}>
-            { type === "public" && <span className={style['title']}>You have {totalPresentation} public presentations</span> }
-            { type === "group" &&  <span className={style['title']}>You are owner or co-owner of {totalPresentation} group presentations</span> }
+            { type === "public" && <span className={style['title']}>You have {publicCount} public presentations</span> }
+            { type === "group" &&  <span className={style['title']}>You are owner or co-owner of {groupCount} group presentations</span> }
             {
                 type === "public" && <IconButton onClick={() => setOpen(true)}>
                     <ControlPointIcon sx={{fontSize: 30}}/>

@@ -1,53 +1,23 @@
 import { FC, memo, useEffect, useState } from 'react';
-import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 import { PresentationCard } from '../../components/PresentationPage/PresentationCard/PresentationCard'
 import { NewCard } from '../../components/PresentationPage/NewCard/NewCard'
+
+import { PublicPresent } from '../../components/PresentationPage/PublicPresent/PublicPresent'
+import { PrivatePresent } from '../../components/PresentationPage/PrivatePresent/PrivatePresent'
 
 import { Box, Tabs, Tab, Divider } from "@mui/material"
 
 import style from "./PresentationPage.module.css";
 
-import { PresentationApiService } from 'src/api/services/presentation-api'
-
-import { useQuery } from 'react-query';
-import { Presentation } from 'src/models/presentation';
-
-import { useMutation } from 'react-query'
+import { selectProfile } from 'src/store/profile/selectors';
+import { useAppSelector } from 'src/store';
 
 const PresentationPageComponent: FC = () => {
-    const { isLoading, isError, data: presentations, refetch } = useQuery<Presentation[]>({
-        queryKey: 'GetPresentations',
-        queryFn: PresentationApiService.getPresentations,
-        refetchOnWindowFocus: false,
-    })
-
-    const deletePresentMutation = useMutation(PresentationApiService.removePresentation, {
-        onSuccess: async(data: any) => {
-          refetch()
-        }
-    })
+    const profile = useAppSelector(selectProfile);
 
     const [tab, setTab] = useState(0)
-
-    if (isLoading) {
-        return <AppLoadingSpinner />
-    }
-
-    if (isError || presentations == null) {
-        return <>
-            <NewCard totalPresentation={0} type="public"/>
-        </>
-    }
-
-    if (presentations.length === 0) {
-        return <>
-            <NewCard totalPresentation={0} type="public"/>
-        </>    
-    }
-
-    const deleteHandler = (id: string) => {
-        deletePresentMutation.mutate(id)
-    }
+    const [publicCount, setPublicCount] = useState(0)
+    const [groupCount, setGroupCount] = useState(0)
 
     return (
 
@@ -58,18 +28,10 @@ const PresentationPageComponent: FC = () => {
                     <Tab label="Group" className={style['tab-label']} />    
                 </Tabs>
                 <Divider orientation='vertical' variant="middle" flexItem />
-                <NewCard totalPresentation={presentations.length} type={tab === 0 ? "public" : "group"}/>
+                <NewCard type={tab === 0 ? "public" : "group"} publicCount={publicCount} groupCount={groupCount}/>
             </Box>
-            {
-                tab === 0 &&
-                presentations.map((each: Presentation) => <PresentationCard key={each.id} type="public" isOwned={true} presentation={each} deleteHandler={() => deleteHandler(each.id)}/>)
-                // presentations.map((each: Presentation) => !each.isPrivate && <PresentationCard key={each.id} type="public" isOwned={true} presentation={each} deleteHandler={() => deleteHandler(each.id)}/>)
-            }
-            {
-                tab === 1 &&
-                presentations.map((each: Presentation) => <PresentationCard key={each.id} type="group" isOwned={false} presentation={each} deleteHandler={() => deleteHandler(each.id)}/>)
-                // presentations.map((each: Presentation) => each.isPrivate && <PresentationCard key={each.id} type="group" isOwned={true} presentation={each} deleteHandler={() => deleteHandler(each.id)}/>)
-            }
+            <PublicPresent tab={tab} setPublicCount={setPublicCount}/>
+            <PrivatePresent tab={tab} setGroupCount={setGroupCount}/>
         </div>
     )
 }

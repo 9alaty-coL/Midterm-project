@@ -9,12 +9,11 @@ import { presentationMapper } from '../mappers/presentation.mapper'
 const PRESENTATION_ROUTE = 'api/presentation'
 
 export namespace PresentationApiService {
-  // Public presentation
+    // Public presentation
     export async function getPresentations(): Promise<Presentation[]> {
         const { data } = await http.get<IData<{ publicPresentations: PresentationDto[] }>>(PRESENTATION_ROUTE + '/all')
         return data.data.publicPresentations.map(dto => presentationMapper.fromDto(dto))
     }
-
 
     //Private presentation
     export async function getGroupPresentations(): Promise<Presentation[]> {
@@ -25,14 +24,6 @@ export namespace PresentationApiService {
     export async function getPresentationById(id: string): Promise<Presentation> {
         const { data } = await http.get<IData<{ presentation: PresentationDto }>>(PRESENTATION_ROUTE + '/' + id)
         return presentationMapper.fromDto(data.data.presentation);
-    }
-
-    export async function createPresentation(name: string): Promise<any> {
-        const { data } = await http.post(
-            PRESENTATION_ROUTE + "/create",
-            { name },
-        )
-        return data
     }
 
     export async function changePresentationSlide(currentSlideId: Slide['id'], presentationId: Presentation['id']): Promise<Presentation> {
@@ -82,6 +73,62 @@ export namespace PresentationApiService {
                     presentationId
                 }
             })
+        return data
+    }
+
+    // Public
+    export async function createPresentation(name: string): Promise<any> {
+        const { data } = await http.post(
+            PRESENTATION_ROUTE + "/create",
+            { name },
+        )
+        return data
+    }
+    export async function addCollaborator(presentationId: string, email: string): Promise<any> {
+        const { data } = await http.patch<any>(PRESENTATION_ROUTE + '/addCollaborators', {
+            presentationId,
+            email
+        })
+        return data
+    }
+    export async function removeCollaborator(presentationId: string, email: string): Promise<any> {
+        const { data } = await http.patch<any>(PRESENTATION_ROUTE + '/removeCollaborators', {
+            presentationId,
+            email
+        })
+        return data
+    }
+
+    // Group
+    export async function createGroupPresentation(name: string, groupId: string): Promise<any> {
+        const { data } = await http.post(
+            PRESENTATION_ROUTE + "/createPrivate",
+            { name, groupId },
+        )
+        return data
+    }
+    export async function isGroupPresenting(groupId: string): Promise<boolean> {
+        const  { data } = await http.get<any>(PRESENTATION_ROUTE + "/isGroupPresenting/" + groupId)
+        return data
+    }
+
+    // Present
+    export async function isPresenting(presentationId: string): Promise<boolean> {
+        const  { data } = await http.get<any>(PRESENTATION_ROUTE + "/isPresenting/" + presentationId)
+        return data
+    }
+
+    export async function present(presentationId: string): Promise<any> {
+        const { data } = await http.patch<any>(PRESENTATION_ROUTE + '/present', {
+            presentationId,
+        })
+        return data
+    }
+
+    export async function stopPresent(presentationId: string): Promise<any> {
+        const { data } = await http.patch<any>(PRESENTATION_ROUTE + '/present', {
+            presentationId,
+        })
         return data
     }
 }
