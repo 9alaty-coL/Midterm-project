@@ -81,7 +81,7 @@ export namespace GroupApiService {
 
   export async function deleteGroup(groupId: string): Promise<any> {
     const { data } = await http.delete(
-      '/api/groups/delete',
+      '/api/group/delete',
       {
           data: {
             groupId
