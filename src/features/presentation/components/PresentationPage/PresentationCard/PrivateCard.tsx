@@ -85,14 +85,14 @@ const PrivateCardComponent: FC<any> = ({
                     disabled={presentation.isPresenting || (!mutatePresenting.isLoading)}
                 >
                     { presentation.isPresenting && <CoPresentIcon sx={{fontSize: '50px'}} />}
-                    { !presentation.isPresent && <PlayCircleOutlineIcon sx={{fontSize: 50}} />}
+                    { !presentation.isPresenting && <PlayCircleOutlineIcon sx={{fontSize: 50}} />}
                 </IconButton>
             }
            
             <Divider orientation="vertical" flexItem />
             <div className={style['info-wrapper']}>
                 <span className={style['card-tittle']} onClick={() => navigate('/presentation/edit/' + presentation.id)}>
-                    {presentation.name}
+                    {presentation.name} {presentation.isPresenting && <span className={style['card-present']}>- Presenting</span>}
                 </span>
                 <span className={style['card-text']}>{presentation.slides.length} slides</span>
                 <span className={style['card-text']}>

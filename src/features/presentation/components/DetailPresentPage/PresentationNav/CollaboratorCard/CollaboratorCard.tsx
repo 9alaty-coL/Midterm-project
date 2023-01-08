@@ -13,7 +13,8 @@ import { PresentationApiService } from 'src/api/services/presentation-api'
 
 const CollaboratorCardComponent: FC<any> = ({
     collaborator,
-    presentationId
+    presentationId,
+    isOwned
 }) => {
     const mutateDeleteCollaborator = useMutation(PresentationApiService.removeCollaborator, {
         onSuccess: () => {
@@ -29,16 +30,21 @@ const CollaboratorCardComponent: FC<any> = ({
             <div className={style['card-name']}>{collaborator.firstname} {collaborator.lastname}</div>
             <div className={style['card-email']}>{collaborator.email}</div>
         </div>
-        <Divider />
-        <IconButton onClick={() => mutateDeleteCollaborator.mutate({
-                presentationId, email: collaborator.email
-            })} 
-            disabled={mutateDeleteCollaborator.isLoading} 
-            sx={{color: '#EB455F', width: '70px'}}
-        >
-            {!mutateDeleteCollaborator.isLoading && <BackspaceIcon sx={{fontSize: '50px'}} />}
-            {mutateDeleteCollaborator.isLoading && <CircularProgress sx={{fontSize: '50px'}}/>}
-        </IconButton>
+        {
+            isOwned && <>
+                <Divider orientation='vertical'/>
+                <IconButton onClick={() => mutateDeleteCollaborator.mutate({
+                        presentationId, email: collaborator.email
+                    })} 
+                    disabled={mutateDeleteCollaborator.isLoading} 
+                    sx={{color: '#EB455F', width: '70px'}}
+                >
+                    {!mutateDeleteCollaborator.isLoading && <BackspaceIcon sx={{fontSize: '50px'}} />}
+                    {mutateDeleteCollaborator.isLoading && <CircularProgress sx={{fontSize: '50px'}}/>}
+                </IconButton>
+            </>
+        }
+
     </Paper>)
 };
 

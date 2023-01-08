@@ -46,6 +46,7 @@ const PresentationNavComponent: FC<any> = ({
     nameControl,
     slidesControl,
     isPrivate,
+    isOwned,
     collaborators
 }) => {
     const navigate = useNavigate()
@@ -140,7 +141,7 @@ const PresentationNavComponent: FC<any> = ({
                         <PlayArrowIcon />} 
                         sx={{width: 100}} 
                     onClick={() => mutatePresenting.mutate(id)}
-                    disabled={slidesControl.isChanged() || slidesControl.pushStatus.isNeedToPush}
+                    disabled={slidesControl.isChanged() || slidesControl.pushStatus.isNeedToPush || !isOwned}
                 >
                     Present
                 </Button>
@@ -156,15 +157,17 @@ const PresentationNavComponent: FC<any> = ({
                     <Box sx={modalStyle}>
                         <span className={style['modal-title']}>Collaborators</span>
                         <Box sx={{display: 'flex', flexDirection: 'row', gap: '5px'}}>
+                            {isOwned && <>
                             <TextField placeholder="Enter email to invite new collaborator" autoComplete="off"
                                 value={email} onChange={(event: any) => setEmail(event.target.value)} sx={{width: '75%', height: '50px'}}/>
                             <Button variant="contained" sx={{width: '25%', height: '50px', fontSize: '20px'}}>
                                 {mutateAddCollaborator.isLoading && <CircularProgress />}
                                 {!mutateAddCollaborator.isLoading && <span>Add</span>}
-                            </Button>
+                            </Button></>
+                            }
                         </Box>                           
                         {
-                            collaborators.map((each: any, index: number) => <CollaboratorCard key={index} collaborator={each} presentationId={id}/>)
+                            collaborators.map((each: any, index: number) => <CollaboratorCard key={index} collaborator={each} presentationId={id} isOwned={isOwned}/>)
                         }
                     </Box>
                 </Modal>

@@ -55,21 +55,24 @@ const PublicCardComponent: FC<any> = ({
             {
                 !mutatePresenting.isLoading &&  
                 <IconButton onClick={() => {
-                    mutatePresenting.mutate(presentation.id)
+                    if (isOwned)
+                        mutatePresenting.mutate(presentation.id)
+                    else
+                        navigate('/presentation/edit/' + presentation.id)
                 }}
                     sx={{color: '#82C3EC', width: '70px'}}
-                    disabled={presentation.isPresenting || (!mutatePresenting.isLoading && !isOwned)}
+                    disabled={presentation.isPresenting}
                 >
                     { presentation.isPresenting && <CoPresentIcon sx={{fontSize: '50px'}} />}
-                    { isOwned && <PlayCircleOutlineIcon sx={{fontSize: 50}} />}
-                    { !isOwned && <DriveFileRenameOutlineIcon sx={{fontSize: 50}} />}
+                    { !presentation.isPresenting && isOwned && <PlayCircleOutlineIcon sx={{fontSize: 50}} />}
+                    { !presentation.isPresenting && !isOwned && <DriveFileRenameOutlineIcon sx={{fontSize: 50}} />}
                 </IconButton>
             }
            
             <Divider orientation="vertical" flexItem />
             <div className={style['info-wrapper']}>
                 <span className={style['card-tittle']} onClick={() => navigate('/presentation/edit/' + presentation.id)}>
-                    {presentation.name}
+                    {presentation.name} {presentation.isPresenting && <span className={style['card-present']}>- Presenting</span>}
                 </span>
                 <span className={style['card-text']}>{presentation.slides.length} slides</span>
             </div>

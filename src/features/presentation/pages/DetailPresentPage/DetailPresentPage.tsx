@@ -19,6 +19,9 @@ import { Slide } from 'src/models/slide';
 import { io, Socket } from 'socket.io-client';
 import { useSnackbar } from 'notistack';
 
+import { selectProfile } from 'src/store/profile/selectors';
+import { useAppSelector } from 'src/store';
+
 export interface PresentationOutletProps {
     readonly presentation: Presentation;
     readonly nextSlideFn: () => void;
@@ -27,6 +30,7 @@ export interface PresentationOutletProps {
 }
 
 const DetailPresentPageComponent: FC = () => {
+    const profile = useAppSelector(selectProfile);
     const { id } = useParams()
     const [ socket, setSocket ] = useState<Socket>();
     const { isLoading, isError, data, refetch } = useQuery<Presentation>(['getPresentationDetails', id], () => PresentationApiService.getPresentationById(id!))
@@ -166,7 +170,7 @@ const DetailPresentPageComponent: FC = () => {
             }}/>
             <PresentationNav 
                 id={id}
-                isPublic={true} isChanged={slidesControl.isChanged()} isPrivate={presentation.isPrivate}
+                isPublic={true} isChanged={slidesControl.isChanged()} isPrivate={presentation.isPrivate} isOwned={profile !== null && profile.id === presentation.createdBy}
                 nameControl={{
                     value: presentation.name,
                     setValue: (event: any) => setPresentation({...presentation, name: event.target.value}),
