@@ -181,7 +181,7 @@ const DetailPresentPageComponent: FC = () => {
             <div className={style['detail-wrapper']}>
                 <ListSlide slidesControl={slidesControl} currentPresent={presentation.current}/>
                 <MainSlide slidesControl={slidesControl} />
-                <EditSlide slidesControl={slidesControl} />
+                <EditSlide slidesControl={slidesControl} presentation={presentation} isChanged={slidesControl.isChanged()}/>
             </div>
         </div>
     )

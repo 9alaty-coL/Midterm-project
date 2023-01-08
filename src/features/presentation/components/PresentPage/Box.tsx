@@ -52,7 +52,6 @@ const BoxComponent: FC<any> = ({
         })
 
         socket?.on("PollQuestion", (polledQuestion: Question) => {
-          console.log('polled: ', polledQuestion)
           dispatch(markQuestion(polledQuestion))
         })
       } else if (type === 'chat') {

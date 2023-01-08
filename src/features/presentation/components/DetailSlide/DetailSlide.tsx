@@ -16,11 +16,6 @@ const DetailSlideComponent: FC<Props> = ({ slide }) => {
   if (slide == null) {
     return <h1>Slide not found!</h1>
   }
-  console.log(slide.slideType)
-
-  useEffect(() => {
-    console.log(slide.paragraph)
-  }, [slide.paragraph]);
 
   return (
   <div className={style['detail-slide']}>

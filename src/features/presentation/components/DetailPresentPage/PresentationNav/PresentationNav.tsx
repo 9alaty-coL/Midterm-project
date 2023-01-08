@@ -70,9 +70,8 @@ const PresentationNavComponent: FC<any> = ({
 
     const { isLoading, isError, data: collaborators, refetch } = useQuery<any>({
         queryKey: 'GetCollaborators',
-        queryFn: PresentationApiService.getCollaborators.bind(null, id),
-        refetchOnWindowFocus: false,
-        onSuccess: (data) => console.log(data)
+        queryFn: !isPrivate ? PresentationApiService.getCollaborators.bind(null, id): () => null,
+        refetchOnWindowFocus: false
     })
 
     const mutateAddCollaborator = useMutation(PresentationApiService.addCollaborator, {
@@ -86,10 +85,10 @@ const PresentationNavComponent: FC<any> = ({
         }
     })
 
-    if (isLoading) {
+    if (isLoading && !isPrivate) {
         return <AppLoadingSpinner />
     }
-    else if (isError) {
+    else if (isError && !isPrivate) {
         return <h1>Error loading collaborators</h1>
     }
 
@@ -171,30 +170,33 @@ const PresentationNavComponent: FC<any> = ({
                         Successfully copied to clipboard!
                     </Alert>
                 </Snackbar>
-                <Modal
-                    open={isOpenCollab}
-                    onClose={() => setOpenCollab(false)}
-                >
-                    <Box sx={modalStyle}>
-                        <span className={style['modal-title']}>Collaborators</span>
-                        {isOwned && <>
-                        <Box sx={{display: 'flex', flexDirection: 'row', gap: '5px'}}>
-                            <TextField placeholder="Enter email to invite new collaborator" autoComplete="off"
-                                value={email} onChange={(event: any) => setEmail(event.target.value)} sx={{width: '75%', height: '50px'}}/>
-                            <Button variant="contained" sx={{width: '25%', height: '50px', fontSize: '20px'}}
-                                onClick={() => mutateAddCollaborator.mutate({presentationId: id, email: email})}>
-                                {mutateAddCollaborator.isLoading && <CircularProgress sx={{color: 'white'}}/>}
-                                {!mutateAddCollaborator.isLoading && <span>Add</span>}
-                            </Button>
+                {
+                    !isPrivate &&
+                    <Modal
+                        open={isOpenCollab}
+                        onClose={() => setOpenCollab(false)}
+                    >
+                        <Box sx={modalStyle}>
+                            <span className={style['modal-title']}>Collaborators</span>
+                            {isOwned && <>
+                            <Box sx={{display: 'flex', flexDirection: 'row', gap: '5px'}}>
+                                <TextField placeholder="Enter email to invite new collaborator" autoComplete="off"
+                                    value={email} onChange={(event: any) => setEmail(event.target.value)} sx={{width: '75%', height: '50px'}}/>
+                                <Button variant="contained" sx={{width: '25%', height: '50px', fontSize: '20px'}}
+                                    onClick={() => mutateAddCollaborator.mutate({presentationId: id, email: email})}>
+                                    {mutateAddCollaborator.isLoading && <CircularProgress sx={{color: 'white'}}/>}
+                                    {!mutateAddCollaborator.isLoading && <span>Add</span>}
+                                </Button>
+                            </Box>
+                            <div style={{color: 'red', fontSize: '20px', fontWeight: 'bold'}}>{errorMessage}</div>
+                            </>
+                            }                         
+                            {
+                                collaborators.map((each: any, index: number) => <CollaboratorCard key={index} collaborator={each} presentationId={id} isOwned={isOwned} refetch={refetch}/>)
+                            }
                         </Box>
-                        <div style={{color: 'red', fontSize: '20px', fontWeight: 'bold'}}>{errorMessage}</div>
-                        </>
-                        }                         
-                        {
-                            collaborators.map((each: any, index: number) => <CollaboratorCard key={index} collaborator={each} presentationId={id} isOwned={isOwned} refetch={refetch}/>)
-                        }
-                    </Box>
-                </Modal>
+                    </Modal>
+                }
             </div>
         </div>
     );

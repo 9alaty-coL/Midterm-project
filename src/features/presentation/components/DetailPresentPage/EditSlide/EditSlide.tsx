@@ -8,7 +8,9 @@ import { Paragraph } from './Slide/Paragraph'
 import { Heading } from './Slide/Heading'
 
 const EditSlideComponent: FC<any> = ({
-    slidesControl
+    slidesControl,
+    presentation,
+    isChanged
 }) => {
     if (slidesControl.currentSlide === undefined) {
         return <div className={style['edit-container']}>No current slide is found</div>
@@ -30,7 +32,7 @@ const EditSlideComponent: FC<any> = ({
                 </FormControl>
             </div>
             <Divider orientation='horizontal' flexItem style={{marginTop: '20px'}}/>
-            { slidesControl.currentSlide.slideType === 'multi' && <MultiChoice slidesControl={slidesControl} /> }
+            { slidesControl.currentSlide.slideType === 'multi' && <MultiChoice slidesControl={slidesControl} presentation={presentation} isChanged={isChanged}/> }
             { slidesControl.currentSlide.slideType === 'para' && <Paragraph slidesControl={slidesControl} /> }
             { slidesControl.currentSlide.slideType === 'heading' && <Heading slidesControl={slidesControl} /> }
         </div>

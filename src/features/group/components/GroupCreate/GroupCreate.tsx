@@ -32,16 +32,6 @@ const CreateGroupComponent: FC = () => {
           value={group.name} onChange={(event: any) => setGroup({...group, name: event.target.value})}
           required/>
       </div>
-      {/* <div className={style['group-create-formrow']}>
-        <span className={style['group-create-formrow-label']}>Group avatar: </span>
-        <TextField
-          name="upload-photo"
-          type="file"
-          sx={{width: 300}}
-          onChange={(event: any) => setGroup({...group, image: event.target.files[0]})}
-          // value={group.image} onChange={(event: any) => console.log(event.target.files[0])}
-        />        
-      </div> */}
       <div className={style['group-create-btn-group']}>
         <Button variant="contained" color="error" onClick={() => navigate("/group")} sx={{width: 100}}>Cancel</Button>
         <Button variant="contained" type="submit" sx={{width: 100}}>Confirm</Button>

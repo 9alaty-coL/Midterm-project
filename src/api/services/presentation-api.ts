@@ -138,4 +138,9 @@ export namespace PresentationApiService {
         const  { data } = await http.get(PRESENTATION_ROUTE + "/collaborators/" + presentationId)
         return data.data.collaborators;
     }
+
+    export async function getAnswersList(info: any): Promise<any> {
+        const { data } = await http.get(PRESENTATION_ROUTE + '/slideAnswers/' + info.presentationId + "/" + info.slideId)
+        return data.data.answers
+    }
 }

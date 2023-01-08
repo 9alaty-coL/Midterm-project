@@ -40,8 +40,7 @@ const PrivateCardComponent: FC<any> = ({
     const { isLoading, isError, data: groupInfo } = useQuery<any>({
         queryKey: 'getGroupInfomation',
         queryFn: GroupApiService.getGroupById.bind(null, presentation.groupId),
-        refetchOnWindowFocus: false,
-        onSuccess: (data) => console.log(data)
+        refetchOnWindowFocus: false
     })
 
     useEffect(() => {

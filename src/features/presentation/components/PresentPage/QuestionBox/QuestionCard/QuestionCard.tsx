@@ -37,7 +37,6 @@ const QuestionCardComponent: FC<any> = ({
                     setUpdateQuestion(question);
                 })
                 .catch(error => {
-                    console.log(error)
                     if (error instanceof AxiosError) {
                         enqueueSnackbar(error.response?.data.message, { variant: 'error' })
                         return;
