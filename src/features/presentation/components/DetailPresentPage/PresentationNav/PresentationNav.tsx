@@ -15,10 +15,11 @@ import { Paper, Modal, Box, TextField } from "@mui/material"
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { useNavigate } from 'react-router-dom'
-import { useMutation } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import { PresentationApiService } from 'src/api/services/presentation-api'
 
 import { CollaboratorCard } from './CollaboratorCard/CollaboratorCard';
+import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 
 const modalStyle = {
     position: 'absolute' as 'absolute',
@@ -46,8 +47,7 @@ const PresentationNavComponent: FC<any> = ({
     nameControl,
     slidesControl,
     isPrivate,
-    isOwned,
-    collaborators
+    isOwned
 }) => {
     const navigate = useNavigate()
 
@@ -56,6 +56,8 @@ const PresentationNavComponent: FC<any> = ({
     const [isOpenCollab, setOpenCollab] = useState(false)
 
     const [email, setEmail] = useState('')
+
+    const [errorMessage, setErrorMessage] = useState('')
 
     const mutatePresenting = useMutation(PresentationApiService.present)
     useEffect(() => {
@@ -66,11 +68,30 @@ const PresentationNavComponent: FC<any> = ({
         }
     }, [mutatePresenting.isSuccess]);
 
+    const { isLoading, isError, data: collaborators, refetch } = useQuery<any>({
+        queryKey: 'GetCollaborators',
+        queryFn: PresentationApiService.getCollaborators.bind(null, id),
+        refetchOnWindowFocus: false,
+        onSuccess: (data) => console.log(data)
+    })
+
     const mutateAddCollaborator = useMutation(PresentationApiService.addCollaborator, {
         onSuccess: () => {
-            // refetch()
+            setErrorMessage('')
+            setEmail('')
+            refetch()
+        },
+        onError: (data: any) => {
+            setErrorMessage(data.response.data.message)
         }
     })
+
+    if (isLoading) {
+        return <AppLoadingSpinner />
+    }
+    else if (isError) {
+        return <h1>Error loading collaborators</h1>
+    }
 
     return (
         <div className={style['nav-container']}>
@@ -156,18 +177,21 @@ const PresentationNavComponent: FC<any> = ({
                 >
                     <Box sx={modalStyle}>
                         <span className={style['modal-title']}>Collaborators</span>
+                        {isOwned && <>
                         <Box sx={{display: 'flex', flexDirection: 'row', gap: '5px'}}>
-                            {isOwned && <>
                             <TextField placeholder="Enter email to invite new collaborator" autoComplete="off"
                                 value={email} onChange={(event: any) => setEmail(event.target.value)} sx={{width: '75%', height: '50px'}}/>
-                            <Button variant="contained" sx={{width: '25%', height: '50px', fontSize: '20px'}}>
-                                {mutateAddCollaborator.isLoading && <CircularProgress />}
+                            <Button variant="contained" sx={{width: '25%', height: '50px', fontSize: '20px'}}
+                                onClick={() => mutateAddCollaborator.mutate({presentationId: id, email: email})}>
+                                {mutateAddCollaborator.isLoading && <CircularProgress sx={{color: 'white'}}/>}
                                 {!mutateAddCollaborator.isLoading && <span>Add</span>}
-                            </Button></>
-                            }
-                        </Box>                           
+                            </Button>
+                        </Box>
+                        <div style={{color: 'red', fontSize: '20px', fontWeight: 'bold'}}>{errorMessage}</div>
+                        </>
+                        }                         
                         {
-                            collaborators.map((each: any, index: number) => <CollaboratorCard key={index} collaborator={each} presentationId={id} isOwned={isOwned}/>)
+                            collaborators.map((each: any, index: number) => <CollaboratorCard key={index} collaborator={each} presentationId={id} isOwned={isOwned} refetch={refetch}/>)
                         }
                     </Box>
                 </Modal>

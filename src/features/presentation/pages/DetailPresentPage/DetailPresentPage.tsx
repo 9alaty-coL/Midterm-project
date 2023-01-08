@@ -177,7 +177,6 @@ const DetailPresentPageComponent: FC = () => {
                     pushNewName: pushNewName
                 }}
                 slidesControl={slidesControl}
-                collaborators={presentation.collaborators}
             />
             <div className={style['detail-wrapper']}>
                 <ListSlide slidesControl={slidesControl} currentPresent={presentation.current}/>

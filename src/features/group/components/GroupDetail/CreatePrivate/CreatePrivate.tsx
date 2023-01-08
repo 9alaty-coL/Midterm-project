@@ -43,8 +43,7 @@ const CreatePrivateComponent: FC<any> = ({ group }) => {
     const { isLoading, isError, data: presentingInfo } = useQuery<any>({
         queryKey: 'GetGroupPresentations',
         queryFn: PresentationApiService.getGroupPresenting.bind(null, group.id),
-        refetchOnWindowFocus: false,
-        onSuccess: (data) => console.log(data)
+        refetchOnWindowFocus: false
     })
 
     const createGroupPresentMutation = useMutation(PresentationApiService.createGroupPresentation, {

@@ -42,11 +42,11 @@ const PublicPresentComponent: FC<any> = ({
     }
 
     if (isError || presentations == null || profile === null) {
-        return <>{ tab === 0 && <NewCard totalPresentation={0} type="public"/> } </>
+        return <>{ tab === 0 && <div style={{fontSize: '20px'}}>You don't have any public presentation</div> } </>
     }
 
     if (presentations.length === 0) {
-        return <>{ tab === 0 && <NewCard totalPresentation={0} type="public"/> }</>
+        return <>{ tab === 0 && <div style={{fontSize: '20px'}}>You don't have any public presentation</div> }</>
     }
 
     return <>

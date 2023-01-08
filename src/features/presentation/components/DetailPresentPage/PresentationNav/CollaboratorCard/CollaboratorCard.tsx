@@ -14,11 +14,12 @@ import { PresentationApiService } from 'src/api/services/presentation-api'
 const CollaboratorCardComponent: FC<any> = ({
     collaborator,
     presentationId,
-    isOwned
+    isOwned,
+    refetch
 }) => {
     const mutateDeleteCollaborator = useMutation(PresentationApiService.removeCollaborator, {
         onSuccess: () => {
-            // refetch()
+            refetch()
         }
     })
 
@@ -40,7 +41,7 @@ const CollaboratorCardComponent: FC<any> = ({
                     sx={{color: '#EB455F', width: '70px'}}
                 >
                     {!mutateDeleteCollaborator.isLoading && <BackspaceIcon sx={{fontSize: '50px'}} />}
-                    {mutateDeleteCollaborator.isLoading && <CircularProgress sx={{fontSize: '50px'}}/>}
+                    {mutateDeleteCollaborator.isLoading && <CircularProgress sx={{fontSize: '55px'}}/>}
                 </IconButton>
             </>
         }

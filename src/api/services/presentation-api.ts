@@ -133,4 +133,9 @@ export namespace PresentationApiService {
       })
       return data.data.updatedPresentation;
     }
+
+    export async function getCollaborators(presentationId: string): Promise<any> {
+        const  { data } = await http.get(PRESENTATION_ROUTE + "/collaborators/" + presentationId)
+        return data.data.collaborators;
+    }
 }
