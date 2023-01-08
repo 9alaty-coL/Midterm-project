@@ -9,5 +9,5 @@ export interface Presentation {
   readonly groupId: string;
   readonly current: Slide['id'];
   readonly slides: Slide[];
-  readonly collaborators: string[];
+  readonly collaborators: any[];
 }

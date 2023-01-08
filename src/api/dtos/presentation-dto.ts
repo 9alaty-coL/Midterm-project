@@ -9,5 +9,5 @@ export interface PresentationDto {
   readonly groupId: string;
   readonly currentSlide: SlideDto;
   readonly slides: readonly SlideDto[];
-  readonly collaborators: string[];
+  readonly collaborators: any[];
 }
