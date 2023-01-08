@@ -13,7 +13,6 @@ import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 
 import { selectProfile } from 'src/store/profile/selectors';
 import { useAppSelector } from 'src/store';
-import { Presentation } from 'src/models/presentation';
 
 const modalStyle = {
     position: 'absolute' as 'absolute',

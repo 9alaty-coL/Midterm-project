@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios';
 import { Group } from 'src/models/group';
 import { http } from '..';
 import { IData } from '../dtos/data-dto';
@@ -76,5 +77,16 @@ export namespace GroupApiService {
         groupId,
       }
     )
+  }
+
+  export async function deleteGroup(groupId: string): Promise<any> {
+    const { data } = await http.delete(
+      '/api/groups/delete',
+      {
+          data: {
+            groupId
+          }
+      })
+    return data
   }
 }

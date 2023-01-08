@@ -30,7 +30,7 @@
     font-size: 25px;  
 }
 
-.time-info-wrapper {
+.btn-info-wrapper {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -39,6 +39,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
+    gap: 10px;
 
     font-size: 20px;
     text-align: right;
@@ -46,4 +47,18 @@
 
 .icon {
     font-size: 20px;
+    color: white;
+}
+
+.link-btn {
+    background-color: #1976d2 !important;
+}
+
+.delete-btn { 
+    background-color: #EB455F !important;
+}
+
+.modal-title {
+    font-size: 25px;
+    text-align: center;
 }
