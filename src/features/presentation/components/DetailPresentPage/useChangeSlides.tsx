@@ -70,9 +70,19 @@ export const useChangeSlides = (initSlides: any) => {
         setSlides([...slides])
     }
 
+    const editSlideParagraph = (newParagraph: string) => {
+        slides[currentIndex - 1].paragraph = newParagraph
+        setSlides([...slides])
+    }
+    const editSlideSubheading = (newSubheading: string) => {
+        slides[currentIndex - 1].subheading = newSubheading
+        setSlides([...slides])
+    }
+
     // ChangeSlideType
     const changeSlideType = (newSlideType: string) => {
-
+        slides[currentIndex - 1].slideType = newSlideType
+        setSlides([...slides])
     }
 
     return {
@@ -105,6 +115,12 @@ export const useChangeSlides = (initSlides: any) => {
         editSlideAnswer,
         deleteSlideAnswer,
         editSlideChartType,
+
+        // change paragraph
+        editSlideParagraph,
+
+        // change sub heading
+        editSlideSubheading,
 
         // changeSlideType
         changeSlideType

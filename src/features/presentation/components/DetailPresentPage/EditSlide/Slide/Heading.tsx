@@ -22,8 +22,8 @@ const HeadingComponent: FC<any> = ({
                 <TextField
                     multiline
                     maxRows={3}
-                    value={slidesControl.currentSlide.question}
-                    onChange={(event: any) => slidesControl.editSlideQuestion(event.target.value)}
+                    value={slidesControl.currentSlide.subheading}
+                    onChange={(event: any) => slidesControl.editSlideSubheading(event.target.value)}
                 />
             </div>
         </>

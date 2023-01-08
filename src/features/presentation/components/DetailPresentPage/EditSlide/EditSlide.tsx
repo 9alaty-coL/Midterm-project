@@ -11,12 +11,8 @@ const EditSlideComponent: FC<any> = ({
     slidesControl
 }) => {
     if (slidesControl.currentSlide === undefined) {
-        return <div className={style['edit-container']}></div>
+        return <div className={style['edit-container']}>No current slide is found</div>
     }
-
-    // Temp state
-    const [slideType, setSlideType] = useState("multi")
-    // End temp
 
     return (
         <div className={style['edit-container']}>
@@ -24,8 +20,8 @@ const EditSlideComponent: FC<any> = ({
                 <span className={style['edit-title']}>Slide type: </span>
                 <FormControl fullWidth>
                     <Select
-                        value={slideType}
-                        onChange={(event: any) => setSlideType(event.target.value)}
+                        value={slidesControl.currentSlide.slideType}
+                        onChange={(event: any) => slidesControl.changeSlideType(event.target.value)}
                     >
                         <MenuItem value="multi">Multiple Choice</MenuItem>
                         <MenuItem value="para">Paragraph</MenuItem>
@@ -34,9 +30,9 @@ const EditSlideComponent: FC<any> = ({
                 </FormControl>
             </div>
             <Divider orientation='horizontal' flexItem style={{marginTop: '20px'}}/>
-            { slideType === 'multi' && <MultiChoice slidesControl={slidesControl} /> }
-            { slideType === 'para' && <Paragraph slidesControl={slidesControl} /> }
-            { slideType === 'heading' && <Heading slidesControl={slidesControl} /> }
+            { slidesControl.currentSlide.slideType === 'multi' && <MultiChoice slidesControl={slidesControl} /> }
+            { slidesControl.currentSlide.slideType === 'para' && <Paragraph slidesControl={slidesControl} /> }
+            { slidesControl.currentSlide.slideType === 'heading' && <Heading slidesControl={slidesControl} /> }
         </div>
     );
 };

@@ -22,8 +22,8 @@ const ParagraphComponent: FC<any> = ({
                 <TextField
                     multiline
                     maxRows={10}
-                    value={slidesControl.currentSlide.question}
-                    onChange={(event: any) => slidesControl.editSlideQuestion(event.target.value)}
+                    value={slidesControl.currentSlide.paragraph}
+                    onChange={(event: any) => slidesControl.editSlideParagraph(event.target.value)}
                 />
             </div>    
         </>

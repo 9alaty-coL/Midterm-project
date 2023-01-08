@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC, memo, useEffect } from 'react';
 import { Slide } from 'src/models/slide';
 import { BarChart } from './chart-component/BarChart/BarChart';
 import { DonutChart } from './chart-component/DonutChart/DonutChart';
@@ -16,13 +16,16 @@ const DetailSlideComponent: FC<Props> = ({ slide }) => {
   if (slide == null) {
     return <h1>Slide not found!</h1>
   }
+  console.log(slide.slideType)
 
-  let type = 'multi'
+  useEffect(() => {
+    console.log(slide.paragraph)
+  }, [slide.paragraph]);
 
   return (
   <div className={style['detail-slide']}>
     <h1 className={style['detail-slide__title']} style={{fontSize: 40}}>{slide.question}</h1>
-    { type === 'multi' &&
+    { slide.slideType === 'multi' &&
       (slide.chartType === 'donut' ? <DonutChart colors={colors} dataset={slide.answers.map(answer => ({
         label: answer.answer,
         count: answer.count,
@@ -38,10 +41,10 @@ const DetailSlideComponent: FC<Props> = ({ slide }) => {
       }))} />)
     }
     {
-      type === 'heading' && <h2 style={{fontSize: 25, whiteSpace: 'pre-line'}}>{slide.question}</h2>
+      slide.slideType === 'heading' && <h2 style={{fontSize: 25, whiteSpace: 'pre-line'}}>{slide.subheading}</h2>
     }
     {
-      type === 'paragraph' && <span style={{fontSize: 25, whiteSpace: 'pre-line'}}>{slide.question}</span>
+      slide.slideType === 'para' && <span style={{fontSize: 25, whiteSpace: 'pre-line'}}>{slide.paragraph}</span>
     }
   </div>
   )
