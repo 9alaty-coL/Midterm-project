@@ -16,21 +16,14 @@ import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 
 import dateFormat, { masks } from "dateformat";
 
-const AnswerCard = (data: any) => {
-
-    const answer = {
-        name: 'Trần Ngọc Phương Duyên',
-        answerContent: 'A short part of a text',
-        answerdAt: '2023-01-07T07:43:00.348Z'
-    }
-
+const AnswerCard = (props : any) => {
     return (
         <Paper elevation={2} sx={{padding: '5px', width: '95%'}}>
             <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <div><b>{answer.name}</b></div>
-                <div>{dateFormat(answer.answerdAt, "hh:MM dd/mm/yyyy")}</div>                
+                <div><b>{props.answer.name}</b></div>
+                <div>{dateFormat(props.answer.answerdAt, "hh:MM dd/mm/yyyy")}</div>                
             </Box>
-            <div>Submit: <i>{answer.answerContent}</i></div>
+            <div>Submit: <i>{props.answer.answerContent}</i></div>
         </Paper>
     )
 }
@@ -40,8 +33,6 @@ const MultiChoiceComponent: FC<any> = ({
     presentation,
     isChanged
 }) => {
-    console.log(isChanged)
-
     const [tab, setTab] = useState(0)
 
     const { isLoading, isError, isSuccess, data: answersList, refetch } = useQuery<any>({
