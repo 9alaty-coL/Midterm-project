@@ -1,0 +1,26 @@
+.card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    gap: 5px;
+}
+
+.card-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 25vw;
+    height: fit-content;    
+}
+
+.card-name {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.card-email {
+    font-size: 18px;
+}

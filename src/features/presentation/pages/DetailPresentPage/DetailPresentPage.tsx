@@ -164,13 +164,17 @@ const DetailPresentPageComponent: FC = () => {
                 nextSlideFn,
                 isChangingSlide,
             }}/>
-            <PresentationNav isPublic={true} isChanged={slidesControl.isChanged()} id={id}
+            <PresentationNav 
+                id={id}
+                isPublic={true} isChanged={slidesControl.isChanged()} isPrivate={presentation.isPrivate}
                 nameControl={{
                     value: presentation.name,
                     setValue: (event: any) => setPresentation({...presentation, name: event.target.value}),
                     pushNewName: pushNewName
                 }}
-                slidesControl={slidesControl}/>
+                slidesControl={slidesControl}
+                collaborators={presentation.collaborators}
+            />
             <div className={style['detail-wrapper']}>
                 <ListSlide slidesControl={slidesControl} currentPresent={presentation.current}/>
                 <MainSlide slidesControl={slidesControl} />
