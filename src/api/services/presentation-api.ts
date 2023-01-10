@@ -4,7 +4,7 @@ import { Answer, Slide } from 'src/models/slide'
 import { http } from '..'
 import { IData } from '../dtos/data-dto'
 import { PresentationDto } from '../dtos/presentation-dto'
-import { presentationMapper } from '../mappers/presentation.mapper'
+import { PresentationMapper } from '../mappers/presentation.mapper'
 
 const PRESENTATION_ROUTE = 'api/presentation'
 
@@ -12,18 +12,18 @@ export namespace PresentationApiService {
     // Public presentation
     export async function getPresentations(): Promise<Presentation[]> {
         const { data } = await http.get<IData<{ publicPresentations: PresentationDto[] }>>(PRESENTATION_ROUTE + '/all')
-        return data.data.publicPresentations.map(dto => presentationMapper.fromDto(dto))
+        return data.data.publicPresentations.map(dto => PresentationMapper.getInstance().fromDto(dto))
     }
 
     //Private presentation
     export async function getGroupPresentations(): Promise<Presentation[]> {
       const { data } = await http.get<IData<{ privatePresentations: PresentationDto[] }>>(PRESENTATION_ROUTE + '/all')
-      return data.data.privatePresentations.map(dto => presentationMapper.fromDto(dto))
+      return data.data.privatePresentations.map(dto => PresentationMapper.getInstance().fromDto(dto))
     }
 
     export async function getPresentationById(id: string): Promise<Presentation> {
         const { data } = await http.get<IData<{ presentation: PresentationDto }>>(PRESENTATION_ROUTE + '/' + id)
-        return presentationMapper.fromDto(data.data.presentation);
+        return PresentationMapper.getInstance().fromDto(data.data.presentation);
     }
 
     export async function changePresentationSlide(currentSlideId: Slide['id'], presentationId: Presentation['id']): Promise<Presentation> {
@@ -31,7 +31,7 @@ export namespace PresentationApiService {
             currSlideId: currentSlideId,
             presentationId,
         })
-        return presentationMapper.fromDto(data.data.updatedPresentation);
+        return PresentationMapper.getInstance().fromDto(data.data.updatedPresentation);
     }
 
     export async function voteQuestion(presentationId: Presentation['id'], answerId: Answer['id']): Promise<void> {

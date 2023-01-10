@@ -2,7 +2,7 @@ import { Message, PostMessage } from "src/models/message";
 import { http } from "..";
 import { IData } from "../dtos/data-dto";
 import { MessageDto } from "../dtos/message-dto";
-import { messageMapper } from "../mappers/message.mapper";
+import { MessageMapper } from "../mappers/message.mapper";
 import { LocalStorageService } from "./local-storage";
 
 const INITIAL_SIZE = 10;
@@ -21,7 +21,7 @@ export namespace MessageApiService {
                 limitSize: INITIAL_SIZE,
                 index: currentPageIndex,
             }        })
-        return data.data.chats.map(dto => messageMapper.fromDto(dto));
+        return data.data.chats.map(dto => MessageMapper.getInstance().fromDto(dto));
     }
     export async function loadMoreMessages(presentationId: string): Promise<Message[]> {
         currentPageIndex += INITIAL_SIZE;
@@ -31,7 +31,7 @@ export namespace MessageApiService {
                 index: currentPageIndex,
             }
         });
-        return data.data.chats.map(dto => messageMapper.fromDto(dto));
+        return data.data.chats.map(dto => MessageMapper.getInstance().fromDto(dto));
     }
 
     export async function sendMessage(messageData: PostMessage): Promise<Message> {
@@ -45,8 +45,8 @@ export namespace MessageApiService {
             messagePost.createdBy = name;
         }
         const { data } = await http.post<IData<{ChatSaved: MessageDto}>>(MESSAGE_ROUTE + '/add',
-            messageMapper.toPostDto(messagePost),
+            MessageMapper.getInstance().toPostDto(messagePost),
         )
-        return messageMapper.fromDto(data.data.ChatSaved);
+        return MessageMapper.getInstance().fromDto(data.data.ChatSaved);
     }
 }

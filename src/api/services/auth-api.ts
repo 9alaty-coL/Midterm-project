@@ -5,7 +5,7 @@ import { http } from '..';
 import { IData } from '../dtos/data-dto';
 import { TokenDto } from '../dtos/token-dto';
 import { AccountMapper } from '../mappers/account.mapper';
-import { tokenMapper } from '../mappers/token.mapper';
+import { TokenMapper } from '../mappers/token.mapper';
 
 const LOGIN_ROUTE = 'api/auth/signin/';
 const LOGIN_GOOGLE_ROUTE = 'api/auth/signin/google/'
@@ -26,7 +26,7 @@ export namespace AuthApi {
     );
 
     const { data: tokenDto } = data;
-    return tokenMapper.fromDto(tokenDto);
+    return TokenMapper.getInstance().fromDto(tokenDto);
   }
 
   export async function googleLogin(credential: string): Promise<Token> {
@@ -36,7 +36,7 @@ export namespace AuthApi {
     );
 
     const { data: tokenDto } = data;
-    return tokenMapper.fromDto(tokenDto);
+    return TokenMapper.getInstance().fromDto(tokenDto);
   }
 
   export async function register(account: RegisterAccount): Promise<string> {

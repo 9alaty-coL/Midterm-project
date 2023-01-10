@@ -4,9 +4,9 @@ import { PostDto } from '../dtos/post-dto';
 
 import { IMapperFromDto } from './mappers';
 
-// TODO (template preparation): This mapper was made for template. Remove it from your project.
 /** Post mapper. */
-class PostMapper implements IMapperFromDto<PostDto, Post> {
+export class PostMapper implements IMapperFromDto<PostDto, Post> {
+  private static instance: PostMapper
   /** @inheritdoc */
   public fromDto(dto: PostDto): Post {
     return new Post({
@@ -16,6 +16,10 @@ class PostMapper implements IMapperFromDto<PostDto, Post> {
       body: dto.body,
     });
   }
+  public static getInstance(): PostMapper {
+    if (!PostMapper.instance) {
+        PostMapper.instance = new PostMapper();
+    }
+    return PostMapper.instance;
+  }
 }
-
-export const postMapper = new PostMapper();

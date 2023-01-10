@@ -1,6 +1,6 @@
 import { Slide } from 'src/models/slide';
 import { SlideDto } from '../dtos/slide-dto';
-import { answerMapper } from './answer.mapper';
+import { AnswerMapper } from './answer.mapper';
 import { IMapperFromDto } from './mappers';
 
 class SlideMapper implements IMapperFromDto<SlideDto, Slide> {
@@ -12,7 +12,7 @@ class SlideMapper implements IMapperFromDto<SlideDto, Slide> {
       paragraph: dto.paragraph,
       subheading: dto.subheading,
       chartType: dto.chartType,
-      answers: dto.answers.map(answerDto => answerMapper.fromDto(answerDto)),
+      answers: dto.answers.map(answerDto => AnswerMapper.getInstance().fromDto(answerDto)),
       answeredUser: dto.answeredUser
     }
   }

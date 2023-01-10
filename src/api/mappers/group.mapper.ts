@@ -3,7 +3,8 @@ import { GroupDto } from '../dtos/group-dto';
 import { IMapperFromDto } from './mappers';
 
 /** Group mapper. */
-class GroupMapper implements IMapperFromDto<GroupDto, Group> {
+export class GroupMapper implements IMapperFromDto<GroupDto, Group> {
+  private static instance: GroupMapper;
   /** @inheritdoc */
   public fromDto(dto: GroupDto): Group {
     return {
@@ -15,6 +16,11 @@ class GroupMapper implements IMapperFromDto<GroupDto, Group> {
       memberId: dto.member_id,
     };
   }
-}
 
-export const groupMapper = new GroupMapper();
+  public static getInstance(): GroupMapper {
+    if (!GroupMapper.instance) {
+        GroupMapper.instance = new GroupMapper();
+    }
+    return GroupMapper.instance;
+  }
+}

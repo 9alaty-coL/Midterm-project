@@ -2,7 +2,8 @@ import { Message, PostMessage } from "src/models/message";
 import { MessageDto, PostMessageDto } from "../dtos/message-dto";
 import { IMapperFromDto } from "./mappers";
 
-class MessageMapper implements IMapperFromDto<MessageDto, Message> {
+export class MessageMapper implements IMapperFromDto<MessageDto, Message> {
+    private static instance: MessageMapper;
     fromDto(dto: MessageDto): Message {
         return new Message({
             id: dto._id,
@@ -19,6 +20,11 @@ class MessageMapper implements IMapperFromDto<MessageDto, Message> {
             presentationId: data.presentationId,
         }
     }
-}
 
-export const messageMapper = new MessageMapper();
+    public static getInstance(): MessageMapper {
+        if (!MessageMapper.instance) {
+            MessageMapper.instance = new MessageMapper();
+        }
+        return MessageMapper.instance;
+      }
+}

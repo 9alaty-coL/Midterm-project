@@ -2,7 +2,8 @@ import { PostQuestion, Question } from "src/models/question";
 import { PostQuestionDto, QuestionDto } from "../dtos/question-dto";
 import { IMapperFromDto } from "./mappers";
 
-class QuestionMapper implements IMapperFromDto<QuestionDto, Question> {
+export class QuestionMapper implements IMapperFromDto<QuestionDto, Question> {
+    private static instance: QuestionMapper;
     fromDto(dto: QuestionDto): Question {
         return new Question({
             id: dto._id,
@@ -22,6 +23,10 @@ class QuestionMapper implements IMapperFromDto<QuestionDto, Question> {
         createdUserName: data.createdUserName ?? '',
       }
     }
+    public static getInstance(): QuestionMapper {
+      if (!QuestionMapper.instance) {
+          QuestionMapper.instance = new QuestionMapper();
+      }
+      return QuestionMapper.instance;
+    }
 }
-
-export const questionMapper = new QuestionMapper();

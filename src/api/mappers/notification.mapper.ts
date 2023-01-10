@@ -2,7 +2,8 @@ import { Notification } from "src/models/notification";
 import { NotificationDto } from "../dtos/notification-dto";
 import { IMapperFromDto } from "./mappers";
 
-class NotificationMapper implements IMapperFromDto<NotificationDto, Notification> {
+export class NotificationMapper implements IMapperFromDto<NotificationDto, Notification> {
+    private static instance: NotificationMapper;
     fromDto(dto: NotificationDto): Notification {
         return new Notification({
             id: dto._id,
@@ -11,6 +12,11 @@ class NotificationMapper implements IMapperFromDto<NotificationDto, Notification
             isRead: dto.isRead,
         })
     }
-}
 
-export const notificationMapper = new NotificationMapper();
+    public static getInstance(): NotificationMapper {
+        if (!NotificationMapper.instance) {
+            NotificationMapper.instance = new NotificationMapper();
+        }
+        return NotificationMapper.instance;
+      }
+}

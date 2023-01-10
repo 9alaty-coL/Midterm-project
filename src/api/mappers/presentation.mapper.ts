@@ -3,7 +3,8 @@ import { PresentationDto } from '../dtos/presentation-dto';
 import { IMapperFromDto } from './mappers';
 import { slideMapper } from './slide.mapper';
 
-class PresentationMapper implements IMapperFromDto<PresentationDto, Presentation> {
+export class PresentationMapper implements IMapperFromDto<PresentationDto, Presentation> {
+  private static instance: PresentationMapper;
   public fromDto(dto: PresentationDto): Presentation {
     return {
       id: dto._id,
@@ -17,6 +18,10 @@ class PresentationMapper implements IMapperFromDto<PresentationDto, Presentation
       collaborators: dto.collaborators
     }
   } 
+  public static getInstance(): PresentationMapper {
+    if (!PresentationMapper.instance) {
+        PresentationMapper.instance = new PresentationMapper();
+    }
+    return PresentationMapper.instance;
+  }
 }
-
-export const presentationMapper = new PresentationMapper();

@@ -1,6 +1,6 @@
 import { http } from "..";
 import { NotificationDto } from "../dtos/notification-dto";
-import { notificationMapper } from "../mappers/notification.mapper";
+import { NotificationMapper } from "../mappers/notification.mapper";
 import { Notification } from "src/models/notification";
 import { IData } from "../dtos/data-dto";
 
@@ -19,7 +19,7 @@ export namespace NotificationApiService {
                 index: currentPageIndex,
             }
         });
-        return data.data.notifications.map(dto => notificationMapper.fromDto(dto));
+        return data.data.notifications.map(dto => NotificationMapper.getInstance().fromDto(dto));
     }
 
     export async function loadMoreNotifications(): Promise<Notification[]> {
@@ -30,7 +30,7 @@ export namespace NotificationApiService {
                 index: currentPageIndex,
             }
         });
-        return data.data.notifications.map(dto => notificationMapper.fromDto(dto));
+        return data.data.notifications.map(dto => NotificationMapper.getInstance().fromDto(dto));
     }
 
     export async function notifyUser(userId: string, content: string): Promise<Notification> {
@@ -38,7 +38,7 @@ export namespace NotificationApiService {
             userId,
             content,
         })
-        return notificationMapper.fromDto(data.data.NotificationSaved);
+        return NotificationMapper.getInstance().fromDto(data.data.NotificationSaved);
     }
 
     export async function notifyGroupUser(userIds: string[], content: string): Promise<void> {

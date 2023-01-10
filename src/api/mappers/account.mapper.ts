@@ -47,7 +47,6 @@ export class AccountMapper implements IMapperToDto<AccountDto, Account> {
     if (!AccountMapper.instance) {
         AccountMapper.instance = new AccountMapper();
     }
-
     return AccountMapper.instance;
-}
+  }
 }
