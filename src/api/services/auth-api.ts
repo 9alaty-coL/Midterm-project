@@ -4,7 +4,7 @@ import { Token } from 'src/models/token';
 import { http } from '..';
 import { IData } from '../dtos/data-dto';
 import { TokenDto } from '../dtos/token-dto';
-import { accountMapper } from '../mappers/account.mapper';
+import { AccountMapper } from '../mappers/account.mapper';
 import { tokenMapper } from '../mappers/token.mapper';
 
 const LOGIN_ROUTE = 'api/auth/signin/';
@@ -22,7 +22,7 @@ export namespace AuthApi {
   export async function login(account: Account): Promise<Token> {
     const { data } = await http.post(
       LOGIN_ROUTE,
-      accountMapper.toDto(account)
+      AccountMapper.getInstance().toDto(account)
     );
 
     const { data: tokenDto } = data;
@@ -42,7 +42,7 @@ export namespace AuthApi {
   export async function register(account: RegisterAccount): Promise<string> {
     const { data } = await http.post(
       REGISTER_ROUTE,
-      accountMapper.toRegisterAccountDto(account)
+      AccountMapper.getInstance().toRegisterAccountDto(account)
     );
 
     const { message } = data;

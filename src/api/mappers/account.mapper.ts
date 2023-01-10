@@ -2,7 +2,9 @@ import { Account, RegisterAccount, UpdateAccount } from 'src/models/account';
 import { AccountDto, RegisterAccountDto, UpdateAccountDto } from '../dtos/account-dto';
 import { IMapperToDto } from './mappers';
 
-class AccountMapper implements IMapperToDto<AccountDto, Account> {
+export class AccountMapper implements IMapperToDto<AccountDto, Account> {
+  private static instance: AccountMapper;
+
   public toDto(data: Account): AccountDto {
     return {
       email: data.email,
@@ -40,6 +42,12 @@ class AccountMapper implements IMapperToDto<AccountDto, Account> {
       address: data.address,
     }
   }
-}
 
-export const accountMapper = new AccountMapper();
+  public static getInstance(): AccountMapper {
+    if (!AccountMapper.instance) {
+        AccountMapper.instance = new AccountMapper();
+    }
+
+    return AccountMapper.instance;
+}
+}

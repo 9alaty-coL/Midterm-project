@@ -4,7 +4,7 @@ import { User } from 'src/models/user';
 import { http } from '..';
 import { IData } from '../dtos/data-dto';
 import { UserDto } from '../dtos/user-dto';
-import { accountMapper } from '../mappers/account.mapper';
+import { AccountMapper } from '../mappers/account.mapper';
 import { userMapper } from '../mappers/user.mapper';
 
 const USER_ROUTE = '/api/user';
@@ -40,7 +40,7 @@ export namespace UserApiService {
     const { data } = await http.put<IData<{ updatedUser: UserDto}>>('/api/user/updateInfo',
     {
       userId: userId,
-      ...accountMapper.toUpdateAccountDto(accountData),
+      ...AccountMapper.getInstance().toUpdateAccountDto(accountData),
     });
     return userMapper.fromDto(data.data.updatedUser);
   }
