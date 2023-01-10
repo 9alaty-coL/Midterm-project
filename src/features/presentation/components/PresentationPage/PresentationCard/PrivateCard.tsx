@@ -39,7 +39,7 @@ const PrivateCardComponent: FC<any> = ({
 
     // Get group name
     const { isLoading, isError, data: groupInfo } = useQuery<any>({
-        queryKey: 'getGroupInfomation',
+        queryKey: 'getGroupInfomation' + presentation.id,
         queryFn: GroupApiService.getGroupById.bind(null, presentation.groupId),
         refetchOnWindowFocus: false
     })
