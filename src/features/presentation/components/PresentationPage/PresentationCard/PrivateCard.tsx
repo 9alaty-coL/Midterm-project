@@ -88,7 +88,7 @@ const PrivateCardComponent: FC<any> = ({
                     mutatePresenting.mutate(presentation.id)
                 }}
                     sx={{color: '#82C3EC', width: '70px'}}
-                    disabled={presentation.isPresenting || (!mutatePresenting.isLoading)}
+                    disabled={presentation.isPresenting || (mutatePresenting.isLoading)}
                 >
                     { presentation.isPresenting && <CoPresentIcon sx={{fontSize: '50px'}} />}
                     { !presentation.isPresenting && <PlayCircleOutlineIcon sx={{fontSize: 50}} />}
