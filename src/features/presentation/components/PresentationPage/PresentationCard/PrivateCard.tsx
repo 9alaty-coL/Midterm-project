@@ -19,6 +19,7 @@ import { useAppSelector } from 'src/store';
 import { Presentation } from 'src/models/presentation';
 
 import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
+import { NotificationApiService } from 'src/api/services/notification-api';
 
 const isAbleToDelete = (profile: any, presentation: Presentation): boolean => {
     if (profile === undefined || profile === null) return false
@@ -45,11 +46,17 @@ const PrivateCardComponent: FC<any> = ({
 
     useEffect(() => {
         if (mutatePresenting.isSuccess) {
-            navigate('/presentation/edit/' + presentation.id + '/present')
+            GroupApiService.getGroupById(presentation.groupId)
+                .then(group => NotificationApiService.notifyGroupUser(group.memberId, `Presentation ${presentation.name} is presenting in group ${group.name}`))
+                .then(() => {
+                    // socket io here
+                    navigate('/presentation/edit/' + presentation.id + '/present')
+                })
         }
         else if (mutatePresenting.isError) {
 
         }
+
     }, [mutatePresenting.isSuccess]);
 
     const countVoted = () => {
