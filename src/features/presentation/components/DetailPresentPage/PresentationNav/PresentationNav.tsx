@@ -20,6 +20,10 @@ import { PresentationApiService } from 'src/api/services/presentation-api'
 
 import { CollaboratorCard } from './CollaboratorCard/CollaboratorCard';
 import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
+import { io, Socket } from 'socket.io-client';
+import { GroupApiService } from 'src/api/services/group-api';
+import { NotificationApiService } from 'src/api/services/notification-api';
+import { Group } from 'src/models/group';
 
 const modalStyle = {
     position: 'absolute' as 'absolute',
@@ -55,17 +59,32 @@ const PresentationNavComponent: FC<any> = ({
     const [isEditName, setEditName] = useState(false)
     const [isOpenSnackbar, setOpenSnackbar] = useState(false)
     const [isOpenCollab, setOpenCollab] = useState(false)
+    const [socket, setSocket] = useState<Socket>();
 
     const [email, setEmail] = useState('')
 
     const [errorMessage, setErrorMessage] = useState('')
 
     const mutatePresenting = useMutation(PresentationApiService.present)
+
+    useEffect(() => {
+        setSocket(io('https://dnlearning-socket-server.onrender.com',  {transports: ['websocket']}))
+    }, [])
     useEffect(() => {
         if (mutatePresenting.isSuccess) {
-            navigate('present', {
-                replace: false,
-            })
+
+            let groupData: Group;
+            GroupApiService.getGroupById(presentation.groupId)
+                .then(group => {
+                    groupData = group;
+                    return NotificationApiService.notifyGroupUser([...group.memberId, ...group.coOwnerId], `Presentation ${presentation.name} is presenting in group ${group.name}`)
+                })
+                .then(() => {
+                    // socket io here
+                    socket?.emit("NotifyListUser", [...groupData.memberId, ...groupData.coOwnerId], `Presentation ${presentation.name} is presenting in group ${groupData.name}`)
+                    navigate('present', {
+                        replace: false,
+                    })                })
         }
     }, [mutatePresenting.isSuccess]);
 

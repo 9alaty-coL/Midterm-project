@@ -20,6 +20,8 @@ import { Presentation } from 'src/models/presentation';
 
 import { AppLoadingSpinner } from 'src/components/AppLoadingSpinner';
 import { NotificationApiService } from 'src/api/services/notification-api';
+import { io, Socket } from 'socket.io-client';
+import { Group } from 'src/models/group';
 
 const isAbleToDelete = (profile: any, presentation: Presentation): boolean => {
     if (profile === undefined || profile === null) return false
@@ -33,6 +35,7 @@ const PrivateCardComponent: FC<any> = ({
     const profile = useAppSelector(selectProfile);
     const navigate = useNavigate();
     const [ isDeleting, setDeleting ] = useState(false)
+    const [socket, setSocket] = useState<Socket>();
 
     // Push presenting status
     const mutatePresenting = useMutation(PresentationApiService.present)
@@ -45,11 +48,20 @@ const PrivateCardComponent: FC<any> = ({
     })
 
     useEffect(() => {
+        setSocket(io('https://dnlearning-socket-server.onrender.com',  {transports: ['websocket']}))
+    }, [])
+
+    useEffect(() => {
         if (mutatePresenting.isSuccess) {
+            let groupData: Group;
             GroupApiService.getGroupById(presentation.groupId)
-                .then(group => NotificationApiService.notifyGroupUser(group.memberId, `Presentation ${presentation.name} is presenting in group ${group.name}`))
+                .then(group => {
+                    groupData = group;
+                    return NotificationApiService.notifyGroupUser([...group.memberId, ...group.coOwnerId], `Presentation ${presentation.name} is presenting in group ${group.name}`)
+                })
                 .then(() => {
                     // socket io here
+                    socket?.emit("NotifyListUser", [...groupData.memberId, ...groupData.coOwnerId], `Presentation ${presentation.name} is presenting in group ${groupData.name}`)
                     navigate('/presentation/edit/' + presentation.id + '/present')
                 })
         }
