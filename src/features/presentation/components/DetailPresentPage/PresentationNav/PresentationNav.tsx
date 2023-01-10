@@ -41,6 +41,7 @@ const modalStyle = {
 };
 
 const PresentationNavComponent: FC<any> = ({
+    presentation,
     id,
     isPublic,
     isChanged,
@@ -161,7 +162,7 @@ const PresentationNavComponent: FC<any> = ({
                         <PlayArrowIcon />} 
                         sx={{width: 100}} 
                     onClick={() => mutatePresenting.mutate(id)}
-                    disabled={slidesControl.isChanged() || slidesControl.pushStatus.isNeedToPush || !isOwned}
+                    disabled={slidesControl.isChanged() || slidesControl.pushStatus.isNeedToPush || (!isPrivate && !isOwned) || presentation.isPresenting}
                 >
                     Present
                 </Button>
