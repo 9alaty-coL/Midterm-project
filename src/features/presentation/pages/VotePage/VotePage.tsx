@@ -159,7 +159,7 @@ const VotePageComponent: FC = () => {
             className={styles["presentation__question"]}
             id="demo-radio-buttons-group-label"
           >
-            {slide.question}
+            <h1 style={{fontSize: 40}}>{slide.question}</h1>
           </FormLabel>
           { slide.slideType === "multi" &&
             <>
