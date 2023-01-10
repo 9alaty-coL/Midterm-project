@@ -43,7 +43,8 @@ const CreatePrivateComponent: FC<any> = ({ group }) => {
     const { isLoading, isError, data: presentingInfo } = useQuery<any>({
         queryKey: 'GetGroupPresentations',
         queryFn: PresentationApiService.getGroupPresenting.bind(null, group.id),
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        onSuccess: (data: any) => console.log(data)
     })
 
     const createGroupPresentMutation = useMutation(PresentationApiService.createGroupPresentation, {
@@ -85,7 +86,7 @@ const CreatePrivateComponent: FC<any> = ({ group }) => {
         <div className={style['list-body']}>
             {
                 presentingInfo.isPresenting ? 
-                <span style={{fontSize: '20px'}}>Presentation <b>{presentingInfo.groupPresentingPresentation[0].name}</b> is being presented in this group!</span> :
+                <span style={{fontSize: '20px'}}>Presentation <b className={style['group-presentation-link']} onClick={() => navigate('/presentation/join/' + presentingInfo.groupPresentingPresentation[0]._id)}>{presentingInfo.groupPresentingPresentation[0].name}</b> is being presented in this group!</span> :
                 <span style={{fontSize: '20px'}}>No presentation is presenting . . .</span>
             }
         </div>

@@ -42,3 +42,13 @@
 .btn-icon {
     font-size: 20px !important;
 }
+
+.group-presentation-link {
+    font-size: 20px;
+    text-decoration: underline;
+    font-style: italic;
+    color: #0000EE;
+}
+.group-presentation-link:hover {
+    cursor: pointer;
+}
