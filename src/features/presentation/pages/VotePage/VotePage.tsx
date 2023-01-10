@@ -159,31 +159,45 @@ const VotePageComponent: FC = () => {
             className={styles["presentation__question"]}
             id="demo-radio-buttons-group-label"
           >
-            {slide.question}
+            <h1 style={{fontSize: 40}}>{slide.question}</h1>
           </FormLabel>
-          <RadioGroup
-            className={styles["presentation__options"]}
-            onChange={voteChangeHandler}
-          >
-            {slide.answers.map((option, index) => (
-              <FormControlLabel
-                className={styles["presentation__option"]}
-                key={index}
-                value={option.id}
-                control={<Radio />}
-                label={option.answer}
-              />
-            ))}
-          </RadioGroup>
-          <Button
-            disabled={isVoting || slide.answers.find(a => a.id === selectedVote) == null}
-            onClick={voteHandler}
-            className={styles["presentation__button"]}
-            type="submit"
-            variant="contained"
-          >
-            {isVoting ? <CircularProgress size={20}/> : 'Submit'}
-          </Button>
+          { slide.slideType === "multi" &&
+            <>
+            <RadioGroup
+              className={styles["presentation__options"]}
+              onChange={voteChangeHandler}
+            >
+              {slide.answers.map((option, index) => (
+                <FormControlLabel
+                  className={styles["presentation__option"]}
+                  key={index}
+                  value={option.id}
+                  control={<Radio />}
+                  label={option.answer}
+                />
+              ))}
+            </RadioGroup>
+            <Button
+              disabled={isVoting || slide.answers.find(a => a.id === selectedVote) == null}
+              onClick={voteHandler}
+              className={styles["presentation__button"]}
+              type="submit"
+              variant="contained"
+            >
+              {isVoting ? <CircularProgress size={20}/> : 'Submit'}
+            </Button>
+          </>
+          }
+          {
+            slide.slideType === "heading" && <>
+              <h2 style={{fontSize: 25, whiteSpace: 'pre-line'}}>{slide.subheading}</h2>
+            </>
+          }
+          {
+            slide.slideType === "para" && <>
+              <span style={{fontSize: 25, whiteSpace: 'pre-line'}}>{slide.paragraph}</span>
+            </>
+          }
         </FormControl>}
       </div>
       

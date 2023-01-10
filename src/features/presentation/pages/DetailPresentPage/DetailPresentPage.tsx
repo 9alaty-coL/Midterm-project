@@ -169,6 +169,7 @@ const DetailPresentPageComponent: FC = () => {
                 isChangingSlide,
             }}/>
             <PresentationNav 
+                presentation={presentation}
                 id={id}
                 isPublic={true} isChanged={slidesControl.isChanged()} isPrivate={presentation.isPrivate} isOwned={profile !== null && profile.id === presentation.createdBy}
                 nameControl={{

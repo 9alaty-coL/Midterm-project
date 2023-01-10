@@ -40,4 +40,11 @@ export namespace NotificationApiService {
         })
         return notificationMapper.fromDto(data.data.NotificationSaved);
     }
+
+    export async function notifyGroupUser(userIds: string[], content: string): Promise<void> {
+        return await http.post(NOTIFICATION_ROUTE + '/addMany', {
+            content,
+            userIdList: userIds,
+        })
+    }
 }
