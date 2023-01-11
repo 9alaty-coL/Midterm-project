@@ -38,6 +38,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { ChatBox } from "../../components/PresentPage/ChatBox/ChatBox";
 import { QuestionBox } from "../../components/PresentPage/QuestionBox/QuestionBox";
+import { useAppSelector } from "src/store";
+import { selectProfile } from "src/store/profile/selectors";
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -66,6 +68,8 @@ const VotePageComponent: FC = () => {
   const [isVoting, setIsVoting] = useState(false);
   const [isVoted, setIsVoted] = useState(false);
   const [requireReload, setRequireReload] = useState(false);
+  
+  const profile = useAppSelector(selectProfile)
 
   useEffect(() => {
     setSocket(io("https://dnlearning-socket-server.onrender.com", { transports: ["websocket"] }));
@@ -98,6 +102,15 @@ const VotePageComponent: FC = () => {
       setRequireReload(true)
     })
   }, [socket]);
+
+  if (detail?.groupId == null) {
+    if (profile == null) {
+      return <h1>Permission denied for this Presentation</h1>
+    }
+    if ([...profile.owner, ...profile.member, ...profile.co_owner].map(group => group.id).find(id => id === detail?.groupId) == null) {
+      return <h1>Permission denied for this Presentation</h1>
+    }
+  }
 
   if (data.isLoading) {
     return <AppLoadingSpinner />;
