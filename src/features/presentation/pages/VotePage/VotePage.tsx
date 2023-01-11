@@ -103,7 +103,7 @@ const VotePageComponent: FC = () => {
     })
   }, [socket]);
 
-  if (detail?.groupId == null) {
+  if (detail?.groupId != null) {
     if (profile == null) {
       return <h1>Permission denied for this Presentation</h1>
     }
